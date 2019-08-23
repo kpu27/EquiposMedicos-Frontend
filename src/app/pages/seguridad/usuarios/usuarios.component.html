@@ -1,0 +1,361 @@
+<div *ngIf="view == true" fxLayout="row wrap">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <div>
+                    <div style="padding: 5px;" class="back-gradient-dark-blue text-white" fxLayout="row"
+                        fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button (click)="setTipoForm(0); view = false; clear()"
+                                class="btn btn-sm btn-light text-success">
+                                <i class="fa fa-plus"></i> &nbsp; Nuevo Usuario
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="list-content" perfectScrollbar>
+                        <p-table #dt [columns]="cols" [value]="usuarios" [paginator]="true" [rows]="9">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th class="text-center" *ngFor="let col of columns"
+                                        [ngStyle]="{'width': getStyle(col.width)}">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-columns="columns">
+                                <tr [pSelectableRow]="item">
+                                    <td class="text-center">
+                                        <img *ngIf="item.foto != ''"
+                                            [src]="'http://ec2-18-224-139-239.us-east-2.compute.amazonaws.com:5000/rest/v1/usuario/img/'+item.foto"
+                                            onerror="src='../../../../assets/img/default_picture.png'" class="imgmini">
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.id }}
+                                    </td>
+                                    <td>
+                                        {{ item.username}}
+                                    </td>
+                                    <td>
+                                        {{item.nombre}}
+                                    </td>
+                                    <td>
+                                        {{item.apellido}}
+                                    </td>
+                                    <td>
+                                        {{item.documento}}
+                                    </td>
+                                    <td>
+                                        {{item.email}}
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="row">
+                                            <div class="container">
+                                                <button (click)="setUsuario(item); view = false; setTipoForm(1)"
+                                                    mat-icon-button>
+                                                    <mat-icon class="text-info">create
+                                                    </mat-icon>
+                                                </button>
+                                                <button mat-icon-button>
+                                                    <mat-icon class="text-warning">vpn_key
+                                                    </mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+</div>
+
+
+
+<div *ngIf="view == false" class="container">
+    <div class="row">
+        <div class="col-12">
+            <mat-card>
+                <form class="p-4" [formGroup]="datos">
+                    <h5 *ngIf="tipoForm == 0" class="text-success"><i class="fa fa-user-plus"></i>&nbsp; Nuevo Usuario
+                    </h5>
+                    <h5 *ngIf="tipoForm == 1" class="text-info"><i class="fa fa-user-edit"></i>&nbsp; Actualizar Usuario
+                    </h5>
+                    <hr>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="content">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Nombre</mat-label>
+                                    <input matInput placeholder="Nombre" name="nombre" formControlName="nombre" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="content">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Apellido</mat-label>
+                                    <input matInput placeholder="Apellido" name="apellido" formControlName="apellido" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="content">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Username</mat-label>
+                                    <input matInput placeholder="Username" name="username" formControlName="username" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="content">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Documento</mat-label>
+                                    <input matInput placeholder="Documento" name="documenti"
+                                        formControlName="documento" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="content">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Email" name="email" formControlName="email" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="content">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Contraseña</mat-label>
+                                    <input type="password" matInput placeholder="Contraseña" name="pass"
+                                        formControlName="password" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-12">
+
+                            <button type="submit" *ngIf="tipoForm == 0" (click)="postUsuario()"
+                                [disabled]="!datos.valid" [ngClass]="!datos.valid ? 'text-muted': 'text-success'"
+                                style="float: right" class="w-30 btn btm-sm"><i class="fa fa-user-plus"></i>&nbsp; Crear
+                                Usuario
+                            </button>
+                            <button type="submit" *ngIf="tipoForm == 1" (click)="putUsuario()" [disabled]="!datos.valid"
+                                [ngClass]="!datos.valid ? 'text-muted': 'text-info'" style="float: right"
+                                class="w-30 btn btm-sm"><i class="fa fa-user-edit"></i>&nbsp; Actualizar
+                                Usuario
+                            </button>
+                            <button type="button" (click)="view = true" style="float: left"
+                                class="w-30 btn btm-sm text-danger"><i class="fa fa-times"></i>&nbsp; Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<!--
+    <div *ngIf="estado=='previa'">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="flex-p">
+      <div fxLayout="row">
+          <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
+              <mat-button-toggle value="add" (click)="estado='nuevo'; crear=true; clear()">
+                  <mat-icon>person_add</mat-icon>
+              </mat-button-toggle>
+              <mat-button-toggle value="search">
+                  <mat-icon>search</mat-icon>
+              </mat-button-toggle>
+          </mat-button-toggle-group>
+      </div>
+      <form class="user-search" [class.show]="controls.value == 'search'">
+          <mat-form-field class="user-search-input">
+              <input matInput placeholder="Search user by name..." [(ngModel)]="searchText" name="search">
+          </mat-form-field>
+      </form>
+  </div>
+  <div class="container">
+      <div class="row">
+          <div class="col-4" *ngFor="let item of usuarios">
+              <mat-card class="list mat-card " style="padding: 0px; margin-bottom: 10px; ">
+                  <div class="encabezado">
+                      <h2>{{item.username}}</h2>
+                  </div>
+                  <div class="col-6">
+                      <mat-button-toggle style="background: white; border: none; position: relative; top: 20px;"
+                          checked="true">
+                          <mat-icon>face</mat-icon>
+                          <span>{{item.nombre}}</span>
+                      </mat-button-toggle>
+                      <br>
+                      <mat-button-toggle style="background: white; border: none; position: relative; top: 20px;"
+                          checked="true">
+                          <mat-icon>face</mat-icon>
+                          <span>{{item.apellido}}</span>
+                      </mat-button-toggle>
+                      <br>
+                      <mat-button-toggle style="background: white; border: none; position: relative; top: 20px;"
+                          checked="true">
+                          <mat-icon>picture_in_picture</mat-icon>
+                          <span>{{item.documento}}</span>
+                      </mat-button-toggle>
+                      <br>
+                      <mat-button-toggle style="background: white; border: none; position: relative; top: 20px;"
+                          checked="true">
+                          <mat-icon>alternate_email</mat-icon>
+                          <span>{{item.email}}</span>
+                      </mat-button-toggle>
+                  </div>
+                  <div class="col-4">
+                      <div class="circulo">
+                          <img *ngIf="item.foto != null || item.foto != ''" [src]="imgUrl+item.foto" style="width: 100%" alt="">
+                          <img *ngIf="item.foto == null || item.foto == ''" src="assets/img/default_picture.png" alt="" style="width: 100%;">
+                      </div>
+                      <mat-button-toggle style="background: white; border: none; position: relative;
+                       bottom: 180px; left: 200px; background: #1FBF87; color: white" checked="true"
+                          (click)="estado='nuevo'; actualizar=true; SetUsuario(item)">
+                          <mat-icon>mode_edit</mat-icon>
+                      </mat-button-toggle>
+                      <mat-button-toggle (click)="estado='cambio'"
+                          style="background: white; border: none; position: relative; bottom: 230px; left: 250px; background: #E34E33; color: white">
+                          <mat-icon>rate_review</mat-icon>
+                      </mat-button-toggle>
+                  </div>
+              </mat-card>
+          </div>
+
+      </div>
+  </div>
+</div>
+-->
+<!--Nuevo usuario-->
+<!--
+    <div class="container" *ngIf="estado=='nuevo';">
+  <div class="row">
+      <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
+          <mat-button-toggle (click)="estado='previa'; crear=false; actualizar=false">
+              <mat-icon>reply</mat-icon>
+          </mat-button-toggle>
+      </mat-button-toggle-group>
+  </div>
+  <div class="row">
+      <mat-card style="position: relative; left: 300px;">
+          <mat-card-header>
+              <mat-card-title style="text-align: center" *ngIf="estado=='crear'">Nuevo Usuario</mat-card-title>
+              <mat-card-title style="text-align: center" *ngIf="actualizar">Actualizar usuario</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <div class="row">
+                  <div class="col-md-6">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Nombres</mat-label>
+                          <input matInput placeholder="Flor,Florida" name="nombre" id="nombre" [(ngModel)]="nombre">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Apellidos</mat-label>
+                          <input matInput placeholder="Perez,Cantillo" name="apellido" id="apellido"
+                              [(ngModel)]="apellido">
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <mat-form-field class="example-full-width" appearance="outline" style="width: 430px">
+                          <mat-label>Correo</mat-label>
+                          <input matInput placeholder="ejemplo@emjemplo.com" type="email" name="email" id="email"
+                              [(ngModel)]="email">
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-6">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Usuario</mat-label>
+                          <input matInput placeholder="username" type="text" name="username" id="username"
+                              [(ngModel)]="username" [(ngModel)]="username">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Documento</mat-label>
+                          <input matInput placeholder="1234567890" type="number" name="documento" id="documento"
+                              [(ngModel)]="documento">
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <mat-form-field class="example-full-width" appearance="outline" *ngIf="estado=='crear'">
+                          <mat-label>Contraseña</mat-label>
+                          <input matInput placeholder="*******" type="password" name="password" id="password"
+                              [(ngModel)]="password">
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field  appearance="outline" *ngIf="actualizar">
+                        <mat-label>Estado</mat-label>
+                        <select matNativeControl required [(ngModel)]="estadoUsuario" name="estadoUsuario" id="estadoUsuario">
+                          <option value="1">Activo</option>
+                          <option value="9">Inactivo</option>
+                        </select>
+                      </mat-form-field>
+                  </div>
+
+              </div>
+          </mat-card-content>
+          <mat-card-actions align="start">
+              <button mat-button (click)="postUsuario()" style="background:#1FBF87 " *ngIf="estado=='crear'">Crear</button>
+              <button mat-button  style="background:#1FBF87 " (click)="putUsuario()"
+                  *ngIf="actualizar">actualizar</button>
+
+          </mat-card-actions>
+      </mat-card>
+  </div>
+</div>
+-->
+<!--Cambiar contraseña-->
+<!--
+    <div class="container" *ngIf="estado=='cambio'">
+      <div class="row">
+              <mat-button-toggle-group #controls="matButtonToggleGroup" appearance="legacy">
+                  <mat-button-toggle (click)="estado='previa'">
+                      <mat-icon>reply</mat-icon>
+                  </mat-button-toggle>
+              </mat-button-toggle-group>
+          </div>
+  <div class="row">
+      <mat-card style="padding: 0px; margin-bottom: 10px;    left: 290px;
+      top: 100px; ">
+          <mat-card-header>
+              <mat-card-title style="text-align: center; align-content: center">Cambiar contraseña</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="col-md-12">
+                          <mat-form-field class="example-full-width" appearance="outline" style="width: 430px">
+                              <mat-label>Correo</mat-label>
+                              <input matInput placeholder="ejemplo@emjemplo.com" type="password" name="email" id="email"
+                                  [(ngModel)]="email">
+                          </mat-form-field>
+                      </div>
+                  </div>
+
+              </div>
+          </mat-card-content>
+          <mat-card-actions align="start">
+              <button mat-button style="background:#1FBF87; text-align: center; position: relative; left:150px; " >Actualizar contraseña</button>
+
+          </mat-card-actions>
+          <mat-card-footer>
+              Footer
+          </mat-card-footer>
+      </mat-card>
+  </div>
+</div>
+-->

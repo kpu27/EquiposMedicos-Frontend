@@ -1,0 +1,68 @@
+<div *ngIf="data" fxLayout="row wrap">
+	<div fxFlex="100" class="flex-p">
+		<mat-card class="p-0 list">
+			<mat-sidenav-container>
+				<div>
+					<div style="padding: 5px;" class="back-gradient-dark-blue text-white" fxLayout="row"
+						fxLayoutAlign="space-between center">
+						<div fxLayout="row" fxLayoutAlign="start center">
+							<button class="btn btn-sm btn-light text-success" (click)="openForm()">
+								<i class="fa fa-plus"></i>&nbsp; Nuevo Cotizacion
+							</button>
+						</div>
+					</div>
+
+					<div class="list-content" perfectScrollbar>
+						<p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="9">
+							<ng-template pTemplate="caption">
+								<div style="text-align: right">
+									<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+									<input class="input-filter" type="text" pInputText size="50"
+										placeholder="Buscar por..."
+										(input)="dt.filterGlobal($event.target.value, 'contains')"
+										style="width:auto">
+								</div>
+							</ng-template>
+							<ng-template pTemplate="header" let-columns>
+									<tr>
+									  <th class="text-center" *ngFor="let col of columns" [ngStyle]="{'width': getStyle(col.width)}">
+									    {{col.header}}
+									  </th>
+									</tr>
+								   </ng-template>
+							<ng-template pTemplate="body" let-item let-columns="columns">
+								<tr [pSelectableRow]="item">
+									<td class="text-center">
+										{{item.codigo}}
+									</td>
+									<td>
+										{{item.fkEmpresa.nombreEmpresa}}
+									</td>
+									<td>
+										{{item.fkCliente.nombre}}
+									</td>
+									<td>
+										{{item.vigencia}}
+									</td>
+									<td>
+										{{item.entrega}}
+									</td>
+									<td>
+										{{item.condicionPago}}
+									</td>
+									<td>
+										{{item.responsable}}
+									</td>
+									<td class="text-center">
+										<div *ngIf="item.estado == 0" class="badge badge-success">activo</div>
+										<div *ngIf="item.estado == 1" class="badge badge-warning">ordenada</div>
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</mat-sidenav-container>
+		</mat-card>
+	</div>
+</div>

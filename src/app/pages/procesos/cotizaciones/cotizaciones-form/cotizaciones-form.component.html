@@ -1,0 +1,175 @@
+<mat-card class="p-0">
+  <div style="padding: 5px;" class="back-gradient-dark-blue text-white" fxLayout="row"
+    fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>add</mat-icon> &nbsp;<h4>Nueva Cotizacion</h4>
+    </div>
+  </div>
+
+  <mat-card-content class="p-3">
+    <form [formGroup]="datos" (ngSubmit)="submit()" class="form-sample">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Cliente</mat-label>
+              <mat-select formControlName="idCliente" name="idCliente">
+                <mat-option *ngFor="let item of clientes" [value]="item.idCliente">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fecha" name="fecha" (dateChange)="getDate()"
+                placeholder="Fecha de Entrega">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Condicion De Pago</mat-label>
+              <mat-select formControlName="cp" name="cp">
+                <mat-option *ngFor="let item of parametros" [value]="item.nombre">{{item.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Valor Viatico</mat-label>
+              <input type="number" matInput formControlName="viatico" name="viatico" placeholder="$000">
+              <mat-icon matSuffix>attach_money</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Valor IVA</mat-label>
+              <input type="number" matInput formControlName="iva" name="iva" placeholder="0%">
+              <mat-icon matSuffix>attach_money</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <button type="button" [disabled]="!datos.valid || !equipos" (click)="openModal()" mat-raised-button
+            [ngClass]="datos.valid ? 'bg-success text-white' : 'bg-danger text-white'">
+            <mat-icon class="mat-18">build</mat-icon>&nbsp;Seleccionar Equipos
+          </button>
+        </div>
+        <div class="col-md-12">
+          <div class="content">
+            <mat-accordion>
+              <mat-expansion-panel [disabled]="!datos.valid || !equiposSelected">
+                <mat-expansion-panel-header>
+                  <mat-panel-title [ngClass]="equiposSelected.length > 0 ? 'text-success' : 'text-danger'">
+                    <mat-icon>build</mat-icon>&nbsp;
+                    Equipos Seleccionados: {{equiposSelected.length}}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon>keyboard_arrow_down</mat-icon>&nbsp; Ver Equipos
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row" *ngFor="let item of equiposSelected; let i = index">
+                  <div class="col-md-3">
+                    <div class="text-success">{{item.nombreEquipo}}</div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label [ngClass]="item.valoru > 0 ? 'text-success' : 'text-danger'">Valor Unidad</mat-label>
+                        <input type="number" matInput name="vu" (change)="agregarValorUnidad(i, $event.target.value)"
+                          placeholder="$000">
+                        <mat-icon matSuffix>attach_money</mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label [ngClass]="item.cant > 0 ? 'text-success' : 'text-danger'">Cantidad</mat-label>
+                        <input type="number" matInput name="cant" (change)="agregarCantidad(i, $event.target.value)"
+                          placeholder="000">
+                        <mat-icon matSuffix>attach_money</mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Calibracion</mat-label>
+                        <input type="number" matInput name="cali" (change)="agregarCalibracion(i, $event.target.value)"
+                          placeholder="$000">
+                        <mat-icon matSuffix>attach_money</mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+        <div class="col-md-12"><br>
+          <button type="button" (click)="goBack()" mat-raised-button color="warn">
+            <mat-icon class="mat-18">cancel</mat-icon>Cancelar
+          </button>
+          <button [disabled]="!datos.valid || equiposSelected.length == 0" style="float: right" type="submit"
+            mat-raised-button color="primary">
+            <mat-icon class="mat-18">save</mat-icon>Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+
+<ngx-smart-modal #myModal identifier="myModal" [closable]="false" [escapable]="false" [dismissable]="false"
+  customClass="modal-smart-95 modal-smart-top-25">
+  <div fxLayout="row wrap">
+    <div fxFlex="100" class="flex-p">
+      <div class="list-content" perfectScrollbar>
+        <p-table #dt [value]="equipos" [columns]="cols" [paginator]="true" [rows]="7">
+          <ng-template pTemplate="caption">
+            <div style="text-align: right">
+              <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+              <input class="input-filter" type="text" pInputText size="30" placeholder="Buscar por..."
+                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr class="bg">
+              <th *ngFor="let col of columns; let i = index">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            <tr [pSelectableRow]="rowData">
+              <td>
+                {{rowData.codigo}}
+              </td>
+              <td>
+                {{rowData.nombre}}
+              </td>
+              <td>
+                <button (click)="addEquipo(rowData, rowIndex)" mat-icon-button class="bg-white">
+                  <mat-icon class="mat-18 text-success">add</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+</ngx-smart-modal>

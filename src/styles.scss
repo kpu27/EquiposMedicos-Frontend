@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://cdn.quilljs.com/1.2.2/quill.snow.css');
+@import url('https://cdn.quilljs.com/1.2.2/quill.bubble.css');
+
+// indigo-pink, deeppurple-amber, purple-green and pink-bluegrey.
+@import '~@angular/material/prebuilt-themes/deeppurple-amber';
+
+//snotify theme
+@import "~ng-snotify/styles/dark";
+
+@import "app/theme/styles/base";
+@import "app/theme/styles/theme";
+@import "app/theme/styles/libs-override";
+@import "app/theme/styles/rtl";
+$color-overlay: rgba(0, 0, 0, .8);
+@import "~ngx-smart-modal/ngx-smart-modal";
+@import "app/app.component";
+
+
+
+
+.pointer{
+  cursor: pointer;
+}
+.btnp{
+  padding: 5px;
+}
+.back-gradient{
+  background: linear-gradient(to right, #44a08d, #093637); 
+  background: -webkit-linear-gradient(to right, #44a08d, #093637);
+}
+.back-gradient-gray{
+  background: linear-gradient(to right, #2c3e50, #bdc3c7);
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+}
+.back-gradient-teal-gray{
+  background: linear-gradient(to right, #808080, #3fada8);
+  background: -webkit-linear-gradient(to right, #808080, #3fada8);
+}
+.back-gradient-dark-blue{
+  background: linear-gradient(to right, #141e30, #243b55);
+  background: -webkit-linear-gradient(to right, #141e30, #243b55);
+}
+.back-gradient-light-purple{
+  background: linear-gradient(to right, #2c3e50, #2980b9);
+  background: -webkit-linear-gradient(to right, #2c3e50, #2980b9);
+}
+
+.form-text{
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.text-25{
+  font-size: 25px;
+}
+.bg-theme{
+  background-color: #49be7c;
+}
+.ww30{
+  width: 30%;
+}
+.ww40{
+  width: 40%;
+}
+.ww50{
+  width: 50%;
+}
+.ww60{
+  width: 60%;
+}
+.ww70{
+  width: 70%;
+}
+.ww80{
+  width: 80%;
+}
+.input-filter{
+  height: 35px;
+  border-radius: 5px;
+  color: #49be7c;
+}  
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content > * {
+  width: 100%;
+}
+
+.img-table-icon{
+  height: 20px; width: 20px
+}
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    top: 27px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: rgb(104, 172, 70);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 6px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 6px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 26px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 45px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(19px, 0);
+    }
+  }
+

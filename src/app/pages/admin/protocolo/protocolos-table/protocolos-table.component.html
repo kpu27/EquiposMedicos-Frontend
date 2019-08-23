@@ -1,0 +1,131 @@
+<div fxLayout="row wrap" *ngIf="estado == true">
+  <div fxFlex="100" class="flex-p">
+    <mat-card class="p-0 list">
+      <mat-sidenav-container>
+        <div>
+          <div style="padding: 5px;" class=" back-gradient-gray text-white" fxLayout="row"
+            fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button class="btn btn-sm btn-light text-success"
+                (click)="getTecnicos();estado=false;clear();setTipoForm(0)">
+                <i class="fa fa-plus"></i>&nbsp; Nuevo Protocolo
+              </button>
+            </div>
+          </div>
+          <div class="list-content" perfectScrollbar>
+            <p-table #dt [value]="protocolos" [columns]="cols" [paginator]="true" [rows]="10">
+              <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                  <input type="text" pInputText size="50" placeholder="Buscar Por..."
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [ngStyle]="{'width': getStyle(col.width)}">
+                    {{col.header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-columns="columns">
+                <tr [pSelectableRow]="item" class="tbody">
+                  <td class="text-center">{{item.idProtocolo}}</td>
+                  <td style="text-align: left">{{item.codigo}}</td>
+                  <td style="text-align: left">{{item.nombre}}</td>
+                  <td style="text-align: left">{{getDate(item.revision)}}</td>
+                  <td style="text-align: left">{{item.responsable}}</td>
+                  <td class="text-center">
+                    <div *ngIf="item.estado == 0" class="badge badge-success">activo</div>
+                    <div *ngIf="item.estado == 9" class="badge badge-danger">inactivo</div>
+                  </td>
+                  <td class="text-center">
+                    <div class="row text-center">
+                      <div class="container">
+
+                        <button class="text-center" mat-icon-button pTooltip="Editar Protocolos"
+                          (click)="seleccionarProtocolo(item);getTecnicos();estado=false;setTipoForm(1)"
+                          tooltipPosition="top">
+                          <mat-icon class="text-info">mode_edit</mat-icon>
+                        </button>
+                        <button *ngIf="item.estado == 0" class="text-center" mat-icon-button
+                          pTooltip="Eliminar Protocolo" tooltipPosition="top"
+                          (click)="seleccionarProtocolo(item);deleteProtocolo();">
+                          <mat-icon class="text-danger">delete</mat-icon>
+                        </button>
+
+                        <button *ngIf="item.estado == 9" class="text-center" mat-icon-button
+                          pTooltip="Restaurar Protocolo" tooltipPosition="top"
+                          (click)="seleccionarProtocolo(item);deleteProtocolo();">
+                          <mat-icon class="text-warning">cached</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </mat-sidenav-container>
+    </mat-card>
+  </div>
+</div>
+<!-- NUEVO PROTOCOLO -->
+<div class="container py-3" *ngIf="estado==false">
+  <mat-card class="formulario" style="padding:10px">
+    <h5 *ngIf="tipoForm == 0" class="text-success text-center">Nuevo Protocolo</h5>
+    <h5 *ngIf="tipoForm == 1" class="text-info text-center">Editar Protocolo</h5>
+    <hr>
+    <form [formGroup]="datos">
+      <div class="row">
+        <div class="col-3">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Codigo</mat-label>
+              <input matInput placeholder="Codigo" id="codigo" name="codigo" formControlName="codigo">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input matInput placeholder="Nombre" id="nombre" name="nombre" formControlName="nombre">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de revisión</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="revision" name="fecha"
+                placeholder="Fecha de revisión">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Descripcion</mat-label>
+              <textarea matInput placeholder="Descripcion" id="descripcion" name="descripcion"
+                formControlName="descripcion"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-sm bg-light text-success" style="float: right" (click)="newProtocolo();"
+            *ngIf="tipoForm == 0"><i class="fa fa-plus"></i> Crear</button>
+          &nbsp;
+          <button class="btn btn-sm bg-light text-info" *ngIf="tipoForm == 1" style="float: right"
+            (click)="updateProtocolo()"><i class="fa fa-edit"></i> Actualizar</button>
+          <button class="btn btn-sm bg-light text-danger" (click)="estado=true;" style="float: left;"><i
+              class="fa fa-times"></i> Cancelar</button>
+        </div>
+      </div>
+      <!--end row-->
+    </form>
+  </mat-card>
+</div>

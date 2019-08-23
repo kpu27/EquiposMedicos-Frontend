@@ -1,0 +1,45 @@
+<p-table  #dt [value]="data" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header">
+    <tr class="bg">
+      <th width="10%">Codigo</th>
+      <th width="15%">Empresa</th>
+      <th width="15%">Cliente</th>
+      <th width="20%">Vigencia</th>
+      <th width="20%">Valor viatico</th>
+      <th width="10%">Responsable</th>
+      <th width="10%">estado</th>
+      <th width="10%">Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr class="tbody">
+      <td>{{item.codigo}}</td>
+      <td style="text-align: left">{{item.fkEmpresa.nombreEmpresa}}</td>
+      <td style="text-align: left">{{item.fkCliente.nombre}}</td>
+      <td style="text-align: left">{{item.vigencia}}</td>
+      <td style="text-align: left">{{item.viaticoValor | currency}}</td>
+      <td style="text-align: left">{{item.responsable}}</td>
+      <td style="text-align: left">
+        <div *ngIf="item.estado === 0" style="background: rgb(216, 86, 63); padding: 4px; color: white; text-align: center"> Sin orden </div>
+        <div *ngIf="item.estado === 1" style="background: rgb(77, 175, 175); padding: 4px; color: white; text-align: center"> Programado </div>
+        <div *ngIf="item.estado === 2" style="background: rgb(84, 184, 128); padding: 4px; color: white; text-align: center"> Finalizado </div>
+      </td>
+
+      <td>
+        <button mat-icon-button pTooltip="Configuracion" tooltipPosition="top" *ngIf="item.estado === 1">
+          <mat-icon>settings
+            </mat-icon>
+        </button>
+
+        <button mat-icon-button pTooltip="Crear Orden" tooltipPosition="top" (click)="CrearOrden(item)"  *ngIf="item.estado === 0">
+            <mat-icon class="text-success">note_add</mat-icon>
+          </button>
+
+          <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top" *ngIf="item.estado != 0 && item.estado != 1">
+              <mat-icon>remove_red_eye</mat-icon>
+            </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+

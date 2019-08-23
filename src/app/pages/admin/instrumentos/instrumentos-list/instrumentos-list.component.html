@@ -1,0 +1,205 @@
+<div fxLayout="row wrap" *ngIf="estado==true">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <div>
+                    <div class="back-gradient-teal-gray text-white btnp" fxLayout="row"
+                        fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button class="btn btn-sm bg-light text-success"
+                                (click)="clear();estado=false; setTipoForm(0)">
+                                <i class="fa fa-plus"></i>&nbsp; Nuevo Instrumento
+                            </button>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button *ngIf="tipoList == 1 || tipoList == 2" (click)="setTipoList(0)"
+                                style="position: relative" class="btn btn-sm bg-light text-danger"
+                                (click)="setTipoList(0)">
+                                <i class="fa fa-times"></i> &nbsp; regresar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="list-content" perfectScrollbar>
+                        <p-table #dt [value]="instrumentos" [columns]="cols" [paginator]="true" [rows]="7"
+                            *ngIf="tipoList == 0">
+                            <ng-template pTemplate="caption">
+                                <div style="text-align: right">
+                                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="50" placeholder="Buscar Por..."
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns" [ngStyle]="{'width': getStyle(col.width)}">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-columns="columns">
+                                <tr [pSelectableRow]="item">
+                                    <td>
+                                        {{item.idInstrumentos}}
+                                    </td>
+                                    <td>
+                                        {{item.nombre}}
+                                    </td>
+                                    <td>
+                                        {{item.marca}}
+                                    </td>
+                                    <td>
+                                        {{item.modelo}}
+                                    </td>
+                                    <td>
+                                            <div *ngIf="item.estado == 0" class="badge badge-success">activo</div>
+                                            <div *ngIf="item.estado == 9" class="badge badge-danger">inactivo</div>
+                                    </td>
+                                    <td>
+                                        <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
+                                            (click)="getProtocolosPorInstrumento(item); SelectIntrumento(item);setTipoList(1);">
+                                            <mat-icon>ballot</mat-icon>
+                                        </button>
+                                        <button mat-icon-button pTooltip="Agragr Protocolo" tooltipPosition="top"
+                                            (click)="setIdInstrumento(item);setTipoList(2); getProtocolos()">
+                                            <mat-icon class="text-success">add</mat-icon>
+                                        </button>
+                                        <button mat-icon-button pTooltip="Editar Instrumento"
+                                            (click)="estado=false; SeleInstrumento(item); setTipoForm(1)"
+                                            tooltipPosition="top">
+                                            <mat-icon class="text-info">mode_edit</mat-icon>
+                                        </button>
+                                        <button *ngIf="item.estado == 0" mat-icon-button pTooltip="Desactivar Instrumento" tooltipPosition="top"
+                                            (click)="SeleInstrumento(item);deleteInstrumento()">
+                                            <mat-icon class="text-danger">delete</mat-icon>
+                                        </button>
+                                        <button *ngIf="item.estado == 9" mat-icon-button pTooltip="Habilitar Instrumento" tooltipPosition="top"
+                                        (click)="SeleInstrumento(item);deleteInstrumento()">
+                                        <mat-icon class="text-warning">cached</mat-icon>
+                                    </button>
+                                    </td>
+                            </ng-template>
+                        </p-table>
+                        <!--Protocolo de instrumentos-->
+                        <p-table *ngIf="tipoList == 1;" #dt [value]="protocolos" [paginator]="true" [rows]="7">
+                            <ng-template pTemplate="header">
+                                <tr class="text-center py-1">
+                                    <div class="row">
+                                        <div class="container">
+                                            <div class="m-2 row" style="font-size: 14px; display: inline-block">
+                                                <p class="badge badge-success" style="font-size: 14px">Instrumento
+                                                    Seleccionado:&nbsp; {{instrumentoSelected}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                                <tr class="bg">
+                                    <th>Codigo</th>
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                    <th>Responsable</th>
+                                    <th>Revision</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item>
+                                <tr class="tbody">
+                                    <td>{{item.fkProtocolo.codigo}}</td>
+                                    <td style="text-align: left">{{item.fkProtocolo.nombre}}</td>
+                                    <td style="text-align: left">{{item.fkProtocolo.descripcion}}</td>
+                                    <td style="text-align: left">{{item.fkProtocolo.responsable}}</td>
+                                    <td>{{item.fkProtocolo.revision}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                        <p-table *ngIf="tipoList == 2;" #dt [value]="protocolos2" [paginator]="true" [rows]="7">
+                            <ng-template pTemplate="header">
+                                <tr class="text-center py-1">
+                                    <div class="row">
+                                        <div class="container">
+                                            <div class="m-2 row" style="font-size: 14px; display: inline-block">
+                                                <p class="badge badge-success" style="font-size: 14px">Agregar Protocolo al Instrumento:&nbsp; {{instrumentoSelected}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                                <tr class="bg">
+                                    <th width="10%">Codigo</th>
+                                    <th width="20%">Nombre</th>
+                                    <th width="30%">Descripcion</th>
+                                    <th width="20%">Responsable</th>
+                                    <th width="20%">Revision</th>
+                                    <th width="5%">Accion</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item>
+                                <tr class="tbody">
+                                    <td>{{item.codigo}}</td>
+                                    <td style="text-align: left">{{item.nombre}}</td>
+                                    <td style="text-align: left">{{item.descripcion}}</td>
+                                    <td style="text-align: left">{{item.responsable}}</td>
+                                    <td>{{item.revision}}</td>
+                                    <td>
+                                        <button mat-icon-button pTooltip="Seleccionar Protocolo"
+                                            (click)="addProtocolo(item.idProtocolo)" tooltipPosition="top">
+                                            <mat-icon class="text-add">add</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+</div>
+
+<!--FORMULARIO DE NUEVO INSTRUMENTO-->
+<div class="container" *ngIf="estado == false">
+    <mat-card class="nuevoIntrumento">
+        <h5 *ngIf="tipoForm == 0" class="text-success text-center">Nuevo Instrumento</h5>
+        <h5 *ngIf="tipoForm == 1" class="text-info text-center">Editar Instrumento</h5>
+        <h5 *ngIf="tipoForm == 2" class="text-success text-center">Agregar Instrumento</h5>
+        <hr>
+        <form *ngIf="tipoForm == 0 || tipoForm == 1" [formGroup]="datos" class="form-sample">
+            <div class="row">
+                <div class="col-12">
+                    <div class="content">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nombre de instrumento:</mat-label>
+                            <input matInput placeholder="nombre" id="nombre" formControlName="nombre">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="content">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Modelo:</mat-label>
+                            <input matInput pla ceholder="modelo" id="modelo" formControlName="modelo">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="content">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Marca:</mat-label>
+                            <input matInput placeholder="marca" id="marca" formControlName="marca">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button [disabled]="!datos.valid" class="btn btn-sm bg-light text-success" *ngIf="tipoForm == 0"
+                        style="float: right;" (click)="postInstrumentos()"><i class="fa fa-plus"></i> Crear</button>
+                    <button [disabled]="!datos.valid" (click)="putInstrumento()" class="btn btn-sm bg-light text-info"
+                        *ngIf="tipoForm == 1" style="float: right;"><i class="fa fa-edit"></i> Actualizar</button>
+                    <button class="btn btn-sm bg-light text-danger" (click)="estado=true;" style="float: left;"><i
+                            class="fa fa-times"></i> Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>

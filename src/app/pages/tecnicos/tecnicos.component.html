@@ -1,0 +1,198 @@
+<div fxLayout="row wrap" *ngIf="!form" class="fadein">
+    <div fxFlex="50" class="flex-p">
+        <div class="content">
+            <mat-form-field appearance="outline">
+                <mat-label>Cliente</mat-label>
+                <mat-select placeholder="Select" [(ngModel)]="idCliente" (selectionChange)="getDetalles()">
+                    <mat-option *ngFor="let item of clientes" [value]="item.idCliente">{{item.nombre}}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>account_box</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div *ngIf="detalles.length > 0 && idCliente != null" fxFlex="50" class="flex-p">
+        <div class="content">
+            <div class="alert alert-success"><i class="fa fa-info-circle text-25"></i> # de Mantenimientos:
+                {{detalles.length}}, revise el Calendario</div>
+        </div>
+    </div>
+
+    <div *ngIf="detalles.length == 0 && idCliente != null" fxFlex="50" class="flex-p">
+        <div class="content">
+            <div class="alert alert-danger"><i class="fa fa-info-circle text-25"></i> No hay ordenes de trabajo
+                Disponibles!</div>
+        </div>
+    </div>
+
+    <div *ngIf="detalles.length == 0 && idCliente == null" fxFlex="50" class="flex-p">
+        <div class="content">
+            <div class="alert alert-warning"><i class="fa fa-info-circle text-25"></i> Seleccione para Consultar las
+                Ordenes!</div>
+        </div>
+    </div>
+</div>
+
+<div fxLayout="row wrap" *ngIf="!form" class="fadein">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="block p-0">
+
+            <div class="bg-dark text-white">
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="w-100">
+                    <div class="">
+                        <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+                            <mat-icon *ngIf="!settings.rtl">chevron_left</mat-icon>
+                            <mat-icon *ngIf="settings.rtl">chevron_right</mat-icon>
+                        </button>
+                        <button mat-icon-button mwlCalendarToday [(viewDate)]="viewDate">
+                            <mat-icon>today</mat-icon>
+                        </button>
+                        <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+                            <mat-icon *ngIf="settings.rtl">chevron_left</mat-icon>
+                            <mat-icon *ngIf="!settings.rtl">chevron_right</mat-icon>
+                        </button>
+                    </div>
+                    <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h4>
+                    <div class="">
+                        <button mat-icon-button (click)="view = 'month'">
+                            <mat-icon>view_comfy</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="view = 'week'">
+                            <mat-icon>view_week</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="view = 'day'">
+                            <mat-icon>view_day</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngSwitch]="view">
+                <mwl-calendar-month-view locale="es" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+                    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view locale="es" *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
+                    [refresh]="refresh">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view locale="es" *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
+                    [refresh]="refresh">
+                </mwl-calendar-day-view>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
+<div class="container" *ngIf="form" class="fadein">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <mat-card class="block p-3">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-md-3"><h5 class="text-primary">Reporte Tecnico #: {{codigoReporte}}</h5></div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3"><img style="width: 150px; height: 50px; float: right" [src]="imgLogo" alt="logo"></div>                
+                    </div>
+                    <hr class="my-2">
+                    <form class="form-text">
+                        <div class="form-row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="text-muted" for="cliente">Nombre Cliente &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="clienteSelected.nombre" name="cliente" id="cliente" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="idcliente">Documento Cliente &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="text-muted" for="direccioncli">Direccion Cliente &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="clienteSelected.direccion" name="direccioncli" id="direccioncli" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="codequipo">Codigo Equipo &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="equipoSelected.codigo" name="codequipo" id="codequipo" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="text-muted" for="nombrequipo">Nombre Equipo &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="equipoSelected.nombre" name="nombrequipo" id="nombrequipo" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="text-muted" for="protocoloquipo">Protocolo Equipo &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="equipoSelected.fkProtocolo.nombre" name="protocoloquipo" id="protocoloquipo" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="nombreres">Nombre Responsable &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.nombre" name="nombreres" id="nombreres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="docres">Documento Responsable &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.documento" name="docres" id="docres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="celres">Celular Responsable &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.telefonoCelular" name="celres" id="celres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres" id="emailres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <hr class="my-2">
+                                <h6 class="text-muted">Actividades</h6>
+                                <div class="table-responsive">
+                                    <table style="border: 2px solid #ccc" class="table table-sm table-striped">
+                                        <tbody>
+                                            <tr *ngFor="let item of actividades; let i = index">
+                                                <td scope="row">{{i+1}}</td>
+                                                <td scope="row">{{item.nombre}}</td>
+                                                <td scope="row">
+                                                    <mat-checkbox [(ngModel)]="item.realizado" name="realizado" color="warn">realizado</mat-checkbox>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form [formGroup]="datos" (ngSubmit)="generarReporte()" class="form-text">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="text-muted" for="descripcion">Descripcion &nbsp;<b class="text-danger">*</b> </label>
+                                    <textarea formControlName="descripcion" class="form-control" name="descripcion" id="descripcion" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button [disabled]="!datos.valid" color="primary" type="submit" mat-button><mat-icon>save</mat-icon> Guardar</button>
+                                <button (click)="goBack()" style="float: right" class="text-danger" mat-button><mat-icon>clear</mat-icon> Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>   
+        </div>
+    </div>
+</div>
+
+

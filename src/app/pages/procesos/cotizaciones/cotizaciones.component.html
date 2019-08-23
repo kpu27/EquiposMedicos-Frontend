@@ -1,0 +1,2 @@
+<app-cotizaciones-form [@blockTransition] *ngIf="showForm == true" [idCot]="idcot" (return)="closeForm()"></app-cotizaciones-form>
+<app-cotizaciones-list [@blockTransition] *ngIf="showList == true" [recargar]="TableRec" (setidcot)="openForm($event)"></app-cotizaciones-list>

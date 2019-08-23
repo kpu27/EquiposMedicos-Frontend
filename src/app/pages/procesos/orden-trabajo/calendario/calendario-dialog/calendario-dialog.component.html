@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>
+    <mat-icon mat-list-icon>person</mat-icon> {{data.tecnico.nombre}}
+</h1>
+<h2 mat-subheader style="    margin: 0px;
+    position: relative;
+    font-size: x-small;
+    top: -35px;">{{data.start}}</h2>
+<div mat-dialog-content style="top: -20px;
+width: 400px;
+position: relative;">
+    <div class="container-equipos" perfectScrollbar>
+        <mat-list style="position: relative">
+            <div *ngFor="let coDetalle of data.CoDetalle">
+                <mat-list-item style="height: 60px;">
+                    <mat-icon mat-list-icon style="font-size: 35px">devices_other</mat-icon>
+                    <h4 mat-line style="color: gray">{{coDetalle.fkEquipos.nombre}}</h4>
+                    <p mat-line>{{coDetalle.fkEquipos.referencia}} </p>
+                    <p mat-line>{{coDetalle.valorUnitario | currency}} </p>
+
+                </mat-list-item>
+                <mat-divider style=" border-top-color: rgba(0, 0, 0, 0.12); width: 80%; left: 8%;"></mat-divider>
+            </div>
+        </mat-list>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-flat-button color="primary" (click)="close()">Cancelar</button>
+</div>

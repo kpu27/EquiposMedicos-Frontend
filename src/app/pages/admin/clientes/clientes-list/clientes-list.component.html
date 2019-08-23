@@ -1,0 +1,290 @@
+<!--Division-->
+<div fxLayout="row wrap" *ngIf="estado == true">
+  <div fxFlex="100" class="flex-p">
+    <mat-card class="p-0 list">
+      <mat-sidenav-container>
+        <div>
+          <div class="back-gradient btnp">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button
+                class="btn btn-sm bg-light text-success"
+                (click)="estado = false; setTipoForm(0); clear()"
+              >
+                <i class="fa fa-plus"></i>&nbsp; Nuevo Cliente
+              </button>
+            </div>
+          </div>
+          <div class="list-content" perfectScrollbar>
+            <p-table
+              #dt
+              [value]="clientes"
+              [columns]="cols"
+              [paginator]="true"
+              [rows]="7"
+            >
+              <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                  <input
+                    type="text"
+                    pInputText
+                    size="50"
+                    placeholder="Buscar Por..."
+                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    style="width:auto"
+                  />
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns; let i = index">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-columns="columns">
+                <tr [pSelectableRow]="item">
+                  <td>
+                    {{ item.documento }}
+                  </td>
+                  <td>
+                    {{ item.nombre }}
+                  </td>
+                  <td>
+                    {{ item.telefonoCelular }}
+                  </td>
+                  <td>
+                    {{ item.direccion }}
+                  </td>
+                  <td>
+                    {{ item.ciudad }}
+                  </td>
+                  <td>
+                    {{ item.email }}
+                  </td>
+                  <td>
+                    <div *ngIf="item.estado == 0" class="badge badge-success">
+                      Activo
+                    </div>
+                    <div *ngIf="item.estado == 9" class="badge badge-danger">
+                      Inactivo
+                    </div>
+                  </td>
+                  <td>
+                    <button
+                      mat-button
+                      (click)="estado = false; setTipoForm(1); setCliente(item)"
+                    >
+                      <i class="material-icons edit text-info">mode_edit</i>
+                    </button>
+
+                    <button
+                      *ngIf="item.estado == 0"
+                      class="text-center"
+                      mat-icon-button
+                      pTooltip="Eliminar Cliente"
+                      tooltipPosition="top"
+                      (click)="setCliente(item); deleteCliente()"
+                    >
+                      <mat-icon class="text-danger">delete</mat-icon>
+                    </button>
+
+                    <button
+                      *ngIf="item.estado == 9"
+                      class="text-center"
+                      mat-icon-button
+                      pTooltip="Restaurar Cliente"
+                      tooltipPosition="top"
+                      (click)="setCliente(item); deleteCliente()"
+                    >
+                      <mat-icon class="text-warning">cached</mat-icon>
+                    </button>
+                  </td>
+                </tr></ng-template
+              >
+            </p-table>
+          </div>
+        </div>
+      </mat-sidenav-container>
+    </mat-card>
+  </div>
+</div>
+<!--FORMULARIO DE NUEVO CLIENTE-->
+<div class="container" *ngIf="estado == false">
+  <mat-card class="nuevoE">
+    <h5 class="text-success" *ngIf="tipoForm == 0">Nuevo Cliente</h5>
+    <h5 class="text-info" *ngIf="tipoForm == 1">Actualizar Datos</h5>
+    <hr />
+    <form [formGroup]="datos" class="form-sample">
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre completo:</mat-label>
+              <input
+                matInput
+                placeholder="Nombre Completo"
+                name="nombre"
+                id="nombre"
+                formControlName="nombre"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Correo:</mat-label>
+              <input
+                matInput
+                placeholder="@"
+                id="email"
+                name="email"
+                formControlName="email"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre corto:</mat-label>
+              <input
+                matInput
+                placeholder="nombre corto"
+                id="nombrecorto"
+                name="nombreCorto"
+                formControlName="nombreCorto"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Documento:</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Documento"
+                id="documento"
+                name="documento"
+                formControlName="documento"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Telefono Fijo:</mat-label>
+              <input
+                matInput
+                placeholder="Telefono"
+                type="number"
+                id="telefonoFijo"
+                name="telefonoFijo"
+                formControlName="telefonoFijo"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Telefono Celular:</mat-label>
+              <input
+                matInput
+                placeholder="+57"
+                type="number"
+                id="telefonoCelular"
+                name="telefonoCelular"
+                formControlName="telefonoCelular"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Cidudad:</mat-label>
+              <input
+                matInput
+                placeholder="Ciudad"
+                id="ciudad"
+                name="ciudad"
+                formControlName="ciudad"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Direccion:</mat-label>
+              <input
+                matInput
+                placeholder="Direccion"
+                id="direccion"
+                name="direccion"
+                formControlName="direccion"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Atencion:</mat-label>
+              <input
+                matInput
+                placeholder="atencion"
+                id="atencion"
+                name="atencion"
+                formControlName="atencion"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button
+            [disabled]="!datos.valid"
+            style="float: right"
+            (click)="nuevoCliente()"
+            *ngIf="tipoForm == 0"
+            class="btn btn-sm bg-light text-success"
+          >
+            <i class="fa fa-plus"></i> Crear
+          </button>
+          <button
+            [disabled]="!datos.valid"
+            style="float: right"
+            (click)="editarDatos()"
+            *ngIf="tipoForm == 1"
+            class="btn btn-sm bg-light text-info"
+          >
+            <i class="fa fa-edit"></i> Actualizar
+          </button>
+          <button
+            style="float: left"
+            class="btn btn-sm bg-light text-danger"
+            (click)="estado = true"
+          >
+            <i class="fa fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

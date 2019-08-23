@@ -1,0 +1,37 @@
+<mat-card class="p-0">
+    <mat-card-header fxLayoutAlign="space-between center" class="p-1 back-gradient-dark-blue">                
+        <mat-card-subtitle class="m-0">
+            <a (click)="goToCotizaciones()" class="text-white pointer">Listado de Cotizaciones</a>
+        </mat-card-subtitle>
+        <mat-chip-list class="pull-right">
+            <mat-chip selected="true" class="info-chip bg-light text-dark">
+                {{cotizaciones.length}}
+            </mat-chip>
+        </mat-chip-list>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxLayoutAlign="space-between">
+            <mat-form-field class="w-100 p-2">
+                <input matInput placeholder="Buscar por..." [(ngModel)]="newCotizacionesText">
+            </mat-form-field>
+        </div>
+        <div perfectScrollbar class="cotizaciones-list p-1">
+                <table class="table table-sm table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Cliente</th>
+                            <th>Condicion de Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of cotizaciones">
+                            <td scope="row">{{ item.codigo }}</td>
+                            <td scope="row">{{ item.fkCliente.nombre }}</td>
+                            <td scope="row">{{ item.condicionPago }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>          
+    </mat-card-content>
+</mat-card>

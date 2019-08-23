@@ -1,0 +1,164 @@
+<div fxLayout="row wrap" *ngIf="estado==true">
+  <div fxFlex="100" class="flex-p">
+    <mat-card class="p-0 list">
+      <mat-sidenav-container>
+        <div>
+          <div class="back-gradient-light-purple text-white btnp" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button class="btn btn-sm btn-light text-success" (click)="estado=false;setTipoForm(0); clear()">
+                <i class="fa fa-plus"></i>&nbsp; Nuevo Tecnico
+              </button>
+            </div>
+          </div>
+          <div class="list-content" perfectScrollbar>
+            <p-table #dt [value]="tecnicos" [columns]="cols" [paginator]="true" [rows]="9">
+              <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                  <input type="text" pInputText size="50" placeholder="Buscar Por..."
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [ngStyle]="{'width': getStyle(col.width)}">
+                    {{col.header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-columns="columns">
+                <tr [pSelectableRow]="item" class="tbody">
+                  <td>{{item.idTecnico}}</td>
+                  <td style="text-align: left">{{item.documento}}</td>
+                  <td style="text-align: left">{{item.nombre}}</td>
+                  <td style="text-align: left">{{item.telefonoCelular}}</td>
+                  <td style="text-align: left">{{item.email}}</td>
+                  <td style="text-align: left">{{item.ciudad}}</td>
+                  <td style="text-align: left">{{item.fkEmpresa.nombreEmpresa}}</td>
+                  <td style="text-align: center">
+                    <div *ngIf="item.estado == 0" class="badge badge-success">Activo</div>
+                    <div *ngIf="item.estado == 9" class="badge badge-danger">Inactivo</div>
+                  </td>
+                  <td>
+                    <button mat-icon-button pTooltip="ver Protocolo"
+                      (click)="estado=false; SeleTecnico(item); setTipoForm(1)" tooltipPosition="top">
+                      <mat-icon class="text-info">mode_edit</mat-icon>
+                    </button>
+                    <button *ngIf="item.estado == 0" mat-icon-button pTooltip="Eliminar Tecnico" tooltipPosition="top"
+                      (click)="SeleTecnico(item);deleteTecnico();">
+                      <mat-icon class="text-danger">delete</mat-icon>
+                    </button>
+                    <button *ngIf="item.estado == 9" mat-icon-button pTooltip="Reactivar Tecnico" tooltipPosition="top"
+                      (click)="SeleTecnico(item);deleteTecnico();">
+                      <mat-icon class="text-warning">cached</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </mat-sidenav-container>
+    </mat-card>
+  </div>
+</div>
+<!--FORMULARIO Actualizar TECNICO-->
+<div class="container" *ngIf="estado==false">
+  <mat-card class="formulario">
+    <h5 class="text-success" *ngIf="tipoForm == 0">Nuevo Tecnico</h5>
+    <h5 class="text-info" *ngIf="tipoForm == 1">Actualizar tecnico</h5>
+    <hr>
+    <form [formGroup]="datos" class="form-sample">
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre:</mat-label>
+              <input matInput placeholder="nombre" id="nombre" name="nombre" formControlName="nombre">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre corto:</mat-label>
+              <input matInput placeholder="nombre corto" id="nombreCorto" name="nombreCorto"
+                formControlName="nombreCorto">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!--end row-->
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Documento:</mat-label>
+              <input matInput placeholder="123456789" id="documento" name="documento" formControlName="documento">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Direccion:</mat-label>
+              <input matInput placeholder="cra..." id="direccion" name="direccion" formControlName="direccion">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!--end row-->
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Telefono Fijo:</mat-label>
+              <input matInput placeholder="3012356" id="telefonoFijo" name="telefonoFijo"
+                formControlName="telefonoFijo">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Telefono Celular:</mat-label>
+              <input matInput placeholder="+57" id="telefonoCelular" name="telefonoCelular"
+                formControlName="telefonoCelular">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!--end row-->
+      <div class="row">
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Email:</mat-label>
+              <input matInput placeholder="@" id="email" name="email" formControlName="email">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="content">
+            <mat-form-field appearance="outline">
+              <mat-label>Ciudad:</mat-label>
+              <input matInput placeholder="Barranquilla" id="ciudad" name="ciudad" formControlName="ciudad">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button style="float: right" [disabled]="!datos.valid" class="btn btn-sm bg-light text-success"
+            (click)="postagregarTecnicos()" *ngIf="tipoForm == 0"><i class="fa fa-plus"></i> Crear</button>
+          <button style="float: right" [disabled]="!datos.valid" class="btn btn-sm bg-light text-info"
+            *ngIf="tipoForm == 1" (click)="editarTecnicos()"><i class="fa fa-edit"></i> Actualizar</button>
+          <button mat-button class="btn btn-sm bg-light text-danger" style="float: left" (click)="estado=true;"><i
+              class="fa fa-times"></i> Cancelar</button>
+        </div>
+      </div>
+      <!--end row-->
+    </form>
+  </mat-card>
+
+</div>

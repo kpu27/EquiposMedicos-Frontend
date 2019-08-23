@@ -1,0 +1,35 @@
+.btn {
+    padding: 4px;
+    border: 0px;
+    border-radius: 3px;
+}
+
+button i {
+    margin: auto;
+}
+.editarActividad textarea, input {
+    width: 70%;
+}
+.search{
+    margin: 0 14px;
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    padding: 6px;
+    outline: none;
+}
+
+.tbody td{
+    border: 0px;
+    border-bottom: 0.5px solid #ccc;
+    background-color: #fff !important;
+    text-align: center;
+}
+
+.tbody:hover{
+    color: #690000;
+}
+
+.bg th{
+    color: #00695c;
+}

@@ -1,0 +1,110 @@
+<!-- ----------- MODAL NUEVA ACTIVIDAD -----------  -->
+<ngx-smart-modal [dismissable]="false" [escapable]="false" #modalNuevaActividad identifier="modalNuevaActividad"
+style="text-align: center;">
+<h1>Añadir Actividad</h1>
+actividad
+<form>
+
+<!--     <h3>Empresa</h3>
+    <input type="text" pInputText value="{{usuario.empresa.nombreEmpresa}}" disabled/>
+     
+    <br> -->
+    <hr>
+ 
+    <h3 class="first">Protocolo</h3>
+    <p-dropdown [options]="protocolos" [(ngModel)]="protocoloActual" [ngModelOptions]="{standalone: true}"
+        placeholder="{{protocoloActual}}" optionLabel="nombre" [showClear]="true" [filter]="true">
+    </p-dropdown>
+
+    <br><br>
+    <h3>Descripción</h3>
+    <textarea pInputTextarea [(ngModel)]="actividad" name="actividad"></textarea>
+
+    <br><br>
+<!-- 
+    <h3>Orden</h3>
+    <p-spinner size="30" [(ngModel)]="val2" [min]="0" [max]="40"></p-spinner>        
+    
+    <br> <br>
+ -->
+    <h3>Estado</h3>
+    <p-dropdown [options]="estados" [(ngModel)]="estado" name="estado" placeholder="" optionLabel="label"></p-dropdown>
+
+    <br>
+    <hr>
+
+    <button type="button" mat-raised-button style="background-color: #42BD75;"
+    (click)="guardarNuevaActividad();modalNuevaActividad.close();">Crear</button>
+    &nbsp;
+    <button type="button" mat-raised-button (click)="modalNuevaActividad.close()">Cerrar</button>
+
+
+</form>
+
+
+
+</ngx-smart-modal>
+<!-- -----------  -----------  -->
+<div fxLayout="row wrap">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <mat-sidenav #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'"
+                    class="list-sidenav mat-elevation-z1">
+                    <mat-toolbar 
+                        class="p-0 back-gradient text-white" fxLayout="row" fxLayoutAlign="space-between center">
+                        <input [(ngModel)]="searchText" type="text" placeholder="Buscar Por..."
+                            class="search mat-elevation-z3">
+                    </mat-toolbar>
+                    <mat-nav-list class="p-0 list-sidenav-list" perfectScrollbar>
+                        <div *ngFor="let item of protocolos | filter: {codigo: searchText, descripcion: searchText, nombre: searchText}"
+                            (click)="getActividadesPorProtocolos(item.idProtocolo); setNombreProtocolo(item.nombre)">
+                            <mat-list-item style="height: 65px">
+                                <div matLine fxLayout="row" fxLayoutAlign="space-between space-between">
+                                    <h6 class="text-truncate sender">{{item.nombre}}</h6>
+                                </div>
+                                <p matLine class="text-truncate subject text-wine">{{item.descripcion}}</p>
+                                <p matLine class="text-truncate subject text-wine">{{item.codigo}}</p>
+                            </mat-list-item>
+                            <mat-divider></mat-divider>
+                        </div>
+                    </mat-nav-list>
+                </mat-sidenav>
+
+                
+                <div>
+                    <mat-toolbar
+                        class="back-gradient text-white"
+                        fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button mat-icon-button (click)="sidenav.toggle()">
+                                <mat-icon>list</mat-icon>
+                            </button>
+                        </div>
+                        <h2 style="color:white;">{{nombreProtocolo}}</h2>
+
+                        <button mat-raised-button style="background-color: #397367; color:white;"
+                            *ngIf="nombreProtocolo && estado == ''" (click)="nuevaActividad();">
+                            <mat-icon>add</mat-icon>&nbsp; NUEVA ACTIVIDAD
+                        </button>
+
+                    </mat-toolbar>
+                    <mat-menu #moreMenu="matMenu" xPosition="before" overlapTrigger="true">
+                    </mat-menu>
+                    <div class="list-content" perfectScrollbar>
+                        <app-actividades-table *ngIf="actividades != null" [data]="actividades"></app-actividades-table>
+                        <div *ngIf="!actividades" fxLayout="column" fxLayoutAlign="center center" class="h-100 empty">
+                            <h2 style="color: rgb(104, 172, 70);">Selecciona Un Protocolo</h2>
+                            <div *ngIf="!actividades" class="lds-ellipsis">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+</div>

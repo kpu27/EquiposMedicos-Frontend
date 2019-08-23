@@ -1,0 +1,75 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p">
+        <mat-card class="p-0">
+            <mat-card-header class="p-1 back-gradient-dark-blue" fxLayoutAlign="space-between center">
+                <mat-card-subtitle class="m-0">
+                    <a class="text-white pointer" (click)="goToEquipos()">Total de Equipos:</a>
+                </mat-card-subtitle>
+                <mat-chip-list>
+                    <mat-chip selected="true" class="info-chip bg-light text-dark">
+                        {{equipos}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-header>
+            <div class="w-100 h-100p">
+                <img style=" width: 100%" src="../../../../assets/img/equiposmedicos.png">
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p">
+        <mat-card class="p-0">
+            <mat-card-header class="p-1 back-gradient-gray" fxLayoutAlign="space-between center">
+                <mat-card-subtitle class="m-0 text-white">
+                    <a class="text-white pointer" (click)="goToProtocolos()">Total de Protocolos:</a>
+                </mat-card-subtitle>
+                <mat-chip-list>
+                    <mat-chip selected="true" class="info-chip bg-light text-dark">
+                        {{protocolos}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-header>
+            <div class="w-100 h-100p">
+                <img style=" width: 100%" src="../../../../assets/img/protocolo.jpg">
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p">
+        <mat-card class="p-0">
+            <mat-card-header class="p-1 back-gradient-teal-gray" fxLayoutAlign="space-between center">
+                <mat-card-subtitle class="m-0 text-white">
+                    <a class="text-white pointer" (click)="goToInstrumentos()">Total de Instrumentos:</a>
+                </mat-card-subtitle>
+                <mat-chip-list>
+                    <mat-chip selected="true" class="info-chip bg-light text-dark">
+                        {{instrumentos}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-header>
+            <div class="w-100 h-100p">
+                <img style="background-size: cover" src="../../../../assets/img/instrumento.jpg">
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" class="flex-p">
+        <mat-card class="p-0">
+            <mat-card-header class="p-1 back-gradient-light-purple" fxLayoutAlign="space-between center">
+                <mat-card-subtitle class="m-0 text-white">
+                    <a class="text-white pointer" (click)="goToTecnicos()">Total de Tecnicos:</a>
+                </mat-card-subtitle>
+                <mat-chip-list>
+                    <mat-chip selected="true" class="info-chip bg-light text-dark">
+                        {{tecnicos}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-header>
+            <div class="w-100 h-100p">
+                <img style=" width: 100%" src="../../../../assets/img/tecnico.jpg">
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
+
+
+

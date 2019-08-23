@@ -1,0 +1,105 @@
+<div style="margin: 7px" *ngIf="accion === 'editar'">
+
+  <div class="container">
+      <br>
+      <button style="float: right" mat-flat-button color="accent" (click)="accion = ''">
+          <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
+        </button>
+      <div style="display: flex;justify-content: center; margin: 0 auto;">
+          
+
+            <h4 style="margin: 0 auto;">Editar Actividad</h4>
+      </div>
+      <hr>    
+<div class="editarActividad" *ngIf="actividad" style="width: 70%;padding-left: 10%;text-align: center;">
+
+  <label for="">Protocolo</label> <br>
+  <p-dropdown [options]="protocolos" [(ngModel)]="nuevoProtocolo" (onChange)="getProtocloActual($event.value.idProtocolo);"
+      placeholder="{{actividad.fkProtocolo.nombre}}" optionLabel="nombre" [filter]="true">
+  </p-dropdown>
+
+  <br><br>
+  
+  <label for="">Descripción</label> <br>
+  <textarea pInputTextarea [(ngModel)]="actividad.actividades">{{actividad.actividades}}</textarea>
+
+  <br><br>
+
+
+  
+ <!--  <label for="">Estado</label> <br>
+  <p-dropdown [options]="estados" [(ngModel)]="estadoStr" placeholder="{{actividad.estadoStr}}" optionLabel="label"></p-dropdown>
+ -->
+<p-dropdown [autoDisplayFirst]="false" [placeholder]="estadoStr" emptyFilterMessage="No hay municipios con esos datos" [options]="estados"
+(onChange)="getEstadoActividad($event.value.value)"
+optionLabel="label" [filter]="true">
+</p-dropdown>
+
+
+
+<hr>
+<button (click)="updateActividades(actividad.idActividades);" mat-raised-button style="background-color: #42BD75;" >Guardar</button>
+&nbsp;
+<button mat-raised-button (click)="accion = ''">Cerrar</button>
+
+</div>
+
+  </div>
+</div>
+
+
+
+
+<p-table #dt [value]="data" [paginator]="true" [rows]="9" *ngIf="accion === ''">
+
+  <ng-template pTemplate="header">
+    <tr class="bg">
+      <th width="8%">Orden</th>
+      <th width="52%">Descripcion</th>
+
+      <th width="15%">Estado<br />orden</th>
+      <th width="25%">Estado</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-item style="display: flex;justify-content: center;">
+    <tr class="tbody">
+      <td>{{ item.orden }}</td>
+      <td style="text-align: left">{{ item.actividades }}</td>
+
+      <td>
+        <h5 *ngIf="item.estado == 0">
+            <span class="badge badge-info">creado</span>
+        </h5>
+        <h5 *ngIf="item.estado == 1">
+            <span class="badge badge-warning">asignado</span>
+        </h5>
+        <h5 *ngIf="item.estado == 2">
+            <span class="badge badge-success">completado</span>
+        </h5>
+        <h5 *ngIf="item.estado == 9">
+            <span class="badge badge-danger">inactivo</span>
+        </h5>
+        <!-- <div *ngIf="item.estado == 1">
+          <img class="img-table-icon" [src]="getImg('success-icon.png')" alt="success" />
+        </div> -->
+      </td>
+
+      <td class="space-around">
+        <button class="btn btnEditar"
+          (click)="editarActividad(item.idActividades, item.fkProtocolo);">
+          <i class="material-icons">mode_edit</i>
+        </button>
+
+<!--         <button (click)="masInfo = true" class="btn">
+          <i class="material-icons">info_outline</i>
+        </button> -->
+
+        <button class="btn" (click)="eliminarActividad(item.idActividades)">
+          <i class="material-icons">delete</i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
