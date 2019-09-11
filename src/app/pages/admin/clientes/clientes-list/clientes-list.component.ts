@@ -27,14 +27,14 @@ export class ClientesListComponent implements OnInit {
   ) {
     this.settings = this.appSettings.settings;
     this.cols = [
-      { field: 'documento', header: '#_ID' },
-      { field: 'nombre', header: 'Nombre' },
-      { field: 'telefonoCelular', header: 'Celular' },
-      { field: 'direccion', header: 'Direccion' },
-      { field: 'ciudad', header: 'Ciudad' },
-      { field: 'email', header: 'Email' },
-      { filed: 'estado', header: 'Estado' },
-      { field: 'acciones', header: 'Acciones' },
+      { field: 'documento', header: 'Nit',width: '10%'},
+      { field: 'nombre', header: 'Nombre o Entidad', width: '20%' },
+      { field: 'telefonoCelular', header: 'Celular',width: '10%' },
+      { field: 'direccion', header: 'Direccion',width: '10%' },
+      { field: 'ciudad', header: 'Ciudad',width: '10%' },
+      { field: 'email', header: 'Email',width: '15%' },
+      { filed: 'estado', header: 'Estado',width: '10%' },
+      { field: 'acciones', header: 'Acciones',width: '10%' },
 
     ];
     this.estado = true;
@@ -237,5 +237,8 @@ export class ClientesListComponent implements OnInit {
   }
   public setTipoForm(tipo: number) {
     this.tipoForm = tipo;
+  }
+  public getStyle(style: string) {
+    return style.toString();
   }
 }

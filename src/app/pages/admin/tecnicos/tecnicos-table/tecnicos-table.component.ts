@@ -40,13 +40,11 @@ export class TecnicosTableComponent implements OnInit {
     this.estado = true;
     this.settings = this.appSettings.settings;
     this.cols = [
-      { field: 'idTecnico', header: 'Id', width: '5%' },
-      { field: 'documento', header: 'Documento', width: '10%' },
+      { field: 'idTecnico', header: 'Item', width: '5%' },
+      { field: 'documento', header: 'Cedula', width: '10%' },
       { field: 'nombre', header: 'Nombre', width: '20%' },
       { field: 'telefonoCelular', header: 'Telefono', width: '10%' },
-      { field: 'email', header: 'Correo', width: '15%' },
-      { field: 'ciudad', header: 'Ciudad', width: '10%' },
-      { field: 'fkEmpresa', header: 'Empresa', width: '10%' },
+      { field: 'email', header: 'Correo', width: '20%' },
       { field: 'estado', header: 'Estado', width: '10%' },
       { field: '', header: 'Accion', width: '10%' }
     ];
