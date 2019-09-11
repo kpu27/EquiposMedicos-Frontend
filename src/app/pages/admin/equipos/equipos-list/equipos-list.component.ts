@@ -38,6 +38,7 @@ export class EquiposListComponent implements OnInit {
   public tipoForm: number;
   public cols: any[];
   public tipoEquipos = 0;
+  public show:boolean = true;
   constructor(
     private _formBuilder: FormBuilder,
     private service: AppService,
@@ -55,7 +56,7 @@ export class EquiposListComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.servicio.getDataUsuario();
     this.getProtocolos();
     this.getParametro();
     this.getEquipos();
@@ -102,7 +103,7 @@ export class EquiposListComponent implements OnInit {
   }
   public getEquipos() {
     this.settings.loadingSpinner = true;
-    this.service.get(`equipos/list/activos`).subscribe(
+    this.service.get(`equipos/list`).subscribe(
       result => {
         this.equipos = result;
         this.settings.loadingSpinner = false;

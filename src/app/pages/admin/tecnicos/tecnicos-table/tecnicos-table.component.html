@@ -36,7 +36,7 @@
                   <td style="text-align: left">{{item.ciudad}}</td>
                   <td style="text-align: left">{{item.fkEmpresa.nombreEmpresa}}</td>
                   <td style="text-align: center">
-                    <div *ngIf="item.estado == 0" class="badge badge-success">Activo</div>
+                    <div *ngIf="item.estado == 1" class="badge badge-success">Activo</div>
                     <div *ngIf="item.estado == 9" class="badge badge-danger">Inactivo</div>
                   </td>
                   <td>
@@ -44,7 +44,7 @@
                       (click)="estado=false; SeleTecnico(item); setTipoForm(1)" tooltipPosition="top">
                       <mat-icon class="text-info">mode_edit</mat-icon>
                     </button>
-                    <button *ngIf="item.estado == 0" mat-icon-button pTooltip="Eliminar Tecnico" tooltipPosition="top"
+                    <button *ngIf="item.estado == 1" mat-icon-button pTooltip="Eliminar Tecnico" tooltipPosition="top"
                       (click)="SeleTecnico(item);deleteTecnico();">
                       <mat-icon class="text-danger">delete</mat-icon>
                     </button>

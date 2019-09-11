@@ -53,7 +53,7 @@ export class TecnicosTableComponent implements OnInit {
   }
   ngOnInit() {
     this.getTecnicos();
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       nombreCorto: ['', Validators.compose([Validators.required])],
@@ -116,7 +116,7 @@ export class TecnicosTableComponent implements OnInit {
             "telefonoCelular": datos.telefonoCelular,
             "fkEmpresa": this.usuario.empresa.idEmpresa,
             "fkUsuario": null,
-            "estado": 0
+            "estado": 1
           }
           let usuario = {
             "nombre": datos.nombre,
@@ -254,12 +254,12 @@ export class TecnicosTableComponent implements OnInit {
   }
   public setEstdo(estado: number): number {
     switch (estado) {
-      case 0:
+      case 1:
         estado = 9;
         return estado;
         break;
       case 9:
-        estado = 0;
+        estado = 1;
         return estado;
       default:
         break;
@@ -267,7 +267,7 @@ export class TecnicosTableComponent implements OnInit {
   }
   public setText(estado: number): string {
     switch (estado) {
-      case 0:
+      case 1:
         return 'desactivar';
         break;
       case 9:

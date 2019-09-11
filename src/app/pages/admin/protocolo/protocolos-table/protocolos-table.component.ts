@@ -56,7 +56,7 @@ export class ProtocolosTableComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.auth.getDataUsuario();
     this.empresa = this.usuario.empresa.idEmpresa;
     this.getProtocolos();
     this.datos = this._formBuilder.group({

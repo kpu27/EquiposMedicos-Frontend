@@ -55,8 +55,9 @@ export class UsuariosComponent implements OnInit {
     this.estado = 'previa';
     this.roles = [{id: 2, nombre: "ROLE_ADMIN"},{"id": 3, "nombre": "ROLE_TECNICO"}]
   }
+  user:Usuario;
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.user = this.service.getDataUsuario();
     this.listarUsuario();
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],

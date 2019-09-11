@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../services/auth.service';
 import { Component, OnInit, Input, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppSettings } from '../../../../app.settings';
@@ -8,46 +9,48 @@ import { MenuService } from '../menu.service';
   templateUrl: './vertical-menu.component.html',
   styleUrls: ['./vertical-menu.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ MenuService ]
+  providers: [MenuService]
 })
 export class VerticalMenuComponent implements OnInit {
   @Input('menuItems') menuItems;
   @Input('menuParentId') menuParentId;
-  @Output() onClickMenuItem:EventEmitter<any> = new EventEmitter<any>();
-  parentMenu:Array<any>;
+  @Output() onClickMenuItem: EventEmitter<any> = new EventEmitter<any>();
+  parentMenu: Array<any>;
   public settings: Settings;
-  public usuario : any;
+  public usuario: any;
   public roles: Array<any> = [];
-  constructor(public appSettings:AppSettings, public menuService:MenuService, public router:Router) { 
+  constructor(public auth:AuthService,public appSettings: AppSettings, public menuService: MenuService, public router: Router) {
     this.settings = this.appSettings.settings;
+    this.usuario = this.auth.getDataUsuario();
   }
 
-  ngOnInit() {     
-    this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);  
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
-    this.roles = this.usuario.roles
+  ngOnInit() {
+    this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);
+    this.roles = this.usuario.roles;
+    console.log(this.usuario)
+    console.log(this.usuario.roles)
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if(this.settings.fixedHeader){
+        if (this.settings.fixedHeader) {
           let mainContent = document.getElementById('main-content');
-          if(mainContent){
+          if (mainContent) {
             mainContent.scrollTop = 0;
           }
         }
-        else{
+        else {
           document.getElementsByClassName('mat-drawer-content')[0].scrollTop = 0;
         }
-      }                
+      }
     });
   }
 
-  onClick(menuId){
+  onClick(menuId) {
     this.menuService.toggleMenuItem(menuId);
     this.menuService.closeOtherSubMenus(this.menuItems, menuId);
-    this.onClickMenuItem.emit(menuId);     
+    this.onClickMenuItem.emit(menuId);
   }
 
 }

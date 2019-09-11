@@ -35,10 +35,6 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = this.menuService.getVerticalMenuItems();
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
-    this.roles = this.usuario.roles[0];
-    this.idUser = this.usuario.id;
-    this.getDataUser(this.idUser);
   }
 
   public cerrarSession(){

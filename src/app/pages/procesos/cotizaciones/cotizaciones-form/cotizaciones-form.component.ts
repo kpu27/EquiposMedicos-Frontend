@@ -7,6 +7,7 @@ import { Settings } from '../../../../app.settings.model';
 import { AppSettings } from '../../../../app.settings';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { blockTransition } from '../../../../theme/utils/app-animation';
+import { AuthService } from 'src/app/services/auth.service';
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
@@ -61,6 +62,7 @@ export class CotizacionesFormComponent implements OnInit {
     private _AppService: AppService,
     private datePipe: DatePipe,
     private _formBuilder: FormBuilder,
+    public auth: AuthService,
     public ngxSmartModalService: NgxSmartModalService) {
     this.equipos = [];
     this.equiposSelected = [];
@@ -73,7 +75,8 @@ export class CotizacionesFormComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.auth.getDataUsuario();
+    console.log(this.usuario = this.auth.getDataUsuario());
     this._AppService.get('cotizacionDetalle/list').subscribe(data => { console.log(data) });
     this.getClientes();
     this.getEquipos();
@@ -120,8 +123,7 @@ export class CotizacionesFormComponent implements OnInit {
     }
   }
   public getIdEmpresa() {
-    let empresa = JSON.parse(sessionStorage.getItem('empresa'));
-    this.idEmpresa = empresa.idEmpresa;
+    this.idEmpresa = this.usuario.empresa.idEmpresa;
   }
   public getClientes() {
     this._AppService.get('clientes/list').subscribe(
@@ -178,20 +180,21 @@ export class CotizacionesFormComponent implements OnInit {
     cantidad: number,
     idCot: number,
     idEqui: number,
-    orden: number,
-    valoru) {
+    orden: string,
+    valoru: number) {
+
     let detalles = {
-      "idCotizDeta": 0,
       "calibracion": calibracion,
       "cantidad": cantidad,
       "estado": 0,
       "fkCotizEncab": idCot,
-      "fkEquipos": idEqui,
+      "fkEquipos": {"idEquipos":idEqui },
       "orden": orden,
-      "servicio": null,
+      "servicio": "0",
       "tipoServicio": 0,
       "valorUnitario": valoru
-    }
+ }
+ console.log(detalles);
     this._AppService.post('cotizacionDetalle/new', detalles).subscribe(
       data => { console.log(data) }
     );
@@ -240,12 +243,14 @@ export class CotizacionesFormComponent implements OnInit {
             this._AppService.post('cotizaciones/new', contizacion).subscribe(
               (data: any) => {
                 for (let index = 0; index < this.equiposSelected.length; index++) {
+                  console.log(this.equiposSelected[index])
                   this.CrearDetalle(
-                    this.equiposSelected[index].calibracion,
-                    this.equiposSelected[index].cant,
+                    parseInt(this.equiposSelected[index].calibracion),
+                    parseInt(this.equiposSelected[index].cant),
                     this.idCot + 1,
                     this.equiposSelected[index].idEquipo,
-                    this.idCot + 1, this.equiposSelected[index].valoru);
+                    String(this.idCot + 1),
+                    parseInt(this.equiposSelected[index].valoru));
                 }
                 this.settings.loadingSpinner = false;
                 Swal.fire({

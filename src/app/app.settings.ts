@@ -1,8 +1,14 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
 import { Settings } from './app.settings.model';
+import { Usuario } from './services/usuario';
 
 @Injectable()
 export class AppSettings {
+    public usuario:Usuario;
+    constructor(private authService:AuthService) { 
+        this.usuario = this.authService.getDataUsuario();
+    }
     public settings = new Settings(
         'Soluciones',   //theme name
         true,       //loadingSpinner
@@ -15,7 +21,8 @@ export class AppSettings {
         'teal-light',   //indigo-light, teal-light, red-light, blue-dark, green-dark, pink-dark
         false, // true = rtl, false = ltr
         0,
-        ''       
+        '',
+        this.usuario    
     )
 }
 

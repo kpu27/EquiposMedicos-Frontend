@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
@@ -11,7 +12,7 @@ class Actividad{constructor(public id: number, public nombre: string, public rea
   providers: [DatePipe]
 })
 export class MantenimientosRealizadosComponent implements OnInit {
-  imgLogo = '../../../../assets/img/soluciones-logo.jpg';
+  imgLogo = '../../../../assets/img/soluciones-logo.png';
   settings: Settings;
   usuario: any;
   reportesOrdenes: Array<any> = [];
@@ -27,7 +28,8 @@ export class MantenimientosRealizadosComponent implements OnInit {
   constructor(
     public appSettings: AppSettings,    
     private _AppService: AppService,
-    private datePipe: DatePipe,) { 
+    private datePipe: DatePipe,
+    private auth: AuthService) { 
       this.settings = this.appSettings.settings;
       this.cols = [
         { field: 'idOrdenesDetalle', header: 'ID', width: '10%' },
@@ -43,7 +45,7 @@ export class MantenimientosRealizadosComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.auth.getDataUsuario();
     this.getReportesOrdenes();
   }
 
@@ -55,12 +57,13 @@ export class MantenimientosRealizadosComponent implements OnInit {
   }
 
   public setInfoReporte( data: any){
-    this.infoReporte = JSON.parse(data.infomacionReporte);
+    this.infoReporte = this.auth.getDataUsuario();
     this.codigoReporte = data.numeroReporte;
     this.getResponsable(data.fkEquipos.idEquipos);
     this.getActividades(data.fkEquipos.fkProtocolo.idProtocolo);
     this.clienteSelected = data.fkCliente;
     this.equipoSelected = data.fkEquipos;
+    console.log(this.equipoSelected);
     this.view = false; 
   }
 

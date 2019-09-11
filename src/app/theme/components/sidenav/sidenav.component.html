@@ -1,16 +1,16 @@
-<mat-toolbar style="padding: 0px">
-    <a  routerLink="/" (click)="closeSubMenus()" style="padding: 0px"><img src="../../../../assets/img/soluciones-logo.jpg" style="width: 100%;" alt="logo"></a> 
+<mat-toolbar style="padding: 0px; justify-content: center;">
+    <a  routerLink="/" (click)="closeSubMenus()" style="padding: 0px"><img src="assets/img/soluciones-logo.png" style="width: 100%;" alt="logo"></a> 
 </mat-toolbar>
 
 <div fxLayout="column" fxLayoutAlign="center center" class="user-block transition-2" [class.show]="settings.sidenavUserBlock"> 
     <div [fxLayout]="(settings.menuType != 'default') ? 'column' : 'row'" 
          [fxLayoutAlign]="(settings.menuType != 'default') ? 'center center' : 'space-around center'" class="user-info-wrapper">
-        <img *ngIf="settings.img != ''" [src]="urlImages+settings.img" onerror=" src='../../../../assets/img/default_picture.png'" alt="user-image" class="imgUsr">
-        <div *ngIf="usuario" class="user-info">
-            <p class="name">{{usuario.nombre}}</p>
-            <p  class="position">{{usuario.username}} <br> 
-                <small *ngIf="roles == 'ROLE_ADMIN'" class="muted-text">Administrador</small>
-                <small *ngIf="roles == 'ROLE_TECNICO'" class="muted-text">Tecnico</small>
+        <img *ngIf="settings.img != ''" [src]="urlImages+settings.img" onerror=" src='assets/img/default_picture.png'" alt="user-image" class="imgUsr">
+        <div *ngIf="settings.usuario != null" class="user-info">
+            <p class="name">{{settings.usuario.nombre}}</p>
+            <p  class="position">{{settings.usuario.username}} <br> 
+                <small *ngIf="settings.usuario.roles[0] == 'ROLE_ADMIN'" class="muted-text">Administrador</small>
+                <small *ngIf="settings.usuario.roles[0] == 'ROLE_TECNICO'" class="muted-text">Tecnico</small>
             </p>
         </div>
     </div>

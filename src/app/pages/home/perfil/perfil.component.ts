@@ -30,7 +30,7 @@ export class PerfilComponent implements OnInit {
   public datoschanged: boolean = true;
   constructor(private _formBuilder: FormBuilder, public appSettings: AppSettings, private appService: AppService, private auth: AuthService, public ngxSmartModalService: NgxSmartModalService) {
     this.settings = this.appSettings.settings;
-    this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
+    this.usuario = this.auth.getDataUsuario();
     console.log(this.usuario.id);
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
@@ -72,7 +72,6 @@ export class PerfilComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
     this.idUser = this.usuario.id;
     this.getDataUser(this.idUser);
   }

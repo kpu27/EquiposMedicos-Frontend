@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { FormioAppConfig } from 'angular-formio';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 class Actividad{constructor(public id: number, public nombre: string, public realizado: boolean){}};
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -53,7 +54,7 @@ const colors: any = {
   providers: [DatePipe, FormioAppConfig]
 })
 export class TecnicosComponent implements OnInit {
-  imgLogo = '../../../assets/img/soluciones-logo.jpg';
+  imgLogo = '../../../assets/img/soluciones-logo.png';
   detalles: Array<any>;
   idDetalle: number;
   clientes: Array<any>;
@@ -103,7 +104,8 @@ export class TecnicosComponent implements OnInit {
     private datePipe: DatePipe,
     public config: FormioAppConfig,
     private _formBuilder: FormBuilder,
-    public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar,
+    private auth: AuthService) {
     this.settings = this.appSettings.settings;
     this.detalles = [];
     this.actividades = [];
@@ -144,14 +146,14 @@ export class TecnicosComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.auth.getDataUsuario();
     this.roles = this.usuario.roles[0];
     this.getClientes();
     this.getTecnico();
   }
   getTecnico(){
     this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
-      (data: any) => {this.tecnico = data}
+      (data: any) => {this.tecnicoSelected = data}
     );
   }
   getDetalles(){
@@ -189,7 +191,7 @@ export class TecnicosComponent implements OnInit {
       let fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'yyyy-MM-dd'));
       this.info.idDetalle = index;
       this.info.equipo = item.fkEquipos.nombre;
-      this.info.responsable = item.fkResponsable.nombre;
+      //this.info.responsable = item.fkResponsable.nombre;
       this.idDetalle = item.idOrdenesDetalle;
       this.events.push({
         id: index,
@@ -203,25 +205,22 @@ export class TecnicosComponent implements OnInit {
     this.refresh.next();
   }
   setActions(estado: number): CalendarEventAction[] {
-    switch (estado) {
+    return this.actions
+/*     switch (estado) {
       case 0:
         if(this.roles == 'ROLE_ADMIN'){ return this.actions2 }else{ return this.actions }
-        break;
       case 1:
         return this.actions2
-        break;
       default:
         break;
-    }
+    } */
   }
   setColors(estado: number): any {
     switch (estado) {
       case 0:
         return colors.black
-        break;
       case 1:
         return colors.green
-        break;
       default:
         break;
     }

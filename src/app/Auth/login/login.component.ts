@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   public datos: FormGroup;
   public settings: Settings;
+  public usuario:any;
   public Toast = swal.mixin({
     toast: true,
     position: 'top-end',
@@ -45,8 +46,13 @@ export class LoginComponent implements OnInit {
             console.log(result);
             this.settings.loadingSpinner = false;
             this.Toast.fire({type: 'success',title: `Bienvenido ${result.nombre}`}); 
-            this.authService.guardarUsuario(result.access_token);
-            this.settings.img = result.foto;},
+            /* this.authService.guardarUsuario(result.access_token); */
+            this.authService.setToken(result.access_token);
+            this.usuario = this.authService.getDataUsuario();
+            this.settings.img = this.usuario.foto;
+            console.log(this.authService.getDataUsuario());
+          },
+            
             error => {
               this.settings.loadingSpinner = false;
               this.Toast.fire({type: 'error',title: 'Credenciales incorrectas'});

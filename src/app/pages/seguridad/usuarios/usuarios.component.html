@@ -26,8 +26,8 @@
                             <ng-template pTemplate="body" let-item let-columns="columns">
                                 <tr [pSelectableRow]="item">
                                     <td class="text-center">
-                                        <img *ngIf="item.foto != ''"
-                                            [src]="'http://ec2-18-224-139-239.us-east-2.compute.amazonaws.com:5000/rest/v1/usuario/img/'+item.foto"
+                                        <img *ngIf="item.foto != '' && item.foto != null"
+                                            [src]="'http://ec2-18-221-61-141.us-east-2.compute.amazonaws.com:5000/rest/v1/usuario/img/'+item.foto"
                                             onerror="src='../../../../assets/img/default_picture.png'" class="imgmini">
                                     </td>
                                     <td class="text-center">

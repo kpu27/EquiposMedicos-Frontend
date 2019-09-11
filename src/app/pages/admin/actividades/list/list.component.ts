@@ -50,7 +50,7 @@ export class ListComponent implements OnInit {
       this.sidenavOpen = false;
     }
     console.log(this.protocolo);
-    this.usuario = this.auth.obtenerDatosUser();
+    this.usuario = this.auth.getDataUsuario();
     this.getProtocolos();
   }
   public setNombreProtocolo(nombre: string){

@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" *ngIf="estado==true">
+<div fxLayout="row wrap" *ngIf="show==true">
     <div fxFlex="100" class="flex-p">
         <mat-card class="p-0 list">
             <mat-sidenav-container>
@@ -6,7 +6,7 @@
                     <div class="back-gradient-dark-blue text-white btnp" fxLayout="row"
                         fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <button (click)="estado=false; setTipoForm(0);clear()"
+                            <button (click)="show=false; setTipoForm(0);clear()"
                                 class="btn btn-sm btn-light text-success">
                                 <i class="fa fa-plus"></i>&nbsp; Nuevo Equipo
                             </button>
@@ -47,7 +47,7 @@
                                                     <mat-icon>ballot</mat-icon>
                                                 </button>
                                                 <button mat-icon-button pTooltip="editar equipo"
-                                                    (click)="estado=false; setTipoForm(1); setEquipo(item)"
+                                                    (click)="show=false; setTipoForm(1); setEquipo(item)"
                                                     tooltipPosition="top">
                                                     <mat-icon class="text-info">mode_edit</mat-icon>
                                                 </button>
@@ -77,7 +77,7 @@
 
 
 <!--FORMULARIO DE NUEVO EQUIPO-->
-<div class="container" *ngIf="estado==false">
+<div class="container" *ngIf="show==false">
     <mat-card class="formulario">
         <h5 *ngIf="tipoForm == 0" class="text-success">Nuevo Equipo</h5>
         <h5 *ngIf="tipoForm == 1" class="text-info">Editar Equipo</h5>
@@ -146,7 +146,7 @@
                         (click)="postEquipo()" *ngIf="tipoForm == 0"><i class="fa fa-plus"></i> Crear</button>
                     <button [disabled]="!datos.valid" class="btn btn-sm bg-light text-info" style="float: right"
                         *ngIf="tipoForm == 1" (click)="putEquipo();"><i class="fa fa-edit"></i> Actualizar</button>
-                    <button class="btn btn-sm bg-light text-danger" style="float: left" (click)="estado=true;"><i
+                    <button class="btn btn-sm bg-light text-danger" style="float: left" (click)="show=true;"><i
                             class="fa fa-times"></i> Cancelar</button>
                 </div>
             </div>

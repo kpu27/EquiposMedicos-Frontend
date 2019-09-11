@@ -14,6 +14,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import swal from 'sweetalert2';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 export class OrdenDetalle {
   constructor(
     public tipoServicio: number,
@@ -94,7 +95,8 @@ export class CalendarioComponent implements OnInit {
     private datePipe: DatePipe,
     public snackBar: MatSnackBar,
     public formBuilder: FormBuilder,
-    private service: AppService) {
+    private service: AppService,
+    private auth: AuthService) {
     this.settings = this.appSettings.settings;
     this.form = this.formBuilder.group({
       'responsable': ['', Validators.compose([Validators.required])],
@@ -107,7 +109,7 @@ export class CalendarioComponent implements OnInit {
   }
   ngOnInit() {
     this.getTecnicos();
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.auth.getDataUsuario();
     this.getConsecutivo();
   }
   public crearOrden(){

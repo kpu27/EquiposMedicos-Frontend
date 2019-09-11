@@ -69,7 +69,7 @@ export class InstrumentosListComponent implements OnInit {
   }
   ngOnInit() {
     this.getInstrumentos();
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.servicio.getDataUsuario();
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       modelo: ['', Validators.compose([Validators.required])],

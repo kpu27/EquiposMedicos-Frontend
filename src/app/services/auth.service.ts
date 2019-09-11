@@ -16,13 +16,13 @@ export class AuthService {
   /* tslint:disable-next-line: variable-name */
   public _token: string;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private auth: AuthService) { }
 
   public get usuario(): Usuario {
     if ( this._usuario !== null ) {
       return this._usuario;
     } else if ( this._usuario === null && sessionStorage.getItem('usuario') !== null) {
-      this._usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
+      this._usuario = this.auth.getDataUsuario() as Usuario;
       return this._usuario;
     }
     return new Usuario();
@@ -47,32 +47,44 @@ export class AuthService {
     }
     return false;
   }
+
+  setToken(token:string) {
+    sessionStorage.setItem('token', token);
+    this.router.navigate(['/dashboard']); 
+  }
   
 
   /* tslint:disable-next-line: variable-name */
-  guardarUsuario( access_token: string): void {
+  getDataUsuario() {
     // tslint:disable-next-line: prefer-const
-    this._token = access_token;
-    sessionStorage.setItem('token', access_token);
-    let payload = this.obtenerDatosToken(access_token);
-    console.log(payload);
-    this._usuario = new Usuario();
-    this._usuario.id = payload.id;
-    this._usuario.nombre = payload.nombre;
-    this._usuario.apellido = payload.apellido;
-    this._usuario.email = payload.email;
-    this._usuario.empresa = payload.empresa;
-    this._usuario.username = payload.user_name;
-    this._usuario.roles  = payload.authorities;
-    sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
-    sessionStorage.setItem('empresa', JSON.stringify(payload.empresa));
-    this.router.navigate(['/dashboard']);
-    
+    let token = sessionStorage.getItem('token');
+    let payload = this.obtenerDatosToken(token);
+
+    if(payload == null || payload == '' || payload == undefined) {
+      this.router.navigate(['login']);
+    }else {
+      console.log(payload);
+      this._usuario = new Usuario();
+      this._usuario.id = payload.id;
+      this._usuario.nombre = payload.nombre;
+      this._usuario.apellido = payload.apellido;
+      this._usuario.email = payload.email;
+      this._usuario.empresa = payload.empresa;
+      this._usuario.username = payload.user_name;
+      this._usuario.foto = payload.foto;
+      this._usuario.roles  = payload.authorities;
+  /*     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
+      sessionStorage.setItem('empresa', JSON.stringify(payload.empresa)); */
+  /*     this.router.navigate(['/dashboard']); */
+      console.log(this._usuario);
+      return this._usuario;
+    }
   }
 
 
   /* tslint:disable-next-line: variable-name */
   obtenerDatosToken( access_token: string): any {
+    // FIXME:
     if (access_token != null) {
       return JSON.parse(atob(access_token.split('.')[1]));
     }

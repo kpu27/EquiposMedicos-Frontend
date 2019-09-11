@@ -1,3 +1,5 @@
+import { Usuario } from './services/usuario';
+
 export class Settings {
     constructor(public name: string, 
                 public loadingSpinner: boolean,
@@ -10,6 +12,7 @@ export class Settings {
                 public theme: string,
                 public rtl: boolean,
                 public tipoColor: number,
-                public img: string
+                public img: string,
+                public usuario:Usuario
                 ) { }
 }

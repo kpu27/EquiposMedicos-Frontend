@@ -46,7 +46,7 @@ export class ActividadesTableComponent implements OnInit {
   
   }
   ngOnInit() {
-    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = this.auth.getDataUsuario();
     this.getProtocolos();
   }
   public getImg(imgNombre: string): string{
