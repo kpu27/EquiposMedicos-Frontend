@@ -29,6 +29,7 @@ import { registerLocaleData } from '@angular/common';
 import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/cotizaciones-form.component';
 import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { DialogComponent } from './cotizaciones/dialog/dialog.component';
 
 registerLocaleData(es);
 
@@ -58,6 +59,7 @@ export const routes = [
     MatCheckboxModule,
     NgxSmartModalModule.forRoot(),
     pCalendar,    
+    PerfectScrollbarModule
   ],
   declarations: [
     ProcesosComponent,
@@ -72,10 +74,12 @@ export const routes = [
     CotizacionesComponent,
     OrdenTrabajoComponent,
     CotizacionesFormComponent,
-    CotizacionesListComponent
+    CotizacionesListComponent,
+    DialogComponent
   ],
   entryComponents: [
-    CalendarioDialogComponent
+    CalendarioDialogComponent,
+    DialogComponent
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },

@@ -25,11 +25,12 @@ export class OrdenesTableComponent implements OnInit {
         { field: 'idOrdenes',header: 'Id', width: '5%' },
         { field: 'numOrden',header: '# Orden', width: '10%' },
         { field: 'fkCotizacion',header: '# Cotizacion', width: '10%' },
-        { field: 'fkCotizacion',header: 'Cliente', width: '25%' },
-        { field: 'fkCotizacion',header: 'Responsable', width: '20%' },
+        { field: 'fkCotizacion',header: 'Cliente', width: '20%' },
+        { field: 'fkCotizacion',header: 'Responsable', width: '10%' },
         { field: 'fechaOrden',header: 'Fecha', width: '10%' },
         { field: 'riesgos',header: 'Riesgo', width: '10%' },
-        { field: 'esatdoOrden',header: 'Estado', width: '10%' }
+        { field: 'esatdoOrden',header: 'Estado', width: '10%' },
+        { filed: 'acciones', header: 'Acciones', width: '10%'}
       ]; 
     }
   ngOnInit() {

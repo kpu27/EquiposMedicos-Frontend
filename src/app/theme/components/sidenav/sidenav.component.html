@@ -14,11 +14,7 @@
             </p>
         </div>
     </div>
-    <div *ngIf="settings.menuType != 'mini'" fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">
-        <button mat-icon-button><mat-icon>person_outline</mat-icon></button>
-        <a mat-icon-button routerLink="/mailbox">
-            <mat-icon>mail_outline</mat-icon>
-        </a>
+    <div *ngIf="settings.menuType != 'mini'" fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">  
         <button mat-icon-button (click)="cerrarSession()">
             <mat-icon>power_settings_new</mat-icon>
         </button>

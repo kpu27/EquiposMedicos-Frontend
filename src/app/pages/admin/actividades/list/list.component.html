@@ -77,11 +77,11 @@ actividad
                         class="back-gradient text-white"
                         fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <button mat-icon-button (click)="sidenav.toggle()">
+                            <button mat-icon-button style="color: #457942" (click)="sidenav.toggle()">
                                 <mat-icon>list</mat-icon>
                             </button>
                         </div>
-                        <h2 style="color:white;">{{nombreProtocolo}}</h2>
+                        <h2 style="color:#457942;">{{nombreProtocolo}}</h2>
 
                         <button mat-raised-button style="background-color: #397367; color:white;"
                             *ngIf="nombreProtocolo && estado == ''" (click)="nuevaActividad();">

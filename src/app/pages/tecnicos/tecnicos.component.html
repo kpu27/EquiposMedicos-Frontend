@@ -89,75 +89,133 @@
             <mat-card class="block p-3">
                 <mat-card-content>
                     <div class="row">
-                        <div class="col-md-3"><h5 class="text-primary">Reporte Tecnico #: {{codigoReporte}}</h5></div>
+                        <div class="col-md-3">
+                            <h5 class="text-primary">Reporte Tecnico #: {{codigoReporte}}</h5>
+                        </div>
                         <div class="col-md-6"></div>
-                        <div class="col-md-3"><img style="width: 150px; height: 50px; float: right" [src]="imgLogo" alt="logo"></div>                
+                        <div class="col-md-3"><img style="width: 150px; height: 50px; float: right" [src]="imgLogo"
+                                alt="logo"></div>
                     </div>
                     <hr class="my-2">
                     <form class="form-text">
                         <div class="form-row">
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <label class="text-muted" for="cliente">Nombre Cliente &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="clienteSelected.nombre" name="cliente" id="cliente" class="form-control form-control-sm">
+                                    <label class="text-muted" for="cliente">Nombre Cliente &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="clienteSelected.nombre" name="cliente"
+                                        id="cliente" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="idcliente">Documento Cliente &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli" class="form-control form-control-sm">
+                                    <label class="text-muted" for="idcliente">Documento Cliente &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli"
+                                        id="idcli" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="text-muted" for="direccioncli">Direccion Cliente &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="clienteSelected.direccion" name="direccioncli" id="direccioncli" class="form-control form-control-sm">
+                                    <label class="text-muted" for="direccioncli">Direccion Cliente &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="clienteSelected.direccion"
+                                        name="direccioncli" id="direccioncli" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="codequipo">Codigo Equipo &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="equipoSelected.codigo" name="codequipo" id="codequipo" class="form-control form-control-sm">
+                                    <label class="text-muted" for="codequipo">Codigo Equipo &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="equipoSelected.codigo" name="codequipo"
+                                        id="codequipo" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <label class="text-muted" for="nombrequipo">Nombre Equipo &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="equipoSelected.nombre" name="nombrequipo" id="nombrequipo" class="form-control form-control-sm">
+                                    <label class="text-muted" for="nombrequipo">Nombre Equipo &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="equipoSelected.nombre" name="nombrequipo"
+                                        id="nombrequipo" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="text-muted" for="protocoloquipo">Protocolo Equipo &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="equipoSelected.fkProtocolo.nombre" name="protocoloquipo" id="protocoloquipo" class="form-control form-control-sm">
+                                    <label class="text-muted" for="protocoloquipo">Protocolo Equipo &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="equipoSelected.fkProtocolo.nombre"
+                                        name="protocoloquipo" id="protocoloquipo" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <!-- ESPECIFICACIONES EQUIPOS -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres"
+                                        id="emailres" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="nombreres">Nombre Responsable &nbsp;<b class="text-danger">*</b></label>
+                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres"
+                                        id="emailres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres"
+                                        id="emailres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres"
+                                        id="emailres" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <!-- ---------- -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="nombreres">Nombre Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
                                     <!-- [(ngModel)]="tecnicoSelected.nombre" -->
-                                    <input readonly type="text"  name="nombreres" id="nombreres" class="form-control form-control-sm">
+                                    <input readonly type="text" name="nombreres" id="nombreres"
+                                        class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="docres">Documento Responsable &nbsp;<b class="text-danger">*</b></label>
+                                    <label class="text-muted" for="docres">Documento Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
                                     <!-- [(ngModel)]="tecnicoSelected.documento" -->
-                                    <input readonly type="text"  name="docres" id="docres" class="form-control form-control-sm">
+                                    <input readonly type="text" name="docres" id="docres"
+                                        class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="celres">Celular Responsable &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.telefonoCelular" name="celres" id="celres" class="form-control form-control-sm">
+                                    <label class="text-muted" for="celres">Celular Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.telefonoCelular"
+                                        name="celres" id="celres" class="form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres" id="emailres" class="form-control form-control-sm">
+                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b
+                                            class="text-danger">*</b></label>
+                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres"
+                                        id="emailres" class="form-control form-control-sm">
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <hr class="my-2">
                                 <h6 class="text-muted">Actividades</h6>
@@ -168,7 +226,8 @@
                                                 <td scope="row">{{i+1}}</td>
                                                 <td scope="row">{{item.nombre}}</td>
                                                 <td scope="row">
-                                                    <mat-checkbox [(ngModel)]="item.realizado" name="realizado" color="warn">realizado</mat-checkbox>
+                                                    <mat-checkbox [(ngModel)]="item.realizado" name="realizado"
+                                                        color="warn">realizado</mat-checkbox>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -181,20 +240,24 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="text-muted" for="descripcion">Descripcion &nbsp;<b class="text-danger">*</b> </label>
-                                    <textarea formControlName="descripcion" class="form-control" name="descripcion" id="descripcion" rows="4"></textarea>
+                                    <label class="text-muted" for="descripcion">Descripcion &nbsp;<b
+                                            class="text-danger">*</b> </label>
+                                    <textarea formControlName="descripcion" class="form-control" name="descripcion"
+                                        id="descripcion" rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button [disabled]="!datos.valid" color="primary" type="submit" mat-button><mat-icon>save</mat-icon> Guardar</button>
-                                <button (click)="goBack()" style="float: right" class="text-danger" mat-button><mat-icon>clear</mat-icon> Cancelar</button>
+                                <button [disabled]="!datos.valid" color="primary" type="submit" mat-button>
+                                    <mat-icon>save</mat-icon> Guardar
+                                </button>
+                                <button (click)="goBack()" style="float: right" class="text-danger" mat-button>
+                                    <mat-icon>clear</mat-icon> Cancelar
+                                </button>
                             </div>
                         </div>
                     </form>
                 </mat-card-content>
-            </mat-card>   
+            </mat-card>
         </div>
     </div>
 </div>
-
-

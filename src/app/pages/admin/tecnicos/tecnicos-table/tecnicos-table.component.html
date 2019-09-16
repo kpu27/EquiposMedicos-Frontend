@@ -13,6 +13,7 @@
           <div class="list-content" perfectScrollbar>
             <p-table #dt [value]="tecnicos" [columns]="cols" [paginator]="true" [rows]="9">
               <ng-template pTemplate="caption">
+                <h5 style="text-align: left; position: absolute;">Tecnicos</h5>
                 <div style="text-align: right">
                   <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
                   <input type="text" pInputText size="50" placeholder="Buscar Por..."
@@ -33,8 +34,6 @@
                   <td style="text-align: left">{{item.nombre}}</td>
                   <td style="text-align: left">{{item.telefonoCelular}}</td>
                   <td style="text-align: left">{{item.email}}</td>
-                  <td style="text-align: left">{{item.ciudad}}</td>
-                  <td style="text-align: left">{{item.fkEmpresa.nombreEmpresa}}</td>
                   <td style="text-align: center">
                     <div *ngIf="item.estado == 1" class="badge badge-success">Activo</div>
                     <div *ngIf="item.estado == 9" class="badge badge-danger">Inactivo</div>

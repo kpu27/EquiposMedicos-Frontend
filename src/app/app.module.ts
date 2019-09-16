@@ -49,8 +49,7 @@ import { ComponentsModule } from './components/components.module';
     SharedModule,
     PipesModule,
     routing,
-    ComponentsModule
-
+    ComponentsModule,
   ],
   declarations: [
     AppComponent,
@@ -67,10 +66,10 @@ import { ComponentsModule } from './components/components.module';
     MessagesComponent,
     LoginComponent,
     RegisterComponent,
-    UserMenuComponent
+    UserMenuComponent,
   ],
   entryComponents:[
-    VerticalMenuComponent
+    VerticalMenuComponent,
   ],
   providers: [ 
     AppSettings,
