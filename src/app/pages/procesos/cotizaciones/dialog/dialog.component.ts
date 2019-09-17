@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import { Component, OnInit} from '@angular/core';
+import { AppService } from 'src/app/services/app.service';
+import Scrollbar from 'smooth-scrollbar';
 
 @Component({
   selector: 'app-dialog',
@@ -7,11 +8,28 @@ import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent implements OnInit {
-  @ViewChild('sidenav') sidenav: PerfectScrollbarComponent;
 
-  constructor() { }
+  options = { autoHide: false, scrollbarMinSize: 100 };
+  cotizacion:any;
+
+  constructor(private api:AppService) { }
 
   ngOnInit() {
+
+  this.getCotizacionById(7);
+  }
+
+  getCotizacionById(id:number)
+  {
+    this.api.get(`cotizaciones/${id}`).subscribe(
+      (data) => {
+        console.log(data);
+        this.cotizacion = JSON.parse(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
 }

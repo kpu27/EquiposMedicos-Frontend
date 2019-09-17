@@ -1,181 +1,88 @@
-<form class="form-text">
-  <div class="row justify-content-end">
-    <div class="col-md-4">
-      <button
-        class="ml-2"
-        mat-mini-fab
-        color="warn"
-        (click)="close()"
-        style="float: right"
-      >
-        <mat-icon>clear</mat-icon>
-      </button>
-      <button
-        class="ml-2"
-        mat-mini-fab
-        color="accent"
-        (click)="close()"
-        style="float: right"
-      >
-        <mat-icon>print</mat-icon>
-      </button>
-      <button
-        mat-mini-fab
-        color="primary"
-        (click)="close()"
-        style="float: right"
-      >
-        <mat-icon>email</mat-icon>
-      </button>
-    </div>
-  </div>
-  <div class="row justify-content-between">
-    <div class="col-md-4">
-      <img src="assets/img/soluciones-logo.png" alt="Logo" />
-    </div>
-    <div class="col-md-2 border border-black">
-      <h6 class="text-center m-auto">
-        RC-05-03 <br />
-        02/08/2014 <br />
-        Version 01
-      </h6>
-    </div>
-  </div>
+  <form>
+      <div class="row justify-content-end pb-2 bg-light">
+          <div class="col-md-4">
+            <button class="ml-2" mat-mini-fab color="warn" (click)="close()" style="float: right">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <button class="ml-2" mat-mini-fab color="accent" (click)="close()" style="float: right">
+              <mat-icon>print</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" (click)="close()" style="float: right">
+              <mat-icon>email</mat-icon>
+            </button>
+          </div>
+        </div>
+    <div class="container">
 
-  <hr class="pt-1" />
-  <p class="text-center">Cotización servicio técnico No. VS 0022-2019</p>
 
-  <div class="form-row">
-    <div class="col-md-6">
-      Miércoles 23 de enero de 2019 <br />
-      SEÑORES <br />
-      GECELA S.A E.S.P. <br />
-      Atencíon: Angelica Enrrique Pault. <br />
-      correo@gecela.com.co <br />
-      Barranquilla <br />
-    </div>
-
-    <div class="col-md-6">
-      NIT: 900.092.124 <br />
-      Dirección: Carrera 55 No. 72-109 piso fa-rotate-9 <br />
-      Teléfono: 3303004
-    </div>
-
-    <div class="col-md-4">
-      <div class="form-group">
-        <label class="text-muted" for="protocoloquipo"
-          >Protocolo Equipo &nbsp;<b class="text-danger">*</b></label
-        >
-        <input
-          readonly
-          type="text"
-          [(ngModel)]="data.fkEquipos.fkProtocolo.nombre"
-          name="protocoloquipo"
-          id="protocoloquipo"
-          class="form-control form-control-sm"
-        />
+    
+    <div class="row justify-content-between">
+      <div class="col-md-4">
+        <img src="assets/img/soluciones-logo.png" alt="Logo"  width="100%"/>
+      </div>
+      <div class="col-md-2 my-auto">
+        <h6 class="text-center border border-black p-2 m-auto">
+          RC-05-03 <br />
+          02/08/2014 <br />
+          Version 01
+        </h6>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label class="text-muted" for="nombreres"
-          >Nombre Responsable &nbsp;<b class="text-danger">*</b></label
-        >
-        <input
-          readonly
-          type="text"
-          [(ngModel)]="data.fkResponsable.nombre"
-          name="nombreres"
-          id="nombreres"
-          class="form-control form-control-sm"
-        />
+  
+    <hr class="pt-1" />
+    <h4 class="text-center">Cotización servicio técnico No. VS 0022-2019</h4>
+  
+    <div class="form-row mt-3">
+      <div class="col-md-6">
+        Miércoles 23 de enero de 2019 <br />
+        SEÑORES <br />
+        GECELA S.A E.S.P. <br />
+        Atencíon: Angelica Enrrique Pault. <br />
+        correo@gecela.com.co <br />
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label class="text-muted" for="docres"
-          >Documento Responsable &nbsp;<b class="text-danger">*</b></label
-        >
-        <input
-          readonly
-          type="text"
-          [(ngModel)]="data.fkResponsable.documento"
-          name="docres"
-          id="docres"
-          class="form-control form-control-sm"
-        />
+  
+      <div class="col-md-6 m-auto">
+        NIT: 900.092.124 <br />
+        Dirección: Carrera 55 No. 72-109 piso fa-rotate-9 <br />
+        Barranquilla <br>
+        Teléfono: 3303004
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label class="text-muted" for="celres"
-          >Celular Responsable &nbsp;<b class="text-danger">*</b></label
-        >
-        <input
-          readonly
-          type="text"
-          [(ngModel)]="data.fkResponsable.telefonoCelular"
-          name="celres"
-          id="celres"
-          class="form-control form-control-sm"
-        />
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <label class="text-muted" for="emailres"
-          >Email Responsable &nbsp;<b class="text-danger">*</b></label
-        >
-        <input
-          readonly
-          type="text"
-          [(ngModel)]="data.fkResponsable.email"
-          name="emailres"
-          id="emailres"
-          class="form-control form-control-sm"
-        />
-      </div>
-    </div>
+  
 
-    <table class="table border border-secondary">
-      <thead class="text-center">
-        <tr>
-          <th>Item</th>
-          <th>Referencia</th>
-          <th>Descripción</th>
-          <th>Cantidad</th>
-          <th>Valor Unidad</th>
-          <th>Valor Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="text-center">
-          <th scope="row">1</th>
-          <td>CH-r33</td>
-          <td class="text-justify">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laborum
-            expedita ullam, possimus alias consectetur dolor obcaecati ipsam
-            deserunt numquam neque voluptatem nesciunt aut. Dignissimos odio
-            minima tempore vero ut!
-          </td>
-          <td>1</td>
-          <td>$100.000</td>
-          <td>$119.000</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row">1</th>
-          <td>CH-r33</td>
-          <td class="text-justify">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laborum
-            expedita ullam, possimus alias consectetur dolor obcaecati ipsam
-            deserunt numquam neque voluptatem nesciunt aut. Dignissimos odio
-            minima tempore vero ut!
-          </td>
-          <td>1</td>
-          <td>$100.000</td>
-          <td>$119.000</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</form>
+    </div>
+    <div class="form-row mt-2">
+       
+        <table class="table border border-secondary pt-2">
+            <thead class="text-center">
+              <tr>
+                <th>Item</th>
+                <th>Referencia</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Valor Unidad</th>
+                <th>Valor Total</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr class="text-center" *ngFor="let item of cotizacion">
+                <th scope="row">item</th>
+                <td>CH-r33</td>
+                <td class="text-justify">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laborum
+                  expedita ullam, possimus alias consectetur dolor obcaecati ipsam
+                  deserunt numquam neque voluptatem nesciunt aut. Dignissimos odio
+                  minima tempore vero ut!
+                </td>
+                <td>1</td>
+                <td>$100.000</td>
+                <td>$119.000</td>
+              </tr>
+            
+            </tbody>
+    
+          </table>
+    </div>
+      
+    </div>
+  </form>

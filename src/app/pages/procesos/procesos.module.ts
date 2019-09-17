@@ -2,7 +2,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarModule, PerfectScrollbarConfigInterface, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { QuillModule } from 'ngx-quill'
 import { SharedModule } from '../../shared/shared.module';
 import { PipesModule } from '../../theme/pipes/pipes.module';
@@ -30,7 +30,6 @@ import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/coti
 import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DialogComponent } from './cotizaciones/dialog/dialog.component';
-
 registerLocaleData(es);
 
 export const routes = [
@@ -39,6 +38,9 @@ export const routes = [
   { path: 'orden-trabajo', component: OrdenTrabajoComponent },
 ];
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 @NgModule({
   imports: [
     CommonModule,
@@ -75,7 +77,7 @@ export const routes = [
     OrdenTrabajoComponent,
     CotizacionesFormComponent,
     CotizacionesListComponent,
-    DialogComponent
+    DialogComponent,
   ],
   entryComponents: [
     CalendarioDialogComponent,
@@ -83,6 +85,10 @@ export const routes = [
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
   ]
 })
 export class ProcesosModule { }

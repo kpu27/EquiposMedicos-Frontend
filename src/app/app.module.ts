@@ -49,7 +49,7 @@ import { ComponentsModule } from './components/components.module';
     SharedModule,
     PipesModule,
     routing,
-    ComponentsModule,
+    ComponentsModule
   ],
   declarations: [
     AppComponent,
