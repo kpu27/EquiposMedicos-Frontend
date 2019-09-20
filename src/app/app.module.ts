@@ -36,6 +36,8 @@ import { AppService } from './services/app.service';
 import { LoginComponent } from './Auth/login/login.component';
 import { RegisterComponent } from './Auth/register/register.component';
 import { ComponentsModule } from './components/components.module';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   imports: [
@@ -49,7 +51,9 @@ import { ComponentsModule } from './components/components.module';
     SharedModule,
     PipesModule,
     routing,
-    ComponentsModule
+    ComponentsModule,
+    ScrollingModule,
+    NgxPrintModule
   ],
   declarations: [
     AppComponent,

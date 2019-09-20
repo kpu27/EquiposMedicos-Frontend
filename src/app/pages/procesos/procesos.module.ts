@@ -30,6 +30,7 @@ import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/coti
 import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DialogComponent } from './cotizaciones/dialog/dialog.component';
+import { NgxPrintModule } from 'ngx-print';
 registerLocaleData(es);
 
 export const routes = [
@@ -61,7 +62,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatCheckboxModule,
     NgxSmartModalModule.forRoot(),
     pCalendar,    
-    PerfectScrollbarModule
+    NgxPrintModule
   ],
   declarations: [
     ProcesosComponent,

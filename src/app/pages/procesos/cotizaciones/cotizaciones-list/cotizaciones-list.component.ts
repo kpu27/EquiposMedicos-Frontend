@@ -81,6 +81,8 @@ export class CotizacionesListComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
+    dialogConfig.width = '80%';
+    dialogConfig.height = '80%';
 
 /*     dialogConfig.data = {
       id: 1,

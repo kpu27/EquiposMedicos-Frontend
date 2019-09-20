@@ -1,88 +1,115 @@
+<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+  <div class="row justify-content-end pb-2 bg-light">
+    <div class="col-md-12">
+      <button class="ml-2" mat-mini-fab color="warn" (click)="close()" style="float: right">
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button class="ml-2" mat-mini-fab color="accent" style="float: right"
+        styleSheetFile="../../../../../../node_modules/bootstrap/dist/css/bootstrap.css" printSectionId="printElement"
+        ngxPrint>
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-mini-fab color="primary" (click)="ngxSmartModalService.getModal('myModal').open()"
+        style="float: right">
+        <mat-icon>email</mat-icon>
+      </button>
+    </div>
+  </div>
   <form>
-      <div class="row justify-content-end pb-2 bg-light">
-          <div class="col-md-4">
-            <button class="ml-2" mat-mini-fab color="warn" (click)="close()" style="float: right">
-              <mat-icon>clear</mat-icon>
-            </button>
-            <button class="ml-2" mat-mini-fab color="accent" (click)="close()" style="float: right">
-              <mat-icon>print</mat-icon>
-            </button>
-            <button mat-mini-fab color="primary" (click)="close()" style="float: right">
-              <mat-icon>email</mat-icon>
-            </button>
-          </div>
+    <div class="container" id="printElement">
+      <div class="row justify-content-between">
+        <div class="col-md-6" style="width: 50%;">
+          <img src="../../../../../assets/img/soluciones-logo.png" alt="Logo" width="40%" />
         </div>
-    <div class="container">
+        <div class="col-md-2 my-auto">
+          <h6 class="text-center" style="border: solid 1px grey;">
+            RC-05-03 <br />
+            02/08/2014 <br />
+            Version 01
+          </h6>
+        </div>
+      </div>
 
+      <hr class="pt-1" />
+      <h4 class="text-center">Cotización servicio técnico No. VS 0022-2019</h4>
 
-    
-    <div class="row justify-content-between">
-      <div class="col-md-4">
-        <img src="assets/img/soluciones-logo.png" alt="Logo"  width="100%"/>
-      </div>
-      <div class="col-md-2 my-auto">
-        <h6 class="text-center border border-black p-2 m-auto">
-          RC-05-03 <br />
-          02/08/2014 <br />
-          Version 01
-        </h6>
-      </div>
-    </div>
-  
-    <hr class="pt-1" />
-    <h4 class="text-center">Cotización servicio técnico No. VS 0022-2019</h4>
-  
-    <div class="form-row mt-3">
-      <div class="col-md-6">
-        Miércoles 23 de enero de 2019 <br />
-        SEÑORES <br />
-        GECELA S.A E.S.P. <br />
-        Atencíon: Angelica Enrrique Pault. <br />
-        correo@gecela.com.co <br />
-      </div>
-  
-      <div class="col-md-6 m-auto">
-        NIT: 900.092.124 <br />
-        Dirección: Carrera 55 No. 72-109 piso fa-rotate-9 <br />
-        Barranquilla <br>
-        Teléfono: 3303004
-      </div>
-  
+      <div class="form-row mt-3">
+        <div class="col-md-6">
+          Miércoles 23 de enero de 2019 <br />
+          SEÑORES <br />
+          GECELA S.A E.S.P. <br />
+          Atencíon: Angelica Enrrique Pault. <br />
+          correo@gecela.com.co <br />
+        </div>
 
-    </div>
-    <div class="form-row mt-2">
-       
-        <table class="table border border-secondary pt-2">
-            <thead class="text-center">
-              <tr>
-                <th>Item</th>
-                <th>Referencia</th>
-                <th>Descripción</th>
-                <th>Cantidad</th>
-                <th>Valor Unidad</th>
-                <th>Valor Total</th>
-              </tr>
-            </thead>
-    
-            <tbody>
-              <tr class="text-center" *ngFor="let item of cotizacion">
-                <th scope="row">item</th>
-                <td>CH-r33</td>
-                <td class="text-justify">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laborum
-                  expedita ullam, possimus alias consectetur dolor obcaecati ipsam
-                  deserunt numquam neque voluptatem nesciunt aut. Dignissimos odio
-                  minima tempore vero ut!
-                </td>
-                <td>1</td>
-                <td>$100.000</td>
-                <td>$119.000</td>
-              </tr>
-            
-            </tbody>
-    
-          </table>
-    </div>
-      
+        <div class="col-md-6 m-auto">
+          NIT: 900.092.124 <br />
+          Dirección: Carrera 55 No. 72-109 piso fa-rotate-9 <br />
+          Barranquilla <br />
+          Teléfono: 3303004
+        </div>
+      </div>
+      <div class="form-row mt-2">
+        <table class="table border border-secondary pt-2" style="border: solid 1px black;">
+          <thead class="text-center">
+            <tr>
+              <th>Item</th>
+              <th>Referencia</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Valor Unidad</th>
+              <th>Valor Total</th>
+            </tr>
+          </thead>
+
+          <tbody *ngFor="let item of items; let i = index;">
+            <tr class="text-center borderTable">
+              <th scope="row">{{ i+1 }}</th>
+              <td>{{ item.fkEquipos.codigo }}</td>
+              <td class="text-justify">
+                {{ item.fkEquipos.fkProtocolo.descripcion }}
+              </td>
+              <td>{{ item.cantidad }}</td>
+              <td>${{ item.valorUnitario }}</td>
+              <td>${{ item.cantidad * item.valorUnitario }}</td>
+            </tr>
+            <hr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>TOTAL:</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="ml-3">${{ monto }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </form>
+</cdk-virtual-scroll-viewport>
+<ngx-smart-modal #myModal identifier="myModal">
+  <h3 class="text-center">Enviar Cotización</h3>
+  <br />
+  <form action="" class="text-center">
+    <mat-form-field class="w-50 text-center example-full-width">
+      <input matInput placeholder="Correo Electrónico" />
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-50 text-center example-full-width">
+      <input matInput placeholder="Asunto" />
+    </mat-form-field>
+    <br />
+    <mat-form-field class="w-50 text-center example-full-width">
+      <textarea matInput placeholder="Mensaje"></textarea>
+    </mat-form-field>
+    <br />
+    <div class="row">
+      <button class="w-100 btn btn-outline-success">Enviar</button>
+      <button class="w-100 btn btn-outline-danger" (click)="myModal.close()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</ngx-smart-modal>
