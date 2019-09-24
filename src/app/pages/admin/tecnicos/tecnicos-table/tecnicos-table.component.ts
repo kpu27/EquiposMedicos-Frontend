@@ -101,7 +101,6 @@ export class TecnicosTableComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           let datos = this.datos.value;
-          console.log(datos);
           let tecnico = {
             "idTecnico": 50,
             "nombre": datos.nombre,
@@ -145,7 +144,6 @@ export class TecnicosTableComponent implements OnInit {
               this.agregarTecnico = result;
               this.service.post('usuarios/new', newUser).subscribe(
                 (result: any) => {
-                  console.log(result);
                   tecnico.fkUsuario = result.fkUsuario;
                   this.service.put('tecnicos/' + result.idTecnico, tecnico).subscribe(
                     result => {
@@ -154,7 +152,6 @@ export class TecnicosTableComponent implements OnInit {
                       this.getTecnicos();
                     },
                     error => {
-                      console.log(error);
                       Swal.fire({ type: 'error', text: 'Error al Crear el Tecnico', timer: 2000 });
                     }
                   )
@@ -233,7 +230,6 @@ export class TecnicosTableComponent implements OnInit {
         this.tecnicos = data;
       },
       err => {
-        console.log(err);
       }
     )
   }

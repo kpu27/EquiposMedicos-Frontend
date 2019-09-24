@@ -122,7 +122,6 @@ export class InstrumentosListComponent implements OnInit {
     this._AppService.get('ip/' + this.usuario.empresa.idEmpresa + '/instrumento/'.concat(e.idInstrumentos)).subscribe(
       (result: any) => {
         this.protocolos = result;
-        console.log(result);
         this.settings.loadingSpinner = false;
         if (result.length > 0) {
           Swal.fire({ type: 'success', text: 'listado de protocolos!', timer: 2000 });
@@ -133,20 +132,17 @@ export class InstrumentosListComponent implements OnInit {
       error => {
         this.settings.loadingSpinner = false;
         Swal.fire({ type: 'error', text: 'error al realizar la consulta!', timer: 2000 });
-        console.log(error);
       });
   }
   public getProtocolos() {
     this.settings.loadingSpinner = true;
     this._AppService.get(`protocolos/list`).subscribe(
       result => {
-        console.log(result)
         this.protocolos2 = result;
         this.settings.loadingSpinner = false;
         Swal.fire({ type: 'success', text: 'listado de Protocolos!', timer: 2000 });
       },
       error => {
-        console.log(error);
         this.settings.loadingSpinner = false;
       });
   }
@@ -233,7 +229,6 @@ export class InstrumentosListComponent implements OnInit {
     this.settings.loadingSpinner = true;
     this._AppService.get(`instrumentos/list`).subscribe(
       result => {
-        console.log(result);
         this.settings.loadingSpinner = false;
         this.instrumentos = result;
       },
@@ -284,7 +279,6 @@ export class InstrumentosListComponent implements OnInit {
           "fkEmpresa": this.fkEmpresa,
           "estado": this.setEstdo(this.estadoIns)
         }
-        console.log(instrumento);
         this._AppService.put('instrumentos/' + this.idInstrumento, instrumento).subscribe(
           result => {
             Swal.fire({ type: 'success', text: 'Accion reLalizada!', timer: 3000 });
@@ -306,16 +300,13 @@ export class InstrumentosListComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        console.log(idpro);
         const json = {
           "fkEmpresa": parseInt(this.usuario.empresa.idEmpresa),
           "fkInstrumento": this.idInstrumento,
           "fkProtocolo": idpro,
         }
-        console.log('json: ', json)
         this._AppService.post('instrumentos_protocolo/new', json).subscribe(
           data => {
-            console.log(data);
             Swal.fire({ type: 'success', text: 'se agrego el protocolo al instrumento ' + this.instrumentoSelected + '!', timer: 3000 });
             this.getInstrumentos();
             this.tipoList = 0;

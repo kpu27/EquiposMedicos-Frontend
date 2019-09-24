@@ -1,0 +1,206 @@
+<div class="container-fluid">
+  <div class="row">
+    <mat-card class="formulario">
+      <div>
+        <h4>Consultas</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>Selecione consulta:</mat-label>
+          <mat-select>
+            <mat-option (click)="formulario=1; opciones='nada'" [value]="1">Cliente</mat-option>
+            <mat-option (click)="opciones='fecha'; formulario=0" [value]="1">Por tecnico</mat-option>
+            <mat-option (click)="opciones='tecnicos'; formulario=0" [value]="1">Tecnicos</mat-option>
+            <mat-option (click)="opciones='equipos'; formulario=0" [value]="1"></mat-option>
+            <mat-option (click)="opciones='mantenimiento';formulario=0" [value]="1">Equipo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!--CONSULTA POR TECNICOS CON LOS EQUIPOS-->
+        <div class="row" *ngIf="opciones=='fecha'">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha inicio:</mat-label>
+              <input matInput [matDatepicker]="inicio2" placeholder="fecha inicial" name="fechai2" [(ngModel)]="fechai2">
+              <mat-datepicker-toggle matSuffix [for]="inicio2"></mat-datepicker-toggle>
+              <mat-datepicker #inicio2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Final:</mat-label>
+              <input matInput [matDatepicker]="final2" placeholder=" fecha final" name="fechaf2" [(ngModel)]="fechaf2">
+              <mat-datepicker-toggle matSuffix [for]="final2"></mat-datepicker-toggle>
+              <mat-datepicker #final2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                  <mat-label>Selecione Tecnico:</mat-label>
+                  <mat-select>
+                    <mat-option *ngFor="let item of tecnicos" (click)="SelectTecnico(item.idTecnico)" [value]="item.idTecnico">{{item.nombre}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+          <div class="col-md-4">
+            <button mat-button style="color: #206936" (click)="getConsulta3();formulario=4">Consultar</button>
+          </div>
+        </div>
+        <!---->
+        <div class="row" *ngIf="opciones=='equipos'">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha inicio:</mat-label>
+              <input matInput [matDatepicker]="inicio1" placeholder="Choose a date" name="fechai3">
+              <mat-datepicker-toggle matSuffix [for]="inicio1"></mat-datepicker-toggle>
+              <mat-datepicker #inicio1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Final:</mat-label>
+              <input matInput [matDatepicker]="final1" placeholder="Choose a date" name="fechaf3">
+              <mat-datepicker-toggle matSuffix [for]="final1"></mat-datepicker-toggle>
+              <mat-datepicker #final1></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <button mat-button style="color: #206936">Consultar</button>
+          </div>
+        </div>
+        <!--CONSULTA DE TODOS LOS TECNICOS CON EQUIPOS-->
+        <div class="row" *ngIf="opciones=='tecnicos'">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha inicio:</mat-label>
+              <input matInput [matDatepicker]="inicio3" placeholder="Choose a date" name="fechai1" [(ngModel)]="fechai1">
+              <mat-datepicker-toggle matSuffix [for]="inicio3"></mat-datepicker-toggle>
+              <mat-datepicker #inicio3></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Final:</mat-label>
+              <input matInput [matDatepicker]="final3" placeholder="Choose a date" name="fechaf1" [(ngModel)]="fechaf1">
+              <mat-datepicker-toggle matSuffix [for]="final3"></mat-datepicker-toggle>
+              <mat-datepicker #final3></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <button mat-button style="color: #206936" (click)="getConsulta4(); formulario=3" >Consultar</button>
+          </div>
+        </div>
+        <!--CONSULTA POR CLIENTE Y EL TOTAL DE SUS EQUIPOS-->
+        <div class="row" *ngIf="opciones=='mantenimiento'">
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha inicio:</mat-label>
+              <input matInput [matDatepicker]="inicio4"  (click)="getConsulta2();formulario=2" placeholder="Choose a date" name="fechai4" [(ngModel)]="fechai4">
+              <mat-datepicker-toggle matSuffix [for]="inicio4"></mat-datepicker-toggle>
+              <mat-datepicker #inicio4></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Final:</mat-label>
+              <input matInput [matDatepicker]="final4" placeholder="Choose a date" name="fechaf4"  [(ngModel)]="fechaf4">
+              <mat-datepicker-toggle matSuffix [for]="final4"></mat-datepicker-toggle>
+              <mat-datepicker #final4></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                  <mat-label>Selecione Cliente:</mat-label>
+                  <mat-select>
+                    <mat-option *ngFor="let item of clientes" (click)="SelectCliente(item.idCliente)"   [value]="item.idCliente">{{item.nombre}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+          <div class="col-md-4">
+            <button mat-button style="color: #206936" (click)="getConsulta2();formulario=2;">Consultar</button>
+          </div>
+        </div>
+    </mat-card>
+  </div>
+  <div class="row" *ngIf="formulario==1">
+    <div style="margin-top:10px; width: 60%; height: 40%">
+      <table class="table table-bordered">
+        <thead style="background: #1BB4B4; color:white">
+          <tr>
+            <th scope="col">Nombre Cliente</th>
+            <th scope="col">Total equipos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{data2.nombre}}</td>
+            <td>{{data3}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--<p-chart type="bar" [data]="data"></p-chart>-->
+  </div>
+  <div class="row" *ngIf="formulario==2">
+      <div style="margin-top:10px; width: 60%; height: 40%">
+          <table class="table table-bordered">
+            <thead style="background: #1BB4B4; color:white">
+              <tr>
+                <th scope="col">Equipo</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Programacion</th>
+                <th scope="col">Tecnico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of sql1">
+                <td>{{item.fkEquipos.nombre}}</td>
+                <td>{{item.fkEquipos.codigo}}</td>
+                <td>{{item.fechaProgramada| date: "MM/dd/yyyy"}}</td>
+                <td>{{item.fkResponsable.nombre}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  </div>
+  <div class="row" *ngIf="formulario==3">
+      <div style="margin-top:10px; width: 60%; height: 40%">
+          <table class="table table-bordered">
+            <thead style="background: #1BB4B4; color:white">
+              <tr>
+                <th scope="col">Tecnico</th>
+                <th scope="col"># Equipos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{data2.nombre}}</td>
+                <td>{{data3}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  </div>
+  <div class="row" *ngIf="formulario==4">
+    <div style="margin-top:10px; width: 80%; height: 40%">
+        <table class="table table-bordered">
+          <thead style="background: #1BB4B4; color:white">
+            <tr>
+              <th scope="col">Equipos</th>
+              <th scope="col">Marcas</th>
+              <th scope="col">Programado</th>
+              <th scope="col">Realizado</th>
+              <th scope="col">Clientes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of sql2">
+              <td>{{item.fkEquipos.nombre}}</td>
+              <td>{{item.fkEquipos.codigo}}</td>
+              <td>{{item.fechaProgramada| date: "MM/dd/yyyy"}}</td>
+              <td>{{item.fechaRealizada| date: "MM/dd/yyyy"}}</td>
+              <td>{{item.fkCliente.nombre}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>
+</div>

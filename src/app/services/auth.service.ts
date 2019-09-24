@@ -76,7 +76,6 @@ export class AuthService {
   /*     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
       sessionStorage.setItem('empresa', JSON.stringify(payload.empresa)); */
   /*     this.router.navigate(['/dashboard']); */
-      console.log(this._usuario);
       return this._usuario;
     }
   }
