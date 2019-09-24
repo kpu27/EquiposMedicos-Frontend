@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "equiposm",
+            "dialect": "MySQL",
+            "name": "EquiposM",
+            "password": "Equipos2019*",
+            "port": 3306,
+            "server": "equiposaws.cflyqudqcoq8.us-east-2.rds.amazonaws.com",
+            "username": "root"
+        }
+    ]
+}
