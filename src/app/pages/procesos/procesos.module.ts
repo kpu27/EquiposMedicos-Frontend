@@ -37,6 +37,7 @@ export const routes = [
   { path: '', component: ProcesosComponent, pathMatch: 'full' },
   { path: 'cotizaciones', component: CotizacionesComponent },
   { path: 'orden-trabajo', component: OrdenTrabajoComponent },
+  { path: 'cotizaciones-form', component: CotizacionesFormComponent }
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {

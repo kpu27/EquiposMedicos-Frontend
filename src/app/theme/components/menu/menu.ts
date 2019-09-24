@@ -21,7 +21,7 @@ export const verticalMenuItems = [
     new Menu (124, 'Equipos', '/admin/equipos', null, 'build', null, false, 120 , role_admin),
 /*     new Menu (130, 'Procesos', null, null, 'insert_chart', null, true, 0,  roles ) ,*/    
     new Menu (130, 'Cotizaciones', null, null, 'attach_money', null, true, 0, roles),
-    new Menu (131, 'Crear', '/procesos/cotizar', null, 'money', null, false, 130, roles), // TODO:
+    new Menu (131, 'Crear', '/procesos/cotizaciones-form', null, 'money', null, false, 130, roles), // TODO:
     new Menu (132, 'Ver - Editar', '/procesos/cotizaciones', null, 'money', null, false, 130, roles), // TODO:
     new Menu (133, 'Aprovar', '/procesos/cotizaciones/aprovar', null, 'money', null, false, 130, roles), // TODO:
     new Menu (135, 'Ordenes de Trabajo', null, null, 'gavel', null, true, 0 , roles),
