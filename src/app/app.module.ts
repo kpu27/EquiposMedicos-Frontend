@@ -38,6 +38,10 @@ import { RegisterComponent } from './Auth/register/register.component';
 import { ComponentsModule } from './components/components.module';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { NgxPrintModule } from 'ngx-print';
+import { EmpresasComponent } from './pages/admin/empresas/empresas.component';
+import { TableModule } from 'primeng/table';
+import { NgxSmartModalService, NgxSmartModalModule } from 'ngx-smart-modal';
+
 
 @NgModule({
   imports: [
@@ -53,7 +57,9 @@ import { NgxPrintModule } from 'ngx-print';
     routing,
     ComponentsModule,
     ScrollingModule,
-    NgxPrintModule
+    NgxPrintModule,
+    TableModule,
+    NgxSmartModalModule
   ],
   declarations: [
     AppComponent,
@@ -71,6 +77,7 @@ import { NgxPrintModule } from 'ngx-print';
     LoginComponent,
     RegisterComponent,
     UserMenuComponent,
+    EmpresasComponent,
   ],
   entryComponents:[
     VerticalMenuComponent,
@@ -79,7 +86,8 @@ import { NgxPrintModule } from 'ngx-print';
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
-    AppService
+    AppService,
+    NgxSmartModalService
   ],
   bootstrap: [AppComponent]
 })

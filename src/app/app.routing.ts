@@ -7,6 +7,9 @@ import { LoginComponent } from './Auth/login/login.component';
 import { RegisterComponent } from './Auth/register/register.component';
 import { AdminGuard } from './Guards/admin.guard';
 import { LoginGuard } from './Guards/login.guard';
+import { RootGuard } from './Guards/root.guard';
+import { EmpresasComponent } from './pages/admin/empresas/empresas.component';
+
 
 export const routes: Routes = [
 
@@ -20,9 +23,9 @@ export const routes: Routes = [
             { path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule', data: { breadcrumb: 'Administracion' } },
             { path: 'procesos', loadChildren: './pages/procesos/procesos.module#ProcesosModule', data: { breadcrumb: 'Procesos' } },
             //{ path: 'users', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
-            { path: 'tecnicos', loadChildren: './pages/tecnicos/tecnicos.module#TecnicosModule', data: { breadcrumb: 'Tecnicos' } }        
-        ],
-        canActivate: [AdminGuard]
+            { path: 'tecnicos', loadChildren: './pages/tecnicos/tecnicos.module#TecnicosModule', data: { breadcrumb: 'Tecnicos' } },
+            { path: 'empresas', component: EmpresasComponent},
+        ]
     },  
     { path : 'login', component: LoginComponent, canActivate: [LoginGuard]},
     { path : 'registro', component: RegisterComponent, canActivate: [LoginGuard]},

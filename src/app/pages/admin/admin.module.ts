@@ -42,15 +42,24 @@ import { MatDatepickerModule, MatInputModule } from '@angular/material';
 import { NgxDaterangepickerMd } from 'ngx-datepicker-material';*/
 import {CalendarModule as pCalendar} from 'primeng/calendar';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { AdminGuard } from 'src/app/Guards/admin.guard';
+import { EmpresasComponent } from './empresas/empresas.component';
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
-  { path: 'actividades', component: ActividadesComponent, data: { breadcrumb: 'Actividades' }},
-  { path: 'protocolos', component: ProtocoloComponent, data: { breadcrumb: 'Protocolos' }},
-  { path: 'instrumentos', component: InstrumentosComponent, data: { breadcrumb: 'Instrumentos' }},
-  { path: 'equipos', component: EquiposComponent, data: { breadcrumb: 'Equipos' }},
-  { path: 'clientes', component: ClientesComponent, data: { breadcrumb: 'Clientes' }},
-  { path: 'form', component: ActividadesFormComponent, data: { breadcrumb: 'Clientes' }},
-  { path: 'tecnicos', component: TecnicosComponent, data: { breadcrumb: 'Tecnicos' }}
+  { path: 'actividades', component: ActividadesComponent, data: { breadcrumb: 'Actividades' },
+  canActivate: [AdminGuard]},
+  { path: 'protocolos', component: ProtocoloComponent, data: { breadcrumb: 'Protocolos' },
+  canActivate: [AdminGuard]},
+  { path: 'instrumentos', component: InstrumentosComponent, data: { breadcrumb: 'Instrumentos' },
+  canActivate: [AdminGuard]},
+  { path: 'equipos', component: EquiposComponent, data: { breadcrumb: 'Equipos' },
+  canActivate: [AdminGuard]},
+  { path: 'clientes', component: ClientesComponent, data: { breadcrumb: 'Clientes' },
+  canActivate: [AdminGuard]},
+  { path: 'form', component: ActividadesFormComponent, data: { breadcrumb: 'Clientes' },
+  canActivate: [AdminGuard]},
+  { path: 'tecnicos', component: TecnicosComponent, data: { breadcrumb: 'Tecnicos' },
+  canActivate: [AdminGuard]}
 ];
 
 @NgModule({
@@ -99,7 +108,7 @@ export const routes = [
     ClientesListComponent,
     ActividadesFormComponent,
     TecnicosComponent,
-    TecnicosTableComponent
+    TecnicosTableComponent,
   ],
   providers: [
     AppService,

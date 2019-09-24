@@ -9,8 +9,9 @@ import { DashboardComponent } from './dashboard.component';
 import { InfoCardsComponent } from './info-cards/info-cards.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
 import { OrdenesComponent } from './ordenes/ordenes.component';
+import { AdminGuard } from 'src/app/Guards/admin.guard';
 export const routes = [
-  { path: '', component: DashboardComponent, pathMatch: 'full' }
+  { path: '', component: DashboardComponent, pathMatch: 'full', CanActivate: [AdminGuard] }
 ];
 
 @NgModule({
