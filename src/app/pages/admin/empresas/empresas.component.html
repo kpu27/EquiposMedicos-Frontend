@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="list-content" perfectScrollbar>
-            <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="7">
+            <p-table #dt [value]="empresas" [columns]="cols" [paginator]="true" [rows]="7">
               <ng-template pTemplate="caption">
                   <h5 style="text-align: left; position: absolute;">Empresas</h5>
                 <div style="text-align: right">
@@ -67,113 +67,124 @@
 </div>
 <!--FORMULARIO DE NUEVO CLIENTE-->
 <div class="container" *ngIf="estado == false">
-  <mat-card class="nuevoE">
-    <h5 class="text-success" *ngIf="tipoForm == 0">Nueva Empresa</h5>
-    <h5 class="text-info" *ngIf="tipoForm == 1">Actualizar Datos</h5>
-    <hr />
-    <form [formGroup]="datos" class="form-sample">
+    <div class="row">
       <div class="col-8">
-      <div class="row">
-        <div class="col-6">
-          <div class="content">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombre Empresa</mat-label>
-              <input matInput placeholder="Nombre Completo" name="nombre" id="nombre" formControlName="nombre" />
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="content">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombre Corto</mat-label>
-              <input matInput placeholder="@" id="email" name="email" formControlName="email" />
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <div class="content">
-            <mat-form-field appearance="outline">
-              <mat-label>NIT:</mat-label>
-              <input matInput placeholder="nombre corto" id="nombrecorto" name="nombreCorto"
-                formControlName="nombreCorto" />
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="content">
-            <mat-form-field appearance="outline">
-              <mat-label>Representante Legal:</mat-label>
-              <input matInput type="number" placeholder="Documento" id="documento" name="documento"
-                formControlName="documento" />
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <div class="content">
-            <mat-form-field appearance="outline">
-              <mat-label>Slogan Empresa:</mat-label>
-              <input matInput placeholder="Telefono" type="number" id="telefonoFijo" name="telefonoFijo"
-                formControlName="telefonoFijo" />
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-        <div class="row d-flex justify-content-center">
-            <ngx-smart-modal #myModal identifier="myModal">
-              <h4>Quiere Actualizar la imagen?</h4>
-              <hr>
-              <img width="45%" [src]="imgURL" alt="user-profile-image" id="image-field" />
-              <hr>
-              <div class="row">
+        <mat-card>
+            <form [formGroup]="datos" class="form-sample">
                 <div class="col-12">
-                    <button style="float: right" class="btn btn-sm btn-light text-success" (click)="subirLogo()" [disabled]="!logoSeleccionado">
-                        <i class="fa fa-edit"></i>&nbsp; Actualizar
-                      </button>
-                      <button style="float: left" class="btn btn-sm btn-light text-danger" (click)="myModal.close()">
-                        <i class="fa fa-times"></i>&nbsp; Cerrar
-                      </button>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Nombre Empresa</mat-label>
+                        <input matInput placeholder="Nombre Completo" name="nombre" id="nombre" formControlName="nombre" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Nombre Corto</mat-label>
+                        <input matInput placeholder="@" id="email" name="email" formControlName="email" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>NIT:</mat-label>
+                        <input matInput placeholder="nombre corto" id="nombrecorto" name="nombreCorto"
+                          formControlName="nombreCorto" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Representante Legal:</mat-label>
+                        <input matInput type="number" placeholder="Documento" id="documento" name="documento"
+                          formControlName="documento" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Slogan Empresa:</mat-label>
+                        <textarea matInput placeholder="Telefono" type="number" id="telefonoFijo" name="telefonoFijo"
+                          formControlName="telefonoFijo"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </ngx-smart-modal>
-            <div class="row m-auto">
-              <div class="col-12">
-                  <div class="upload-btn-wrapper">
-                      <input #file type="file" id="file" style="display:none;"
-                        (change)="verLogo(file.files); seleccionarLogo($event)" accept="image/*" />
-                        <button class="btn btn-sm btn-light text-danger" (click)="clearImage(); thisFileUpload()">
-                            <i class="fas fa-trash-alt"></i>&nbsp; Borrar Imagen
-                          </button>
-                          &nbsp;
-                      <button class="btn btn-sm btn-light text-success" (click)="clearImage(); thisFileUpload()">
-                        <i class="fas fa-camera-retro"></i>&nbsp; Subir Imagen
-                      </button>
-                    </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button [disabled]="!datos.valid" style="float: right" (click)="nuevoCliente()" *ngIf="tipoForm == 0"
+                      class="btn btn-sm bg-light text-success">
+                      <i class="fa fa-plus"></i> Crear
+                    </button>
+                    <button [disabled]="!datos.valid" style="float: right" (click)="editarDatos()" *ngIf="tipoForm == 1"
+                      class="btn btn-sm bg-light text-info">
+                      <i class="fa fa-edit"></i> Actualizar
+                    </button>
+                    <button style="float: left" class="btn btn-sm bg-light text-danger" (click)="estado = true">
+                      <i class="fa fa-times"></i> Cancelar
+                    </button>
+                  </div>
+                </div>
+              </form>
+        </mat-card>
+      </div>
+      <div class="col-4">
+        <mat-card>
+          <form action="" class="m-3 text-center">
+            <div *ngIf="userImg != null || userImg != '';then content else other_content"></div>
+  
+  
+            <ng-template #content><img [src]="UrlImages + userImg" alt="" width="160px" class="rounded-circle m-3 border-img" /></ng-template>
+            <ng-template #other_content><img src="assets/img/default_picture.png" alt="" width="160px" class="rounded-circle m-3 border-img" /></ng-template>
+  
+            <br /><br />
+            <div class="row d-flex justify-content-center">
+              <ngx-smart-modal #myModal identifier="myModal">
+                <h4>Quiere Actualizar la imagen?</h4>
+                <hr>
+                <img width="45%" [src]="imgURL" alt="user-profile-image" id="image-field" />
+                <hr>
+                <div class="row">
+                  <div class="col-12">
+                      <button style="float: right" class="btn btn-sm btn-light text-success" (click)="subirLogo()" [disabled]="!logoSeleccionado">
+                          <i class="fa fa-edit"></i>&nbsp; Actualizar
+                        </button>
+                        <button style="float: left" class="btn btn-sm btn-light text-danger" (click)="myModal.close()">
+                          <i class="fa fa-times"></i>&nbsp; Cerrar
+                        </button>
+                  </div>
+                </div>
+              </ngx-smart-modal>
+              <div class="row m-auto">
+                <div class="col-12">
+                    <div class="upload-btn-wrapper">
+                        <input #file type="file" id="file" style="display:none;"
+                          (change)="verLogo(file.files); seleccionarLogo($event)" accept="image/*" />
+                          <button class="btn btn-sm btn-light text-danger" (click)="clearImage(); thisFileUpload()">
+                              <i class="fas fa-trash-alt"></i>&nbsp; Borrar Imagen
+                            </button>
+                            &nbsp;
+                        <button class="btn btn-sm btn-light text-success" (click)="clearImage(); thisFileUpload()">
+                          <i class="fas fa-camera-retro"></i>&nbsp; Subir Imagen
+                        </button>
+                      </div>
+                </div>
               </div>
             </div>
-          </div>
-      
-    </div>
-      <div class="row">
-        <div class="col-12">
-          <button [disabled]="!datos.valid" style="float: right" (click)="nuevoCliente()" *ngIf="tipoForm == 0"
-            class="btn btn-sm bg-light text-success">
-            <i class="fa fa-plus"></i> Crear
-          </button>
-          <button [disabled]="!datos.valid" style="float: right" (click)="editarDatos()" *ngIf="tipoForm == 1"
-            class="btn btn-sm bg-light text-info">
-            <i class="fa fa-edit"></i> Actualizar
-          </button>
-          <button style="float: left" class="btn btn-sm bg-light text-danger" (click)="estado = true">
-            <i class="fa fa-times"></i> Cancelar
-          </button>
-        </div>
+          </form>
+        </mat-card>
       </div>
-    </form>
-  </mat-card>
-</div>
+    </div>
+  </div>

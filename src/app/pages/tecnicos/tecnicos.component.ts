@@ -166,7 +166,7 @@ export class TecnicosComponent implements OnInit {
   getCotizacionesDetallesByIdCliente() {
     this.settings.loadingSpinner = true;
     this._AppService.get('ordenesDetalle/cliente/'+this.idCliente).subscribe(
-      (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
+      (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false;console.log(data); },
       error => { this.settings.loadingSpinner = false; }
     );
   }

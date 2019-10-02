@@ -8,14 +8,35 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./cotizaciones-table.component.scss']
 })
 export class CotizacionesTableComponent implements OnInit {
-  @Input() data: any;
+  public cotizaciones: any;
   public settings: Settings;
   public protocolos: any;
   @Output() crearOrden = new EventEmitter();
   constructor( public appSettings:AppSettings, private _AppService:AppService) {  this.settings = this.appSettings.settings }
   ngOnInit() {
+    this.getCotizacionesSinOrdenDeTrabajo(2);
+  }
+  getCotizacionesSinOrdenDeTrabajo(estado:number)
+  {
+    this._AppService.get(`cotizaciones/listar-cotizaciones-sin-orden/${estado}`).subscribe(
+      (data:any) => {
+        console.log(data);
+        this.cotizaciones = data
+      }
+    )
   }
   CrearOrden(cotizaciones: any) {
     this.crearOrden.emit(cotizaciones);
   }
+    // @Get protocolos por Instrumentos
+    public getProtocolosPorInstrumento(id: string){
+      this._AppService.get('ip/1/instrumento/2').subscribe(
+        result => {
+          this.protocolos = result;
+          if(this.protocolos.length > 0){}
+        },
+        error =>{
+          console.log(error);
+        });
+    } 
 }

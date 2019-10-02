@@ -37,7 +37,9 @@ export const routes = [
   { path: '', component: ProcesosComponent, pathMatch: 'full' },
   { path: 'cotizaciones', component: CotizacionesComponent },
   { path: 'orden-trabajo', component: OrdenTrabajoComponent },
-  { path: 'cotizaciones-form', component: CotizacionesFormComponent }
+  { path: 'cotizaciones-form', component: CotizacionesTableComponent },
+  { path: 'programar-orden', component: CotizacionesTableComponent},
+//  { path: 'reporte-mantenimiento', component: ReporteMantenimientoComponent}
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -75,11 +77,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CalendarioComponent,
     CalendarioDialogComponent,
     ProcesosComponent,
-    CotizacionesComponent,
     OrdenTrabajoComponent,
     CotizacionesFormComponent,
     CotizacionesListComponent,
-    DialogComponent,
+    DialogComponent
   ],
   entryComponents: [
     CalendarioDialogComponent,

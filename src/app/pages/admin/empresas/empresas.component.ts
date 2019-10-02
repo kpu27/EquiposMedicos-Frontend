@@ -46,6 +46,7 @@ export class EmpresasComponent implements OnInit {
       { field: 'nitEmpresa', header: 'NIT',width: '12%' },
       { field: 'representanteLegal', header: 'Representante Legal',width: '20%' },
       { filed: 'sloganEmpresa', header: 'Slogan',width: '30%' },
+      { filed: 'acciones', header: 'Acciones',width: '20%' },
     ];
     this.estado = true;
   }

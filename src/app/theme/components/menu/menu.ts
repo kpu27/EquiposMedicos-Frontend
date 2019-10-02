@@ -22,14 +22,14 @@ export const verticalMenuItems = [
 /*     new Menu (130, 'Procesos', null, null, 'insert_chart', null, true, 0,  roles ) ,*/    
     new Menu (130, 'Cotizaciones', null, null, 'attach_money', null, true, 0, roles),
     new Menu (131, 'Crear', '/procesos/cotizaciones-form', null, 'money', null, false, 130, roles), // TODO:
-    new Menu (132, 'Ver - Editar', '/procesos/cotizaciones', null, 'money', null, false, 130, roles), // TODO:
-    new Menu (133, 'Aprovar', '/procesos/cotizaciones/aprovar', null, 'money', null, false, 130, roles), // TODO:
+    new Menu (132, 'Listar - Editar', '/procesos/cotizaciones', null, 'money', null, false, 130, roles), // TODO:
+    new Menu (133, 'Aprobar', '/procesos/cotizaciones/aprovar', null, 'money', null, false, 130, roles), // TODO:
     new Menu (135, 'Ordenes de Trabajo', null, null, 'gavel', null, true, 0 , roles),
-    new Menu (136, 'Programar', '/procesos/orden-trabajo', null, 'gavel', null, false, 135 , roles), //TODO:
-    new Menu (137, 'Ver - Editar', '/procesos/orden-trabajo', null, 'gavel', null, false, 135 , roles), //TODO:
-    new Menu (138, 'Reporte Mantenimiento', '/procesos/orden-trabajo', null, 'gavel', null, false, 135, roles), //TODO:
-    new Menu (150, 'Mantenimiento', '/tecnicos', null, 'today', null, false, 0, roles),
-    new Menu (151, 'Historico', '/tecnicos/mantenimientos-r', null, 'history', null, false, 0, role_admin),
+    new Menu (136, 'Programar', '/procesos/programar-orden', null, 'gavel', null, false, 135 , roles), //TODO:
+    new Menu (137, 'Listar - Editar', '/procesos/orden-trabajo', null, 'gavel', null, false, 135 , roles), //TODO:
+    new Menu (138, 'Reporte Mantenimiento', '/procesos/reporte-mantenimiento', null, 'gavel', null, false, 135, roles), //TODO:
+/*     new Menu (150, 'Mantenimiento', '/tecnicos', null, 'today', null, false, 0, roles),*/    
+    new Menu (151, 'Mantenimientos Historico', '/tecnicos/mantenimientos-r', null, 'history', null, false, 0, role_admin),
     new Menu (101, 'Perfil', '/home/perfil', null, 'account_circle', null, false, 0, roles),
     new Menu (46, 'Page Not Found', '/pagenotfound', null, 'error_outline', null, false, 40, roles),
     new Menu (47, 'Error', '/error', null, 'warning', null, false, 40, roles)
