@@ -1,4 +1,4 @@
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf="estado != 'agregarOrden'">
   <div fxFlex="100" class="flex-p">
       <mat-card class="p-0 list">
           <mat-sidenav-container>
@@ -62,3 +62,24 @@
 </div>
 </div>
 
+<div fxLayout="row wrap" *ngIf="estado === 'agregarOrden'">
+  <div fxFlex="100" class="flex-p">
+      <mat-card class="p-0 list">
+          <mat-sidenav-container>
+              <div>
+                  <div class="back-gradient-gray text-white btnp" fxLayout="row" fxLayoutAlign="space-between center">
+                      <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
+                          (click)="irA('cotizaciones')">
+                          <mat-icon>keyboard_backspace</mat-icon>
+                      </button>&nbsp;&nbsp;
+                      <h4 class="title">Agregar orden</h4>
+                  </div>
+                  <div class="list-content" perfectScrollbar>
+                      <app-calendario [cotizacionDetalles]="cotizacionDetalles" [cotizacion]="cotizacion" (return)="estado = 'ordenes'; getOrdenes()">
+                      </app-calendario>
+                  </div>
+              </div>
+          </mat-sidenav-container>
+      </mat-card>
+  </div>
+</div>

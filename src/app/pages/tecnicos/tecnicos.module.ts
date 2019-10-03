@@ -14,7 +14,8 @@ import { MantenimientosRealizadosComponent } from './mantenimientos-realizados/m
 registerLocaleData(es);
 export const routes = [
   { path: '', component: TecnicosComponent, pathMatch: 'full' },
-  { path: 'mantenimientos-r', component: MantenimientosRealizadosComponent }
+  { path: 'mantenimientos-r', component: MantenimientosRealizadosComponent },
+  { path: 'reporte-mantenimiento', component: TecnicosComponent}
 ];
 
 @NgModule({
@@ -35,7 +36,8 @@ export const routes = [
     MantenimientosRealizadosComponent
   ],
   entryComponents: [
-    ScheduleDialogComponent
+    ScheduleDialogComponent,
+    TecnicosComponent
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },

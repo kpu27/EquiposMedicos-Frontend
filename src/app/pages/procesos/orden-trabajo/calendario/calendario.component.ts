@@ -103,7 +103,6 @@ export class CalendarioComponent implements OnInit {
       'fecha': ['', Validators.compose([Validators.required])]
     });
     this.form2 = this.formBuilder.group({
-      'riesgos': ['', Validators.compose([Validators.required])],
       'comentarios': ['', Validators.compose([Validators.required])]
     });
   }
@@ -111,6 +110,7 @@ export class CalendarioComponent implements OnInit {
     this.getTecnicos();
     this.usuario = this.auth.getDataUsuario();
     this.getConsecutivo();
+    console.log('COTIZACIONES DETALLE DESPITAOOO AQUIII',this.cotizacionDetalles);
   }
   public crearOrden(){
     this.getConsecutivo();
@@ -220,6 +220,7 @@ export class CalendarioComponent implements OnInit {
           color: colors.yellow,
           actions: this.actions
         }
+        console.log('FIXMEEEEEEE HEREEEE',this.cotizacion);
         for (let i = 0; i < coDetalles.length; i++) {
           this.ordenDetalle.push(
             new OrdenDetalle(157,1,fecha,'','','',0,

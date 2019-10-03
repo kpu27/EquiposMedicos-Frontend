@@ -15,13 +15,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-item let-columns="columns">
     <tr [pSelectableRow]="item" class="tbody">
-      <td class="text-center">
-          <button class="text-center" mat-icon-button pTooltip="Editar Protocolos"
-          (click)="seleccionarProtocolo(item);getTecnicos();estado=false;setTipoForm(1)"
-          tooltipPosition="top">
-          <mat-icon class="text-info">remove_red_eye</mat-icon>
-        </button>
-      </td>
       <td style="text-align: left">{{ item.numOrden }}</td>
       <td style="text-align: left">{{ item.fkCotizacion.codigo }}</td>
       <td style="text-align: left">{{ item.fkCotizacion.fkCliente.nombre }}</td>
@@ -29,17 +22,27 @@
       <td style="text-align: left">{{ getDate(item.fechaOrden) }}</td>
       <td style="text-align: left">{{ item.riesgos }}</td>
       <td class="text-center">
-        <div *ngIf="item.esatdoOrden == 0" class="badge badge-success">
+        <div *ngIf="item.esatdoOrden == 3" class="badge badge-success">
           Activo
         </div>
-        <div *ngIf="item.esatdoOrden == 1" class="badge badge-info">
+        <div *ngIf="item.esatdoOrden == 4" class="badge badge-info">
           Asignado
         </div>
+        <div *ngIf="item.esatdoOrden == 9" class="badge badge-danger">
+          Cancelada
+          </div>
       </td>
       <td class="text-center">
         <div class="row text-center">
           <div class="container">
-            <button class="text-center" mat-icon-button pTooltip="Editar Protocolos" (click)="
+            
+            <button class="text-center" mat-icon-button pTooltip="Editar Protocolos"
+              (click)="openDialog()"
+              tooltipPosition="top">
+              <mat-icon class="text-secondary">remove_red_eye</mat-icon>
+            </button>
+
+<!--             <button *ngIf="item.esatdoOrden == 3" class="text-center" mat-icon-button pTooltip="Editar Protocolos" (click)="
                 seleccionarProtocolo(item);
                 getTecnicos();
                 estado = false;
@@ -48,13 +51,7 @@
               <mat-icon class="text-info">mode_edit</mat-icon>
             </button>
 
-
-            <button *ngIf="item.esatdoOrden == 0" class="text-center" mat-icon-button pTooltip="Eliminar Protocolo"
-              tooltipPosition="top" (click)="seleccionarProtocolo(item); deleteProtocolo()">
-              <mat-icon class="text-warning">person_add</mat-icon>
-            </button>
-
-            <button *ngIf="item.esatdoOrden == 1" class="text-center" mat-icon-button pTooltip="Eliminar Protocolo"
+            <button *ngIf="item.esatdoOrden == 3" class="text-center" mat-icon-button pTooltip="Eliminar Protocolo"
               tooltipPosition="top" (click)="seleccionarProtocolo(item); deleteProtocolo()">
               <mat-icon class="text-danger">delete</mat-icon>
             </button>
@@ -62,13 +59,15 @@
             <button *ngIf="item.esatdoOrden == 9" class="text-center" mat-icon-button pTooltip="Restaurar Protocolo"
               tooltipPosition="top" (click)="seleccionarProtocolo(item); deleteProtocolo()">
               <mat-icon class="text-warning">cached</mat-icon>
-            </button>
+            </button> -->
+
           </div>
         </div>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
 
 <!--////////// table protocolos-->
 

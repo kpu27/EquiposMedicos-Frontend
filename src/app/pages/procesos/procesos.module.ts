@@ -31,6 +31,7 @@ import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/coti
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DialogComponent } from './cotizaciones/dialog/dialog.component';
 import { NgxPrintModule } from 'ngx-print';
+import { OrderDialogComponent } from './orden-trabajo/ordenes-table/order-dialog/order-dialog.component';
 registerLocaleData(es);
 
 export const routes = [
@@ -80,11 +81,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OrdenTrabajoComponent,
     CotizacionesFormComponent,
     CotizacionesListComponent,
-    DialogComponent
+    DialogComponent,
+    OrderDialogComponent
   ],
   entryComponents: [
     CalendarioDialogComponent,
-    DialogComponent
+    DialogComponent,
+    OrderDialogComponent
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },

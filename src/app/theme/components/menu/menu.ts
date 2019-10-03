@@ -27,7 +27,7 @@ export const verticalMenuItems = [
     new Menu (135, 'Ordenes de Trabajo', null, null, 'gavel', null, true, 0 , roles),
     new Menu (136, 'Programar', '/procesos/programar-orden', null, 'gavel', null, false, 135 , roles), //TODO:
     new Menu (137, 'Listar - Editar', '/procesos/orden-trabajo', null, 'gavel', null, false, 135 , roles), //TODO:
-    new Menu (138, 'Reporte Mantenimiento', '/procesos/reporte-mantenimiento', null, 'gavel', null, false, 135, roles), //TODO:
+    new Menu (138, 'Reporte Mantenimiento', '/tecnicos/reporte-mantenimiento', null, 'gavel', null, false, 135, roles), //TODO:
 /*     new Menu (150, 'Mantenimiento', '/tecnicos', null, 'today', null, false, 0, roles),*/    
     new Menu (151, 'Mantenimientos Historico', '/tecnicos/mantenimientos-r', null, 'history', null, false, 0, role_admin),
     new Menu (101, 'Perfil', '/home/perfil', null, 'account_circle', null, false, 0, roles),
