@@ -65,7 +65,6 @@ export class ActividadesTableComponent implements OnInit {
     this._AppService.get('actividad/'+id).subscribe(
       data => {
         this.actividad = data;
-        console.log(this.actividad.estado);
         this.accion = 'editar';
         this.estadoActividad();
         this.nuevoProtocolo = null;
@@ -83,7 +82,6 @@ export class ActividadesTableComponent implements OnInit {
     }else if(this.actividad.estado == 9) {
       this.estadoStr = 'Inactivo';
     }
-    console.log(this.estadoStr);
   }
 
   fkProtocolo:any;
@@ -91,25 +89,17 @@ export class ActividadesTableComponent implements OnInit {
   
 
   getEstadoActividad(e:any){
-    console.log(e);
     this.estadoActividad = e;
   }
   
 
 
   getProtocloActual(e:any){
-    console.log(e);
     this.nuevoProtocolo = e;
 	}
 
   updateActividades(id:any) {
-    // "orden": Object.keys(this.actividades).length+1,
-/*     if (this.actividad.estadoStr == 'Completado') {
-      this.actividad.estado == 9;
-    }else if(this.actividad.estadoStr == 'Pendiente') {
-      this.actividad.estado == 0;
-    } */
-    console.log(this.estadoActividad);
+
     const json = {
       "idActividades": this.actividad.idActividades,
       "fkEmpresa": this.usuario.empresa.idEmpresa,
@@ -123,7 +113,6 @@ export class ActividadesTableComponent implements OnInit {
 
     this._AppService.put('actividad/'+id, json).subscribe(
       result => {
-        console.log(result);
         this.accion = '';
         this.list.getActividadesPorProtocolos(this.list.protocoloActual);
       }

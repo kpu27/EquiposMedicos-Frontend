@@ -43,7 +43,7 @@ export class UsuariosComponent implements OnInit {
     this.settings = this.appSettings.settings;
     this.cols = [
       { field: 'IMG', header: 'Foto', width: '10%' },
-      { field: 'id', header: 'Item', width: '5%' },
+      { field: 'id', header: 'ID', width: '5%' },
       { field: 'Usuario', header: 'username', width: '15%' },
       { field: 'nombre', header: 'Nombre', width: '15%' },
       { field: 'Apellido', header: 'apellido', width: '15%' },

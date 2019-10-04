@@ -77,7 +77,7 @@ import { NgxSmartModalService, NgxSmartModalModule } from 'ngx-smart-modal';
     LoginComponent,
     RegisterComponent,
     UserMenuComponent,
-    EmpresasComponent,
+    EmpresasComponent
   ],
   entryComponents:[
     VerticalMenuComponent,

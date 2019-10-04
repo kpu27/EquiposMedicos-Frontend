@@ -35,13 +35,13 @@
                   <td class="text-center">
                     {{ item.codigo }}
                   </td>
-                  <td class="text-center">
+                  <td>
                     {{ item.fkCliente.nombre }}
                   </td>
                   <td class="text-center">
                     {{ item.vigencia }}
                   </td>
-                  <td class="text-center">
+                  <td>
                     {{ item.entrega }}
                   </td>
                   <td class="text-center">
@@ -54,43 +54,16 @@
                     <div *ngIf="item.estado == 1" class="badge badge-warning">
                       Pendiente
                     </div>
-                    <div *ngIf="item.estado == 2" class="badge badge-info">
+                    <div *ngIf="item.estado == 2" class="badge badge-success">
                       Autorizada
                     </div>
                     <div *ngIf="item.estado == 9" class="badge badge-danger">
                       Cancelado
                     </div>
-                    <div *ngIf="item.estado == 4" class="badge badge-success">
-                      Realizada
-                    </div>
                   </td>
-                  <td class="text-center">
-                    <div class="row text-center">
-                      <div class="container">
-                        <button class="text-center" mat-icon-button pTooltip="Editar Protocolos" (click)="
-                            seleccionarProtocolo(item);
-                            getTecnicos();
-                            estado = false;
-                            setTipoForm(1)
-                          " tooltipPosition="top">
-                          <mat-icon class="text-info">mode_edit</mat-icon>
-                        </button>
-
-                        <button *ngIf="item.estado == 1" class="text-center" mat-icon-button
-                          pTooltip="Eliminar Protocolo" tooltipPosition="top" (click)="
-                            seleccionarProtocolo(item); deleteProtocolo()
-                          ">
-                          <mat-icon class="text-danger">delete</mat-icon>
-                        </button>
-
-                        <button *ngIf="item.estado == 9" class="text-center" mat-icon-button
-                          pTooltip="Restaurar Protocolo" tooltipPosition="top" (click)="
-                            seleccionarProtocolo(item); deleteProtocolo()
-                          ">
-                          <mat-icon class="text-warning">cached</mat-icon>
-                        </button>
-                      </div>
-                    </div>
+                  <td>
+                    <button class="text-center" mat-icon-button pTooltip="Editar Protocolos" tooltipPosition="top" (click)="openDialog2()">
+                  <mat-icon class="text-info">done</mat-icon></button>
                   </td>
                 </tr>
               </ng-template>

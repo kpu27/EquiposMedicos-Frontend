@@ -1,0 +1,19 @@
+<p-table *ngIf="table == 0" #dt [value]="data" [columns]="cols" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Buscar Por..."
+        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto" />
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [ngStyle]="{ width: getStyle(col.width) }">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-columns="columns">
+    
+  </ng-template>
+</p-table>

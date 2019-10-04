@@ -24,7 +24,7 @@ export class EquiposListComponent implements OnInit {
   public parametro: any;
   public protocolos: any;
   public estado: boolean;
-  public usuario: any;
+  public usuario: Usuario;
   public equipo: any;
   public putEquip: any
   public idEquipos: any;
@@ -103,7 +103,7 @@ export class EquiposListComponent implements OnInit {
   }
   public getEquipos() {
     this.settings.loadingSpinner = true;
-    this.service.get(`equipos/list`).subscribe(
+    this.service.get(`equipos/list/`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
         this.equipos = result;
         this.settings.loadingSpinner = false;
@@ -143,7 +143,6 @@ export class EquiposListComponent implements OnInit {
             "codigo": datos.codigo,
             "estado": this.estadoEquipo
           }
-          console.log(equipo);
           this.service.put('equipos/' + this.idEquipo, equipo).subscribe(
             result => {
               this.estado = true;
@@ -257,7 +256,6 @@ export class EquiposListComponent implements OnInit {
           "codigo": datos.codigo,
           "estado":  this.setEstdo(this.estadoEquipo)
         };
-        console.log(equipo);
         this.service.put('equipos/'+this.idEquipo, equipo).subscribe(
           data => {
             Swal.fire({ type: 'success', text: 'Accion realizada', timer: 2000 });

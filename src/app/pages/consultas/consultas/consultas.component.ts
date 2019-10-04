@@ -64,7 +64,6 @@ export class ConsultasComponent implements OnInit {
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/cliente1/'+this.usuario.empresa.idEmpresa).subscribe(
       (res:any)=>{
-        console.log(res);
         data = res[0];
         this.data1=data[0];
         this.data2=data[1];
@@ -89,7 +88,7 @@ export class ConsultasComponent implements OnInit {
     let fechaf = this.datePipe.transform(this.fechaf2, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/tecnico/'+this.usuario.empresa.idEmpresa+'/'+this.TecnicoSelect+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{console.log(res)
+      res=>{
       this.sql2=res  
       },error=>{
         console.log(error)
@@ -102,7 +101,7 @@ export class ConsultasComponent implements OnInit {
     let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/responsable2/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{console.log(res)
+      res=>{
         data = res[0];
         this.data1=data[0];
         this.data2=data[1];
@@ -115,7 +114,7 @@ export class ConsultasComponent implements OnInit {
     let fechaf = this.datePipe.transform(this.fechaf3, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/responsable/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{console.log(res)
+      res=>{
         data = res[0];
         this.data1=data[0];
         this.data2=data[1];
@@ -129,7 +128,8 @@ export class ConsultasComponent implements OnInit {
       data => {
         this.tecnicos = data;
       },
-      err => {
+      error => {
+        console.log(error)
       }
     )
   }

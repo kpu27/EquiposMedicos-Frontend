@@ -10,6 +10,7 @@ import { Usuario, UsuarioLogin } from '../models/usuario';
   providedIn: 'root'
 })
 export class AppService {
+  //ec2-18-221-61-141.us-east-2.compute.amazonaws.com
   public url = 'http://localhost:5000/rest/v1/';
   public publicUrl = 'http://localhost:5000/';
   private token = '';

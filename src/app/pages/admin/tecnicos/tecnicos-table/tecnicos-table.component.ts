@@ -152,6 +152,7 @@ export class TecnicosTableComponent implements OnInit {
                       this.getTecnicos();
                     },
                     error => {
+                      console.log(error);
                       Swal.fire({ type: 'error', text: 'Error al Crear el Tecnico', timer: 2000 });
                     }
                   )
@@ -230,6 +231,7 @@ export class TecnicosTableComponent implements OnInit {
         this.tecnicos = data;
       },
       err => {
+        console.log(err);
       }
     )
   }

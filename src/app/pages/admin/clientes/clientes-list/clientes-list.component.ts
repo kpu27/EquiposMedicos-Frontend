@@ -4,6 +4,9 @@ import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
@@ -15,6 +18,7 @@ export class ClientesListComponent implements OnInit {
   public cols: any[];
   public estado: boolean;
   public nuevoC: any;
+  usuario:Usuario;
   public estadoCliente: number;
   public actualizar: any;
   public datos: FormGroup;
@@ -24,6 +28,7 @@ export class ClientesListComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
     public appSettings: AppSettings,
     private _AppService: AppService,
+    private service: AuthService
   ) {
     this.settings = this.appSettings.settings;
     this.cols = [
@@ -40,6 +45,7 @@ export class ClientesListComponent implements OnInit {
     this.estado = true;
   }
   ngOnInit() {
+    this.service.obtenerDatosUser();
     this.getTerceros();
     this.datos = this._formBuilder.group({
       documento: ['', Validators.compose([Validators.required])],
@@ -199,8 +205,8 @@ export class ClientesListComponent implements OnInit {
       text: 'Estas seguro de que quiere '+this.setText(this.estadoCliente)+' el Cliente?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
+      confirmButtonText: 'Si, activar',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
         let datos = this.datos.value;
@@ -228,7 +234,7 @@ export class ClientesListComponent implements OnInit {
         )
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
-          'Cancelled',
+          'Cancelado',
           'No se ha realizado ningun cambio',
           'error'
         )

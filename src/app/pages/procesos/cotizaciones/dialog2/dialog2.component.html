@@ -1,0 +1,30 @@
+<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+  <div class="row justify-content-end pb-2 bg-light">
+  </div>
+  <form>
+    <div class="container" id="printElement">
+      <div class="container-equipos" perfectScrollbar>
+        <mat-list style="position: relative">
+            <div >
+                <mat-list-item style="height: 60px;">
+                    <mat-icon mat-list-icon style="font-size: 35px">devices_other</mat-icon>
+                    <h4 mat-line style="color: gray"></h4>
+                    <p mat-line>Nuevo equipo
+                        <mat-checkbox > </mat-checkbox>
+                    </p>
+                </mat-list-item>
+                <mat-divider style=" border-top-color: rgba(0, 0, 0, 0.12); width: 80%; left: 8%;">
+                </mat-divider>
+            </div>
+        </mat-list>
+    </div>
+    </div>
+  </form>
+</cdk-virtual-scroll-viewport>
+<ngx-smart-modal #myModal identifier="myModal">
+  <h3 class="text-center">Enviar Cotización</h3>
+  <br />
+  <form action="" class="text-center">
+    
+  </form>
+</ngx-smart-modal>

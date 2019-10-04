@@ -9,7 +9,6 @@
             <mat-option (click)="formulario=1; opciones='nada'" [value]="1">Cliente</mat-option>
             <mat-option (click)="opciones='fecha'; formulario=0" [value]="1">Por tecnico</mat-option>
             <mat-option (click)="opciones='tecnicos'; formulario=0" [value]="1">Tecnicos</mat-option>
-            <mat-option (click)="opciones='equipos'; formulario=0" [value]="1"></mat-option>
             <mat-option (click)="opciones='mantenimiento';formulario=0" [value]="1">Equipo</mat-option>
           </mat-select>
         </mat-form-field>
@@ -42,28 +41,6 @@
             </div>
           <div class="col-md-4">
             <button mat-button style="color: #206936" (click)="getConsulta3();formulario=4">Consultar</button>
-          </div>
-        </div>
-        <!---->
-        <div class="row" *ngIf="opciones=='equipos'">
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Fecha inicio:</mat-label>
-              <input matInput [matDatepicker]="inicio1" placeholder="Choose a date" name="fechai3">
-              <mat-datepicker-toggle matSuffix [for]="inicio1"></mat-datepicker-toggle>
-              <mat-datepicker #inicio1></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Fecha Final:</mat-label>
-              <input matInput [matDatepicker]="final1" placeholder="Choose a date" name="fechaf3">
-              <mat-datepicker-toggle matSuffix [for]="final1"></mat-datepicker-toggle>
-              <mat-datepicker #final1></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <button mat-button style="color: #206936">Consultar</button>
           </div>
         </div>
         <!--CONSULTA DE TODOS LOS TECNICOS CON EQUIPOS-->

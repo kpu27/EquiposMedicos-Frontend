@@ -63,7 +63,7 @@ export class AuthService {
     if(payload == null || payload == '' || payload == undefined) {
       this.router.navigate(['login']);
     }else {
-      console.log(payload);
+  
       this._usuario = new Usuario();
       this._usuario.id = payload.id;
       this._usuario.nombre = payload.nombre;

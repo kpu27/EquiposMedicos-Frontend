@@ -132,6 +132,7 @@ export class InstrumentosListComponent implements OnInit {
       error => {
         this.settings.loadingSpinner = false;
         Swal.fire({ type: 'error', text: 'error al realizar la consulta!', timer: 2000 });
+        console.log(error);
       });
   }
   public getProtocolos() {
@@ -143,6 +144,7 @@ export class InstrumentosListComponent implements OnInit {
         Swal.fire({ type: 'success', text: 'listado de Protocolos!', timer: 2000 });
       },
       error => {
+        console.log(error);
         this.settings.loadingSpinner = false;
       });
   }
@@ -229,6 +231,7 @@ export class InstrumentosListComponent implements OnInit {
     this.settings.loadingSpinner = true;
     this._AppService.get(`instrumentos/list`).subscribe(
       result => {
+
         this.settings.loadingSpinner = false;
         this.instrumentos = result;
       },

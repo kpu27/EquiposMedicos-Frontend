@@ -27,10 +27,7 @@ export class VerticalMenuComponent implements OnInit {
   ngOnInit() {
     this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);
     this.roles = this.usuario.roles;
-    console.log(this.usuario)
-    console.log(this.usuario.roles)
   }
-
   ngAfterViewInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

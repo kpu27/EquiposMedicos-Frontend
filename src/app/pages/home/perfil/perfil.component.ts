@@ -31,6 +31,7 @@ export class PerfilComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, public appSettings: AppSettings, private appService: AppService, private auth: AuthService, public ngxSmartModalService: NgxSmartModalService) {
     this.settings = this.appSettings.settings;
     this.usuario = this.auth.getDataUsuario();
+    console.log(this.usuario.id);
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       apellido: ['', Validators.compose([Validators.required])],
@@ -168,8 +169,9 @@ export class PerfilComponent implements OnInit {
     }
   }
   clearImage() {
+    console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-
+    console.log(this.myInputVariable.nativeElement.files);
   }
   subirLogo() {
     if (!this.logoSeleccionado) {

@@ -23,20 +23,25 @@ import { CalendarioComponent } from './orden-trabajo/calendario/calendario.compo
 import { CalendarioDialogComponent } from './orden-trabajo/calendario/calendario-dialog/calendario-dialog.component';
 import { MatListModule } from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/cotizaciones-form.component';
 import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DialogComponent } from './cotizaciones/dialog/dialog.component';
+
 import { NgxPrintModule } from 'ngx-print';
+import { CotizacionesPorAprovarComponent } from './cotizaciones/cotizaciones-por-aprovar/cotizaciones-por-aprovar.component';
+import { Dialog2Component } from './cotizaciones/dialog2/dialog2.component';
+import { HojaVidaComponent } from './orden-trabajo/hoja-vida/hoja-vida.component';
 registerLocaleData(es);
 
 export const routes = [
   { path: '', component: ProcesosComponent, pathMatch: 'full' },
   { path: 'cotizaciones', component: CotizacionesComponent },
   { path: 'orden-trabajo', component: OrdenTrabajoComponent },
+  { path: 'cotizaciones-form', component: CotizacionesFormComponent },
+  { path: 'cotizaciones-por-aprovar', component: CotizacionesPorAprovarComponent }
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -79,10 +84,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CotizacionesFormComponent,
     CotizacionesListComponent,
     DialogComponent,
+    Dialog2Component,
+    CotizacionesPorAprovarComponent,
+    HojaVidaComponent
   ],
   entryComponents: [
     CalendarioDialogComponent,
-    DialogComponent
+    DialogComponent,
+    Dialog2Component,
+    HojaVidaComponent 
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },

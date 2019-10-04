@@ -8,6 +8,7 @@ import { AppSettings } from '../../../../app.settings';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { blockTransition } from '../../../../theme/utils/app-animation';
 import { AuthService } from 'src/app/services/auth.service';
+import { Usuario } from 'src/app/models/usuario';
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
@@ -56,7 +57,7 @@ export class CotizacionesFormComponent implements OnInit {
   public panelOpenState = false;
   public alowed: boolean;
   public cols: any[];
-  public usuario: any;
+  public usuario: Usuario;
   constructor(
     public appSettings: AppSettings,
     private _AppService: AppService,
@@ -76,8 +77,9 @@ export class CotizacionesFormComponent implements OnInit {
   }
   ngOnInit() {
     this.usuario = this.auth.getDataUsuario();
-    console.log(this.usuario = this.auth.getDataUsuario());
-    this._AppService.get('cotizacionDetalle/list').subscribe(data => { console.log(data) });
+    this._AppService.get('cotizacionDetalle/list').subscribe(
+      data => { 
+     });
     this.getClientes();
     this.getEquipos();
     this.getIdEmpresa();
@@ -106,7 +108,6 @@ export class CotizacionesFormComponent implements OnInit {
         veces = 0;
         times++;
       });
-      console.log(this.datoschanged);
     });
   }
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -126,9 +127,12 @@ export class CotizacionesFormComponent implements OnInit {
     this.idEmpresa = this.usuario.empresa.idEmpresa;
   }
   public getClientes() {
-    this._AppService.get('clientes/list').subscribe(
+    this._AppService.get('clientes/estado/'+this.usuario.empresa.idEmpresa).subscribe(
       (data: any) => {
+        console.log(data)
         this.clientes = data;
+      },error=>{
+        console.log(error)
       }
     );
   }
@@ -194,7 +198,6 @@ export class CotizacionesFormComponent implements OnInit {
       "tipoServicio": 0,
       "valorUnitario": valoru
  }
- console.log(detalles);
     this._AppService.post('cotizacionDetalle/new', detalles).subscribe(
       data => { console.log(data) }
     );
@@ -243,7 +246,6 @@ export class CotizacionesFormComponent implements OnInit {
             this._AppService.post('cotizaciones/new', contizacion).subscribe(
               (data: any) => {
                 for (let index = 0; index < this.equiposSelected.length; index++) {
-                  console.log(this.equiposSelected[index])
                   this.CrearDetalle(
                     parseInt(this.equiposSelected[index].calibracion),
                     parseInt(this.equiposSelected[index].cant),
