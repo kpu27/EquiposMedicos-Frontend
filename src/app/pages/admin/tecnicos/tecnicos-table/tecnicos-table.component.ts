@@ -31,7 +31,7 @@ export class TecnicosTableComponent implements OnInit {
   private idTecnico: number;
   private idEmpresa: number;
   public estadoTec: number;
-  public usuario: any;
+  public usuario: Usuario;
   public settings: Settings;
   public cols: any[];
   public roles: Array<any> = [];
@@ -50,8 +50,8 @@ export class TecnicosTableComponent implements OnInit {
     ];
   }
   ngOnInit() {
+    this.usuario = this.servicio.obtenerDatosUser();
     this.getTecnicos();
-    this.usuario = this
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       nombreCorto: ['', Validators.compose([Validators.required])],
@@ -226,7 +226,7 @@ export class TecnicosTableComponent implements OnInit {
     }
   }
   public getTecnicos() {
-    this.service.get('tecnicos/list').subscribe(
+    this.service.get('tecnicos/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
       data => {
         this.tecnicos = data;
       },

@@ -45,8 +45,8 @@ export class ClientesListComponent implements OnInit {
     this.estado = true;
   }
   ngOnInit() {
-    this.service.obtenerDatosUser();
-    this.getTerceros();
+    this.usuario = this.service.obtenerDatosUser();
+    this.getCliente();
     this.datos = this._formBuilder.group({
       documento: ['', Validators.compose([Validators.required])],
       nombre: ['', Validators.compose([Validators.required])],
@@ -107,7 +107,7 @@ export class ClientesListComponent implements OnInit {
       result => {
       alert('El cliente se agregado con exito'),
         this.estado = true
-        this.getTerceros();
+        this.getCliente();
         this.datos.reset();
       }
     )
@@ -149,12 +149,12 @@ export class ClientesListComponent implements OnInit {
       result => {
         Swal.fire({ type: 'success', text: 'cliente actualizado con exito!', timer: 2000 });
         this.estado = true
-        this.getTerceros();
+        this.getCliente();
       }
     )
   }
-  public getTerceros() {
-    this._AppService.get(`clientes/list`).subscribe(
+  public getCliente() {
+    this._AppService.get(`clientes/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
         this.clientes = result;
       },
@@ -226,7 +226,7 @@ export class ClientesListComponent implements OnInit {
         this._AppService.put(`cliente/${this.idCliente}`, cliente).subscribe(
           data => {
             Swal.fire({ type: 'success', text: 'Accion Realizada', timer: 2000 });
-            this.getTerceros();
+            this.getCliente();
           },
           error => {
             console.log(error)

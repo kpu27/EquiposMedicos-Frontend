@@ -62,7 +62,7 @@ export class ListComponent implements OnInit {
 
   //GET PROTOCOLOS
   public getProtocolos(){
-    this._AppService.get(`protocolos/list`).subscribe(
+    this._AppService.get(`protocolos/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
         result =>{
           this.protocolos = result;
         },

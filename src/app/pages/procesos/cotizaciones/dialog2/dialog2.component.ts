@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CotizacionesPorAprovarComponent } from '../cotizaciones-por-aprovar/cotizaciones-por-aprovar.component';
 @Component({
   selector: 'app-dialog2',
   templateUrl: './dialog2.component.html',
@@ -12,26 +14,21 @@ export class Dialog2Component implements OnInit {
   items: any;
   subTotal: Array<any> = [];
   monto: any = 0;
+  aut:any;
 
-  constructor(private service: AppService, public mgxSmartModalService: NgxSmartModalService) { }
+  constructor(
+    public dialogRef:MatDialogRef<CotizacionesPorAprovarComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any,
+    private service: AppService, 
+    public mgxSmartModalService: NgxSmartModalService) { }
 
   ngOnInit() {
-
   }
 
   public getEquiposAut(){
-    this.service.get("/cotizacionDetalle/cotizacion/").subscribe(
-      res=>{}
-    )
-  }
-
- 
-  getItemsCotizados(idCotizacion: number) {
-    this.service.get(`cotizacionDetalle/cotizacion/${idCotizacion}`).subscribe(
-      (data) => {
-        console.log(data);
-        this.items = data;
-      }
+    this.service.get("/cotizacionDetalle/cotizacion/"+this.data).subscribe(
+      res=>{ console.log(res)
+      this.aut=res}
     )
   }
 

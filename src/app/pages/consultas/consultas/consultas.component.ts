@@ -52,7 +52,7 @@ export class ConsultasComponent implements OnInit {
   }
   }
   public getClientes() {
-    this.service.get('clientes/list').subscribe(
+    this.service.get('clientes/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
       (data: any) => {
         this.clientes = data;
         

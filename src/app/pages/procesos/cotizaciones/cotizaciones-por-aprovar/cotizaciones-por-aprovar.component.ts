@@ -32,6 +32,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
   public info: any;
   public display: boolean = false;
   public cols: any[];
+  SelectCotizacion:any;
   usuario:Usuario;
 
   name: string;
@@ -79,6 +80,11 @@ export class CotizacionesPorAprovarComponent implements OnInit {
     return style.toString();
   }
 
+  selectCotizacion(cotizacion:any){
+    this.SelectCotizacion = cotizacion;
+    console.log(this.SelectCotizacion)
+  }
+  
   openDialog() {
 
     const dialogConfig = new MatDialogConfig();
@@ -90,25 +96,15 @@ export class CotizacionesPorAprovarComponent implements OnInit {
     this.dialog.open(DialogComponent, dialogConfig);
   }
 
-  openDialog2() {
-
+  openDialog2() { 
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
-    dialogConfig.width = '40%';
+    dialogConfig.width = '30%';
     dialogConfig.height = '80%';
 
-/*     dialogConfig.data = {
-      id: 1,
-      title: 'Angular For Beginners'
-    };
- */
-/*     dialogConfig.position = {
-      'top': '0',
-      left: '0'
-    }; */
-
+    dialogConfig.data = this.SelectCotizacion;
     this.dialog.open(Dialog2Component, dialogConfig);
   }
 

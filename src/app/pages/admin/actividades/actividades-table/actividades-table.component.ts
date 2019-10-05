@@ -24,7 +24,7 @@ export class ActividadesTableComponent implements OnInit {
   public actividad;
   public protocoloSeleccionado: string = ""; 
   public protocoloActual;
-  public usuario:any;
+  public usuario:Usuario;
   @Input()
   descripcion:any;
   estadoStr:any;
@@ -121,7 +121,7 @@ export class ActividadesTableComponent implements OnInit {
 
   //GET PROTOCOLOS
   public getProtocolos(){
-    this._AppService.get(`protocolos/list`).subscribe(
+    this._AppService.get(`protocolos/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
         result =>{
           this.protocolos = result;
         },

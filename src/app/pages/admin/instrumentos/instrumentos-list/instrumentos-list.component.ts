@@ -32,7 +32,7 @@ export class InstrumentosListComponent implements OnInit {
   public selectinstrumento: any;
   public vacion: boolean;
   public actualizar: any;
-  public usuario: any;
+  public usuario: Usuario;
   public idInstrumentos: any;
   public datos: FormGroup;
   public datoschanged: boolean = true;
@@ -68,8 +68,8 @@ export class InstrumentosListComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.getInstrumentos();
     this.usuario = this.servicio.getDataUsuario();
+    this.getInstrumentos();
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       modelo: ['', Validators.compose([Validators.required])],
@@ -137,7 +137,7 @@ export class InstrumentosListComponent implements OnInit {
   }
   public getProtocolos() {
     this.settings.loadingSpinner = true;
-    this._AppService.get(`protocolos/list`).subscribe(
+    this._AppService.get(`protocolos/empresa`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
         this.protocolos2 = result;
         this.settings.loadingSpinner = false;
@@ -229,9 +229,8 @@ export class InstrumentosListComponent implements OnInit {
   }
   public getInstrumentos() {
     this.settings.loadingSpinner = true;
-    this._AppService.get(`instrumentos/list`).subscribe(
+    this._AppService.get(`instrumentos/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
-
         this.settings.loadingSpinner = false;
         this.instrumentos = result;
       },
