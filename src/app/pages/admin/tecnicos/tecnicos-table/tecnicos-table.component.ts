@@ -228,8 +228,10 @@ export class TecnicosTableComponent implements OnInit {
     }
   }
   public getTecnicos() {
+    this.settings.loadingSpinner = true;
     this.service.get('tecnicos/list').subscribe(
       data => {
+        this.settings.loadingSpinner = false;
         this.tecnicos = data;
       },
       err => {

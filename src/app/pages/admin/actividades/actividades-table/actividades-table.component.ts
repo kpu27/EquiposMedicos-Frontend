@@ -88,14 +88,12 @@ export class ActividadesTableComponent implements OnInit {
 
   fkProtocolo:any;
 
-  
 
   getEstadoActividad(e:any){
     console.log(e);
     this.estadoActividad = e;
   }
   
-
 
   getProtocloActual(e:any){
     console.log(e);

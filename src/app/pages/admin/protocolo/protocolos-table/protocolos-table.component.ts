@@ -119,9 +119,11 @@ export class ProtocolosTableComponent implements OnInit {
     )
   }
   public getProtocolos() {
+    this.settings.loadingSpinner = true;
     this.service.get('protocolos/list').subscribe(
       data => {
         this.protocolos = data;
+        this.settings.loadingSpinner = false;
       },
       error => {
       }

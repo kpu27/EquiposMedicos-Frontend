@@ -1,10 +1,99 @@
 <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+
   <div class="row justify-content-end pb-2 bg-light">
     <div class="col-md-12">
-      HOLA
+      <button class="ml-2" mat-mini-fab color="warn" (click)="close()" style="float: right">
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button class="ml-2" mat-mini-fab color="accent" style="float: right"
+        styleSheetFile="../../../../../../node_modules/bootstrap/dist/css/bootstrap.css" printSectionId="printElement"
+        ngxPrint>
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-mini-fab color="primary" (click)="ngxSmartModalService.getModal('myModal').open()"
+        style="float: right">
+        <mat-icon>email</mat-icon>
+      </button>
     </div>
   </div>
-  <form>
-   
+
+  <form action="">
+    <div class="container">
+      <div class="row text-center m-0 py-2 bg-light w-100">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"># Orden &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"># Cotización &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente">Fecha cotización &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+      </div>
+    
+      <div class="row text-center m-0 py-2 bg-light w-100">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"> Cliente &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"> Técnico &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+      </div>
+    
+      <div class="row text-center m-0 py-2 bg-light w-100">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"> Comentarios &nbsp;<b class="text-danger">*</b></label>
+            <textarea readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    
+      <div class="row text-center m-0 py-2 bg-light w-100">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"> Fecha &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"> Estado &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="text-muted" for="idcliente"> %%%%%%% &nbsp;<b class="text-danger">*</b></label>
+            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
+              class="form-control form-control-sm">
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
+
 </cdk-virtual-scroll-viewport>

@@ -154,13 +154,18 @@ export class CalendarioComponent implements OnInit {
     let numOrdenes
     let idEmpresa = this.usuario.empresa.idEmpresa
     this.service.get('ordenes/count').subscribe(
-      (data: any) => { numOrdenes = data }
+      (data: any) => { numOrdenes = data;console.log('DATA ->',data)
+      this.service.get('parametro/filtro_empresa_grupo_parametro/'+idEmpresa+'/0/163').subscribe(
+        (data: any) => { console.log('dataa 2 ->',data);this.setConsecutivo(data[0].nombreCorto+data[0].valor+numOrdenes)}
+     );
+    }
+      
     );
-    this.service.get('parametro/filtro_empresa_grupo_parametro/'+idEmpresa+'/0/163').subscribe(
-       (data: any) => { this.setConsecutivo(data[0].nombreCorto+data[0].valor+numOrdenes)}
-    );
+
   }
-  public setConsecutivo(consecutivo: number){
+
+  public setConsecutivo(consecutivo: any){
+    console.log('Consecutivo ',consecutivo);
      this.consecutivo = String(consecutivo); 
   }
   public setOrden(){

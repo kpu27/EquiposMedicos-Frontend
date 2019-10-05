@@ -63,8 +63,10 @@ export class ListComponent implements OnInit {
 
   //GET PROTOCOLOS
   public getProtocolos(){
+    this.settings.loadingSpinner = true;
     this._AppService.get(`protocolos/list`).subscribe(
         result =>{
+          this.settings.loadingSpinner = false;
           this.protocolos = result;
           console.log(result);
         },

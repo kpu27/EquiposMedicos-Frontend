@@ -148,8 +148,10 @@ export class ClientesListComponent implements OnInit {
     )
   }
   public getTerceros() {
+    this.settings.loadingSpinner = true;
     this._AppService.get(`clientes/list`).subscribe(
       result => {
+        this.settings.loadingSpinner = false;
         this.clientes = result;
       },
       error => {
