@@ -101,7 +101,8 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo": datos.telefonoFijo,
       "telefonoCelular": datos.telefonoCelular,
       "atencion": datos.atencion,
-      "estado": 0
+      "estado": 0,
+      "fkEmpresa":this.usuario.empresa.idEmpresa
     }
     this._AppService.post('clientes/new', cliente).subscribe(
       result => {
@@ -143,7 +144,8 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo": datos.telefonoFijo,
       "telefonoCelular": datos.telefonoCelular,
       "atencion": datos.atencion,
-      "estado": this.estadoCliente
+      "estado": this.estadoCliente,
+      "fkEmpresa":this.usuario.empresa.idEmpresa
     }
     this._AppService.put('cliente/' + this.idCliente, cliente).subscribe(
       result => {
@@ -205,7 +207,7 @@ export class ClientesListComponent implements OnInit {
       text: 'Estas seguro de que quiere '+this.setText(this.estadoCliente)+' el Cliente?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, activar',
+      confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
@@ -221,7 +223,8 @@ export class ClientesListComponent implements OnInit {
           "telefonoFijo": datos.telefonoFijo,
           "telefonoCelular": datos.telefonoCelular,
           "atencion": datos.atencion,
-          "estado": this.setEstdo(this.estadoCliente)
+          "estado": this.setEstdo(this.estadoCliente),
+          "fkEmpresa":this.usuario.empresa.idEmpresa
         }
         this._AppService.put(`cliente/${this.idCliente}`, cliente).subscribe(
           data => {

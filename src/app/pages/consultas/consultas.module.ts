@@ -13,7 +13,7 @@ import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ChartCommonModule } from '@swimlane/ngx-charts';
+import {ChartModule} from 'primeng/chart';
 
 
 
@@ -40,7 +40,7 @@ export const routes:Routes =[
     CardModule,
     ButtonModule,
     InputTextModule,
-    ChartCommonModule
+    ChartModule
  ]
 })
 export class ConsultasModule { }

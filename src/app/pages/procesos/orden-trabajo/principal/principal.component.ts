@@ -38,8 +38,13 @@ export class PrincipalComponent implements OnInit {
     );
   }
 
+  showEvent(event)
+  {
+    console.log(event);
+  }
+
   crearOrden(cotizacion) {
-    this._AppService.get(`cotizacionDetalle/cotizacion/${cotizacion.idCotizEncab}`).subscribe(result => { this.cotizacionDetalles = result; this.cotizacion = cotizacion; this.estado = 'agregarOrden' },
+    this._AppService.get(`cotizacionDetalle/cotizacion/${cotizacion.idCotizEncab}`).subscribe(result => { console.log('pendiente');this.cotizacionDetalles = result; this.cotizacion = cotizacion; this.estado = 'agregarOrden' },
       error => { this.Toast.fire(this.error_en_La_consulta) });
   }
 

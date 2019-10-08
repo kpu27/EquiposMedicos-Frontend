@@ -1,4 +1,15 @@
-<p-table  #dt [value]="data" [paginator]="true" [rows]="10">
+<div fxLayout="row wrap" *ngIf="estado != 'agregarOrden'">
+  <div fxFlex="100" class="flex-p">
+      <mat-card class="p-0 list">
+          <mat-sidenav-container>
+              <div>
+                  <div class="back-gradient-gray text-white btnp" fxLayout="row" fxLayoutAlign="space-between center">
+                      <h5 style="float: right">Listado de Cotizaciones</h5>
+                  </div>
+                  <div class="list-content" perfectScrollbar>
+
+
+<p-table  #dt [value]="cotizaciones" [paginator]="true" [rows]="10">
   <ng-template pTemplate="header">
     <tr class="bg">
       <th width="10%">Codigo</th>
@@ -20,9 +31,9 @@
       <td style="text-align: left">{{item.viaticoValor | currency}}</td>
       <td style="text-align: left">{{item.responsable}}</td>
       <td style="text-align: left">
-        <div *ngIf="item.estado === 0" style="background: rgb(216, 86, 63); padding: 4px; color: white; text-align: center"> Sin orden </div>
-        <div *ngIf="item.estado === 1" style="background: rgb(77, 175, 175); padding: 4px; color: white; text-align: center"> Programado </div>
-        <div *ngIf="item.estado === 2" style="background: rgb(84, 184, 128); padding: 4px; color: white; text-align: center"> Finalizado </div>
+        <div *ngIf="item.estado === 2" style="background: rgb(216, 86, 63); padding: 4px; color: white; text-align: center"> Sin Técnico </div>
+        <div *ngIf="item.estado === 3" style="background: rgb(77, 175, 175); padding: 4px; color: white; text-align: center"> Programado </div>
+        <div *ngIf="item.estado === 4" style="background: rgb(84, 184, 128); padding: 4px; color: white; text-align: center"> Finalizado </div>
       </td>
 
       <td>
@@ -31,11 +42,11 @@
             </mat-icon>
         </button>
 
-        <button mat-icon-button pTooltip="Crear Orden" tooltipPosition="top" (click)="CrearOrden(item)"  *ngIf="item.estado === 0">
+        <button mat-icon-button pTooltip="Crear Orden" tooltipPosition="top" (click)="CrearOrden(item)"  *ngIf="item.estado === 2">
             <mat-icon class="text-success">note_add</mat-icon>
           </button>
 
-          <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top" *ngIf="item.estado != 0 && item.estado != 1">
+          <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top" *ngIf="item.estado != 2 && item.estado != 1">
               <mat-icon>remove_red_eye</mat-icon>
             </button>
       </td>
@@ -43,3 +54,32 @@
   </ng-template>
 </p-table>
 
+                   
+</div>
+</div>
+</mat-sidenav-container>
+</mat-card>
+</div>
+</div>
+
+<div fxLayout="row wrap" *ngIf="estado === 'agregarOrden'">
+  <div fxFlex="100" class="flex-p">
+      <mat-card class="p-0 list">
+          <mat-sidenav-container>
+              <div>
+                  <div class="back-gradient-gray text-white btnp" fxLayout="row" fxLayoutAlign="space-between center">
+                      <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
+                          (click)="irA('cotizaciones')">
+                          <mat-icon>keyboard_backspace</mat-icon>
+                      </button>&nbsp;&nbsp;
+                      <h4 class="title">Agregar orden</h4>
+                  </div>
+                  <div class="list-content" perfectScrollbar>
+                      <app-calendario [cotizacionDetalles]="cotizacionDetalles" [cotizacion]="cotizacion" (return)="estado = 'ordenes'; getOrdenes()">
+                      </app-calendario>
+                  </div>
+              </div>
+          </mat-sidenav-container>
+      </mat-card>
+  </div>
+</div>

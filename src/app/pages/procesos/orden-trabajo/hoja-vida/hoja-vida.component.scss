@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+h2{
+    align-content: center;
+    text-align: center;
+    margin: 0 0 20px 0px;
+    font-family: 'Roboto', sans-serif;
+}
+.imagen{
+align-content: center;
+text-align: center;
+width: 150px;
+height:150px;
+border: solid 3px white;
+border-radius:250px;
+}
+img{
+    width: 100%;
+    height: 100%; 
+    border-radius:250px;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+tr, th{
+    background-color: #E1EBDA;
+}
+
+
+td, th {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #fff;
+}

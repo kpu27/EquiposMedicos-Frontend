@@ -3,6 +3,13 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
 import { DatePipe } from '@angular/common';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
+
+export interface DialogData {
+  name: string;
+}
+
 @Component({
   selector: 'app-ordenes-table',
   templateUrl: './ordenes-table.component.html',
@@ -18,22 +25,24 @@ export class OrdenesTableComponent implements OnInit {
   constructor( 
     private datePipe: DatePipe,
     public appSettings:AppSettings, 
-    private _AppService:AppService) {  
+    private _AppService:AppService,
+    public dialog: MatDialog
+    ) {  
       this.settings = this.appSettings.settings; 
       this.table = 0;
       this.cols = [
-        { field: 'idOrdenes',header: 'Id', width: '5%' },
         { field: 'numOrden',header: '# Orden', width: '10%' },
-        { field: 'fkCotizacion',header: '# Cotizacion', width: '10%' },
-        { field: 'fkCotizacion',header: 'Cliente', width: '20%' },
+        { field: 'fkCotizacion',header: '# Cotizacion', width: '5%' },
+        { field: 'fkCotizacion',header: 'Cliente', width: '15%' },
         { field: 'fkCotizacion',header: 'Responsable', width: '10%' },
         { field: 'fechaOrden',header: 'Fecha', width: '10%' },
         { field: 'riesgos',header: 'Riesgo', width: '10%' },
-        { field: 'esatdoOrden',header: 'Estado', width: '10%' },
-        { filed: 'acciones', header: 'Acciones', width: '10%'}
+        { field: 'esatdoOrden',header: 'Estado', width: '6%' },
+        { filed: 'acciones', header: 'Acciones', width: '4%'}
       ]; 
     }
   ngOnInit() {
+
   }
   public return(){
     this.table = 0;
@@ -55,4 +64,27 @@ export class OrdenesTableComponent implements OnInit {
   public getStyle(style: string) {
     return style.toString();
   }
+
+  openDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '50%';
+    dialogConfig.height = '50%';
+
+/*     dialogConfig.data = {
+      id: 1,
+      title: 'Angular For Beginners'
+    };
+
+    dialogConfig.position = {
+      'top': '0',
+      left: '0'
+    }; */
+
+    this.dialog.open(OrderDialogComponent, dialogConfig);
+  }
+
 }

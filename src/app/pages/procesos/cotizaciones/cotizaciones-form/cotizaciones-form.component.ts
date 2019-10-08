@@ -190,7 +190,7 @@ export class CotizacionesFormComponent implements OnInit {
     let detalles = {
       "calibracion": calibracion,
       "cantidad": cantidad,
-      "estado": 0,
+      "estado": 1,
       "fkCotizEncab": idCot,
       "fkEquipos": {"idEquipos":idEqui },
       "orden": orden,
@@ -214,7 +214,7 @@ export class CotizacionesFormComponent implements OnInit {
   public submit() {
     if(this.validarInput() == true){
       swalWithBootstrapButtons.fire({
-        text: 'Seguro de que quiere Crear la Catizacion?',
+        text: 'Seguro de que quiere Crear la Cotizacion?',
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Si',

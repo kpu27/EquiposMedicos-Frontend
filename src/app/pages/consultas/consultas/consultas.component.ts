@@ -35,18 +35,19 @@ export class ConsultasComponent implements OnInit {
   data2:any = {};
   data3:any = 0;
   data:any;
+  alison:any;
 
 
   constructor( private datePipe: DatePipe,private service:AppService, private servicio: AuthService) { 
 
-    this.data = {
+    this.alison = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
           {
-              label: 'My First dataset',
+              label: 'Mi primer chart',
               backgroundColor: '#42A5F5',
               borderColor: '#1E88E5',
-              data: [65, 59, 80, 81, 56, 55, 40]
+              alison: [65, 59, 80, 81, 56, 55, 40]
           }
       ]
   }
@@ -145,7 +146,6 @@ export class ConsultasComponent implements OnInit {
     this.usuario = this.servicio.obtenerDatosUser();
     this.getClientes();
     this.getTecnicos();
-    this.getConsulta1();
   }
 
 }

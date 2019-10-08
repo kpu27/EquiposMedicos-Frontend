@@ -34,6 +34,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
   public cols: any[];
   SelectCotizacion:any;
   usuario:Usuario;
+  aut:any;
 
   name: string;
 
@@ -69,6 +70,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
         this.settings.loadingSpinner = false; }
     );
   }
+  
 
   public openForm() {
     this.setidcot.emit(this.data.length);
@@ -82,7 +84,6 @@ export class CotizacionesPorAprovarComponent implements OnInit {
 
   selectCotizacion(cotizacion:any){
     this.SelectCotizacion = cotizacion;
-    console.log(this.SelectCotizacion)
   }
   
   openDialog() {
@@ -103,8 +104,8 @@ export class CotizacionesPorAprovarComponent implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.width = '30%';
     dialogConfig.height = '80%';
-
     dialogConfig.data = this.SelectCotizacion;
+
     this.dialog.open(Dialog2Component, dialogConfig);
   }
 

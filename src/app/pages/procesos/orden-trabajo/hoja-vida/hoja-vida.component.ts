@@ -6,23 +6,24 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-hoja-vida',
   templateUrl: './hoja-vida.component.html',
+  styleUrls: ['./hoja-vida.component.scss'],
   providers: [DatePipe]
 })
 export class HojaVidaComponent implements OnInit {
   @Input() data: any;
   public settings: Settings;
   public protocolos: any;
-  public table:number;
+  public table: number;
   public cols: any[];
-  constructor( 
+  constructor(
     private datePipe: DatePipe,
-    public appSettings:AppSettings, 
-    private _AppService:AppService) {  
-      this.settings = this.appSettings.settings; 
-    }
-  ngOnInit() {
+    public appSettings: AppSettings,
+    private _AppService: AppService) {
+    this.settings = this.appSettings.settings;
   }
-  public return(){
-    this.table = 0;
-  }
+ngOnInit() {
+}
+  public return (){
+  this.table = 0;
+}
 }
