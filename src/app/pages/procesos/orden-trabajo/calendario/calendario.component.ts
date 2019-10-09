@@ -134,7 +134,7 @@ export class CalendarioComponent implements OnInit {
     );
   }
   public setEstadoCotizacion(){
-    this.cotizacion.estado = 1;
+    this.cotizacion.estado = 3;
     this.service.put('cotizaciones/update',this.cotizacion).subscribe(
       (data: any) => {}
     );
