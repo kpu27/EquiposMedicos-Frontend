@@ -32,6 +32,9 @@ import { MatAutocompleteModule,
          MatToolbarModule,
          MatTooltipModule,
          MatStepperModule } from '@angular/material';
+import { ChartCommonModule } from '@swimlane/ngx-charts';
+
+      
 
 @NgModule({
   imports: [
@@ -67,7 +70,8 @@ import { MatAutocompleteModule,
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    ChartCommonModule
   ],
   exports: [
     FlexLayoutModule,
@@ -101,7 +105,8 @@ import { MatAutocompleteModule,
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    ChartCommonModule
   ],
   declarations: []
 })

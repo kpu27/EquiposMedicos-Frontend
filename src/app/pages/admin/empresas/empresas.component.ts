@@ -175,7 +175,6 @@ export class EmpresasComponent implements OnInit {
     this._AppService.get(`empresa/list`).subscribe(
       result => {
         this.empresas = result;
-        console.log(result);
       },
       error => {
         console.log(error);
@@ -293,9 +292,8 @@ export class EmpresasComponent implements OnInit {
     }
   }
   clearImage() {
-    console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    console.log(this.myInputVariable.nativeElement.files);
+  
   }
   subirLogo() {
     if (!this.logoSeleccionado) {

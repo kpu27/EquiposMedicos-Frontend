@@ -24,6 +24,7 @@ export const routes: Routes = [
             { path: 'procesos', loadChildren: './pages/procesos/procesos.module#ProcesosModule', data: { breadcrumb: 'Procesos' } },
             //{ path: 'users', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
             { path: 'tecnicos', loadChildren: './pages/tecnicos/tecnicos.module#TecnicosModule', data: { breadcrumb: 'Tecnicos' } },
+            { path: 'consultas', loadChildren: './pages/consultas/consultas.module#ConsultasModule', data: { breadcrumb: 'Consultas' } },
             { path: 'empresas', component: EmpresasComponent},
         ]
     },  

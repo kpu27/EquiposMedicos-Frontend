@@ -49,7 +49,6 @@ export class ListComponent implements OnInit {
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
-    console.log(this.protocolo);
     this.usuario = this.auth.getDataUsuario();
     this.getProtocolos();
   }
@@ -63,12 +62,10 @@ export class ListComponent implements OnInit {
 
   //GET PROTOCOLOS
   public getProtocolos(){
-    this.settings.loadingSpinner = true;
-    this._AppService.get(`protocolos/list`).subscribe(
+    this._AppService.get(`protocolos/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
         result =>{
           this.settings.loadingSpinner = false;
           this.protocolos = result;
-          console.log(result);
         },
         error =>{
           console.log(error);
@@ -88,11 +85,9 @@ public protocoloActual
 
   public nuevaActividad() {
     this.ngxSmartModalService.getModal('modalNuevaActividad').open();
-    console.log(this.protocoloActual);
     if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string' ) {
       let x = this.getProtocoloById(this.protocoloActual);
       this.protocoloSeleccionado = x.nombre;
-      console.log(this.protocoloSeleccionado);
     }
 
   }
@@ -101,12 +96,10 @@ public protocoloActual
 //GET ACTIVIDADES X PROTOCOLOS
   public getActividadesPorProtocolos(id: string){
     this.protocoloActual = id;
-    console.log(this.protocoloActual);
     if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string') {
     this._AppService.get(`actividades/protocolo/${id}`).subscribe(
       result=>{
         this.actividades = result;
-        console.log(result);
       },
       error =>{
         console.log ( error);
@@ -124,9 +117,6 @@ public protocoloActual
       "orden": Object.keys(this.actividades).length+1 , 
       "estado": this.estado
     }
-    console.log(this.usuario.empresa.idEmpresa);
-    console.log(this.protocolos.idProtocolo);
-    console.log(String(this.actividad));
     this._AppService.post(`actividad/new`, nueva_actividad).subscribe(
       result => {
         Swal.fire(

@@ -15,7 +15,7 @@ registerLocaleData(es);
 export const routes = [
   { path: '', component: TecnicosComponent, pathMatch: 'full' },
   { path: 'mantenimientos-r', component: MantenimientosRealizadosComponent },
-  { path: 'reporte-mantenimiento', component: TecnicosComponent}
+  { path: 'reporte-mantenimiento', component: TecnicosComponent }
 ];
 
 @NgModule({

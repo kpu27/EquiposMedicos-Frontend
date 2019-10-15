@@ -31,7 +31,7 @@ export class TecnicosTableComponent implements OnInit {
   private idTecnico: number;
   private idEmpresa: number;
   public estadoTec: number;
-  public usuario: any;
+  public usuario: Usuario;
   public settings: Settings;
   public cols: any[];
   public roles: Array<any> = [];
@@ -50,8 +50,8 @@ export class TecnicosTableComponent implements OnInit {
     ];
   }
   ngOnInit() {
+    this.usuario = this.servicio.obtenerDatosUser();
     this.getTecnicos();
-    this.usuario = this
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       nombreCorto: ['', Validators.compose([Validators.required])],
@@ -101,7 +101,6 @@ export class TecnicosTableComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           let datos = this.datos.value;
-          console.log(datos);
           let tecnico = {
             "idTecnico": 50,
             "nombre": datos.nombre,
@@ -145,7 +144,6 @@ export class TecnicosTableComponent implements OnInit {
               this.agregarTecnico = result;
               this.service.post('usuarios/new', newUser).subscribe(
                 (result: any) => {
-                  console.log(result);
                   tecnico.fkUsuario = result.fkUsuario;
                   this.service.put('tecnicos/' + result.idTecnico, tecnico).subscribe(
                     result => {
@@ -228,10 +226,8 @@ export class TecnicosTableComponent implements OnInit {
     }
   }
   public getTecnicos() {
-    this.settings.loadingSpinner = true;
-    this.service.get('tecnicos/list').subscribe(
+    this.service.get('tecnicos/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
       data => {
-        this.settings.loadingSpinner = false;
         this.tecnicos = data;
       },
       err => {

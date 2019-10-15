@@ -21,26 +21,32 @@ import { CotizacionesTableComponent } from './orden-trabajo/cotizaciones-table/c
 import { TooltipModule } from '@swimlane/ngx-charts';
 import { CalendarioComponent } from './orden-trabajo/calendario/calendario.component';
 import { CalendarioDialogComponent } from './orden-trabajo/calendario/calendario-dialog/calendario-dialog.component';
-import { MatListModule } from '@angular/material';
+import { MatListModule, MatDialog,MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/cotizaciones-form.component';
 import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DialogComponent } from './cotizaciones/dialog/dialog.component';
+import {CheckboxModule} from 'primeng/checkbox';
+
 import { NgxPrintModule } from 'ngx-print';
-import { OrderDialogComponent } from './orden-trabajo/ordenes-table/order-dialog/order-dialog.component';
+import { CotizacionesPorAprovarComponent } from './cotizaciones/cotizaciones-por-aprovar/cotizaciones-por-aprovar.component';
+import { Dialog2Component } from './cotizaciones/dialog2/dialog2.component';
+import { HojaVidaComponent } from './orden-trabajo/hoja-vida/hoja-vida.component';
+
+
 registerLocaleData(es);
 
 export const routes = [
   { path: '', component: ProcesosComponent, pathMatch: 'full' },
   { path: 'cotizaciones', component: CotizacionesComponent },
   { path: 'orden-trabajo', component: OrdenTrabajoComponent },
-  { path: 'cotizaciones-form', component: CotizacionesTableComponent },
+  { path: 'cotizaciones-form', component: CotizacionesFormComponent },
   { path: 'programar-orden', component: CotizacionesTableComponent},
-//  { path: 'reporte-mantenimiento', component: ReporteMantenimientoComponent}
+    { path: 'cotizaciones-por-aprovar', component: CotizacionesPorAprovarComponent},
+    { path: 'hoja-vida', component: HojaVidaComponent}
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -66,7 +72,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatCheckboxModule,
     NgxSmartModalModule.forRoot(),
     pCalendar,    
-    NgxPrintModule
+    NgxPrintModule,
+    MatDialogModule,
+    CheckboxModule
   ],
   declarations: [
     ProcesosComponent,
@@ -78,16 +86,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CalendarioComponent,
     CalendarioDialogComponent,
     ProcesosComponent,
-    OrdenTrabajoComponent,
     CotizacionesFormComponent,
     CotizacionesListComponent,
     DialogComponent,
-    OrderDialogComponent
+    Dialog2Component,
+    CotizacionesPorAprovarComponent,
+    HojaVidaComponent
   ],
   entryComponents: [
     CalendarioDialogComponent,
     DialogComponent,
-    OrderDialogComponent
+    Dialog2Component,
+    HojaVidaComponent 
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },

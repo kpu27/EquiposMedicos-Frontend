@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { blockTransition } from '../../../theme/utils/app-animation';
 import { AppSettings } from '../../../app.settings';
 import { Settings } from '../../../app.settings.model';
+
 @Component({
   selector: 'app-cotizaciones',
   templateUrl: './cotizaciones.component.html',
@@ -31,6 +32,7 @@ export class CotizacionesComponent implements OnInit {
     this.showList = true;
     this.recargarTable();
   }
+  
   recargarTable() {
     this.TableRec = this.TableRec + 1;
   }

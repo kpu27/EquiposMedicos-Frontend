@@ -4,6 +4,9 @@ import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
@@ -15,6 +18,7 @@ export class ClientesListComponent implements OnInit {
   public cols: any[];
   public estado: boolean;
   public nuevoC: any;
+  usuario:Usuario;
   public estadoCliente: number;
   public actualizar: any;
   public datos: FormGroup;
@@ -24,6 +28,7 @@ export class ClientesListComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
     public appSettings: AppSettings,
     private _AppService: AppService,
+    private service: AuthService
   ) {
     this.settings = this.appSettings.settings;
     this.cols = [
@@ -40,7 +45,8 @@ export class ClientesListComponent implements OnInit {
     this.estado = true;
   }
   ngOnInit() {
-    this.getTerceros();
+    this.usuario = this.service.obtenerDatosUser();
+    this.getCliente();
     this.datos = this._formBuilder.group({
       documento: ['', Validators.compose([Validators.required])],
       nombre: ['', Validators.compose([Validators.required])],
@@ -95,13 +101,14 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo": datos.telefonoFijo,
       "telefonoCelular": datos.telefonoCelular,
       "atencion": datos.atencion,
-      "estado": 0
+      "estado": 0,
+      "fkEmpresa":this.usuario.empresa.idEmpresa
     }
     this._AppService.post('clientes/new', cliente).subscribe(
       result => {
       alert('El cliente se agregado con exito'),
         this.estado = true
-        this.getTerceros();
+        this.getCliente();
         this.datos.reset();
       }
     )
@@ -137,21 +144,20 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo": datos.telefonoFijo,
       "telefonoCelular": datos.telefonoCelular,
       "atencion": datos.atencion,
-      "estado": this.estadoCliente
+      "estado": this.estadoCliente,
+      "fkEmpresa":this.usuario.empresa.idEmpresa
     }
     this._AppService.put('cliente/' + this.idCliente, cliente).subscribe(
       result => {
         Swal.fire({ type: 'success', text: 'cliente actualizado con exito!', timer: 2000 });
         this.estado = true
-        this.getTerceros();
+        this.getCliente();
       }
     )
   }
-  public getTerceros() {
-    this.settings.loadingSpinner = true;
-    this._AppService.get(`clientes/list`).subscribe(
+  public getCliente() {
+    this._AppService.get(`clientes/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
-        this.settings.loadingSpinner = false;
         this.clientes = result;
       },
       error => {
@@ -201,8 +207,8 @@ export class ClientesListComponent implements OnInit {
       text: 'Estas seguro de que quiere '+this.setText(this.estadoCliente)+' el Cliente?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
         let datos = this.datos.value;
@@ -217,12 +223,13 @@ export class ClientesListComponent implements OnInit {
           "telefonoFijo": datos.telefonoFijo,
           "telefonoCelular": datos.telefonoCelular,
           "atencion": datos.atencion,
-          "estado": this.setEstdo(this.estadoCliente)
+          "estado": this.setEstdo(this.estadoCliente),
+          "fkEmpresa":this.usuario.empresa.idEmpresa
         }
         this._AppService.put(`cliente/${this.idCliente}`, cliente).subscribe(
           data => {
             Swal.fire({ type: 'success', text: 'Accion Realizada', timer: 2000 });
-            this.getTerceros();
+            this.getCliente();
           },
           error => {
             console.log(error)
@@ -230,7 +237,7 @@ export class ClientesListComponent implements OnInit {
         )
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
-          'Cancelled',
+          'Cancelado',
           'No se ha realizado ningun cambio',
           'error'
         )

@@ -32,7 +32,7 @@ export class InstrumentosListComponent implements OnInit {
   public selectinstrumento: any;
   public vacion: boolean;
   public actualizar: any;
-  public usuario: any;
+  public usuario: Usuario;
   public idInstrumentos: any;
   public datos: FormGroup;
   public datoschanged: boolean = true;
@@ -68,8 +68,8 @@ export class InstrumentosListComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.getInstrumentos();
     this.usuario = this.servicio.getDataUsuario();
+    this.getInstrumentos();
     this.datos = this._formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
       modelo: ['', Validators.compose([Validators.required])],
@@ -122,7 +122,6 @@ export class InstrumentosListComponent implements OnInit {
     this._AppService.get('ip/' + this.usuario.empresa.idEmpresa + '/instrumento/'.concat(e.idInstrumentos)).subscribe(
       (result: any) => {
         this.protocolos = result;
-        console.log(result);
         this.settings.loadingSpinner = false;
         if (result.length > 0) {
           Swal.fire({ type: 'success', text: 'listado de protocolos!', timer: 2000 });
@@ -138,9 +137,8 @@ export class InstrumentosListComponent implements OnInit {
   }
   public getProtocolos() {
     this.settings.loadingSpinner = true;
-    this._AppService.get(`protocolos/list`).subscribe(
+    this._AppService.get(`protocolos/empresa`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
-        console.log(result)
         this.protocolos2 = result;
         this.settings.loadingSpinner = false;
         Swal.fire({ type: 'success', text: 'listado de Protocolos!', timer: 2000 });
@@ -231,9 +229,8 @@ export class InstrumentosListComponent implements OnInit {
   }
   public getInstrumentos() {
     this.settings.loadingSpinner = true;
-    this._AppService.get(`instrumentos/list`).subscribe(
+    this._AppService.get(`instrumentos/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
       result => {
-        console.log(result);
         this.settings.loadingSpinner = false;
         this.instrumentos = result;
       },
@@ -284,7 +281,6 @@ export class InstrumentosListComponent implements OnInit {
           "fkEmpresa": this.fkEmpresa,
           "estado": this.setEstdo(this.estadoIns)
         }
-        console.log(instrumento);
         this._AppService.put('instrumentos/' + this.idInstrumento, instrumento).subscribe(
           result => {
             Swal.fire({ type: 'success', text: 'Accion reLalizada!', timer: 3000 });
@@ -306,16 +302,13 @@ export class InstrumentosListComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        console.log(idpro);
         const json = {
           "fkEmpresa": parseInt(this.usuario.empresa.idEmpresa),
           "fkInstrumento": this.idInstrumento,
           "fkProtocolo": idpro,
         }
-        console.log('json: ', json)
         this._AppService.post('instrumentos_protocolo/new', json).subscribe(
           data => {
-            console.log(data);
             Swal.fire({ type: 'success', text: 'se agrego el protocolo al instrumento ' + this.instrumentoSelected + '!', timer: 3000 });
             this.getInstrumentos();
             this.tipoList = 0;

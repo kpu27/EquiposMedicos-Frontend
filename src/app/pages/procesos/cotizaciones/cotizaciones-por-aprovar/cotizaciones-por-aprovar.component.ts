@@ -6,23 +6,19 @@ import { Settings } from '../../../../app.settings.model';
 import { AppSettings } from '../../../../app.settings';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/services/usuario';
+import { Dialog2Component } from '../dialog2/dialog2.component';
 
 
-export interface DialogData {
-  name: string;
-}
 
 @Component({
-  selector: 'app-cotizaciones-list',
-  templateUrl: './cotizaciones-list.component.html',
-  styleUrls: ['./cotizaciones-list.component.scss'],
-
-  providers: [DatePipe]
+  selector: 'app-cotizaciones-por-aprovar',
+  templateUrl: './cotizaciones-por-aprovar.component.html',
+  styleUrls: ['./cotizaciones-por-aprovar.component.scss']
 })
-
-export class CotizacionesListComponent implements OnInit {
+export class CotizacionesPorAprovarComponent implements OnInit {
   @Output() setidcot = new EventEmitter();
   @Input()
   set recargar(val: any) {
@@ -36,7 +32,9 @@ export class CotizacionesListComponent implements OnInit {
   public info: any;
   public display: boolean = false;
   public cols: any[];
+  SelectCotizacion:any;
   usuario:Usuario;
+  aut:any;
 
   name: string;
 
@@ -51,12 +49,12 @@ export class CotizacionesListComponent implements OnInit {
       { field: 'ver', header: 'Ver', width: '5%' },
       { field: 'codigo', header: 'Codigo', width: '8%' },
       { field: 'fkCliente', header: 'Cliente', width: '20%' },
-      { field: 'vigencia', header: 'Vigencia', width: '10%' },
+      { field: 'vigencia', header: 'Vigencia', width: '8%' },
       { field: 'entrega', header: 'Entrega', width: '10%' },
       { field: 'condicionPago', header: 'Condicion de Pago', width: '12%' },
-      { field: 'responsable', header: 'Responsable', width: '15%' },
+      { field: 'responsable', header: 'Responsable', width: '12%' },
       { field: 'estado', header: 'Estado', width: '10%' },
-      { field: 'acciones', header: 'Accion', width: '8%' }
+      { field: 'acciones', header: 'Accion', width: '5%' }
     ];
   }
   ngOnInit() {
@@ -66,15 +64,13 @@ export class CotizacionesListComponent implements OnInit {
 
   public getCotizaciones() {
     this.settings.loadingSpinner = true;
-    this._AppService.get('cotizaciones/list').subscribe(
-      (data: any) => { 
+    this._AppService.get('cotizaciones/estado/'+this.usuario.empresa.idEmpresa).subscribe(
+      (data: any) => { console.log(data); 
         this.data = data; 
         this.settings.loadingSpinner = false; }
-    ),
-    aguadecoco =>{
-      console.log(aguadecoco)
-    }
+    );
   }
+  
 
   public openForm() {
     this.setidcot.emit(this.data.length);
@@ -86,6 +82,10 @@ export class CotizacionesListComponent implements OnInit {
     return style.toString();
   }
 
+  selectCotizacion(cotizacion:any){
+    this.SelectCotizacion = cotizacion;
+  }
+  
   openDialog() {
 
     const dialogConfig = new MatDialogConfig();
@@ -94,18 +94,20 @@ export class CotizacionesListComponent implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.width = '80%';
     dialogConfig.height = '80%';
-
-/*     dialogConfig.data = {
-      id: 1,
-      title: 'Angular For Beginners'
-    };
- */
-/*     dialogConfig.position = {
-      'top': '0',
-      left: '0'
-    }; */
-
     this.dialog.open(DialogComponent, dialogConfig);
   }
+
+  openDialog2() { 
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '30%';
+    dialogConfig.height = '80%';
+    dialogConfig.data = this.SelectCotizacion;
+
+    this.dialog.open(Dialog2Component, dialogConfig);
+  }
+
 
 }

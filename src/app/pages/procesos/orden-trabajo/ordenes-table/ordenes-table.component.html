@@ -20,7 +20,6 @@
       <td style="text-align: left">{{ item.fkCotizacion.fkCliente.nombre }}</td>
       <td style="text-align: left">{{ item.fkCotizacion.responsable }}</td>
       <td style="text-align: left">{{ getDate(item.fechaOrden) }}</td>
-      <td style="text-align: left">{{ item.riesgos }}</td>
       <td class="text-center">
         <div *ngIf="item.esatdoOrden == 3" class="badge badge-success">
           Activo

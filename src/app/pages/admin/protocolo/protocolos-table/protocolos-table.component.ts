@@ -112,15 +112,14 @@ export class ProtocolosTableComponent implements OnInit {
     this.estadoPro = protocolo.estado;
   }
   public getTecnicos() {
-    this.service.get('tecnicos/list').subscribe(
+    this.service.get('tecnicos/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
       data => {
         this.tecnicos = data;
       }
     )
   }
   public getProtocolos() {
-    this.settings.loadingSpinner = true;
-    this.service.get('protocolos/list').subscribe(
+    this.service.get('protocolos/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
       data => {
         this.protocolos = data;
         this.settings.loadingSpinner = false;
