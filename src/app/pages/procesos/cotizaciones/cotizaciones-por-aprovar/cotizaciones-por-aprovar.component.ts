@@ -84,6 +84,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
 
   selectCotizacion(cotizacion:any){
     this.SelectCotizacion = cotizacion;
+    console.log(this.SelectCotizacion)
   }
   
   openDialog() {

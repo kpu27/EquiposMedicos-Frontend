@@ -45,7 +45,7 @@ export const routes = [
   { path: 'orden-trabajo', component: OrdenTrabajoComponent },
   { path: 'cotizaciones-form', component: CotizacionesFormComponent },
   { path: 'programar-orden', component: CotizacionesTableComponent},
-    { path: 'cotizaciones-por-aprovar', component: CotizacionesPorAprovarComponent},
+    { path: 'cotizaciones-por-aprobar', component: CotizacionesPorAprovarComponent},
     { path: 'hoja-vida', component: HojaVidaComponent}
 ];
 

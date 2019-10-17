@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Settings } from '../../../app.settings.model';
+import { AppSettings } from '../../../app.settings';
 
 
 @Component({
@@ -36,10 +38,13 @@ export class ConsultasComponent implements OnInit {
   data3:any = 0;
   data:any;
   alison:any;
+  public settings: Settings;
 
 
-  constructor( private datePipe: DatePipe,private service:AppService, private servicio: AuthService) { 
-
+  constructor( private datePipe: DatePipe,private service:AppService, 
+    private servicio: AuthService,
+    public appSettings: AppSettings,) { 
+    this.settings = this.appSettings.settings;
     this.alison = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -53,31 +58,41 @@ export class ConsultasComponent implements OnInit {
   }
   }
   public getClientes() {
+    this.settings.loadingSpinner = true;
     this.service.get('clientes/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
-      (data: any) => {
+      (data: any) => {   
         this.clientes = data;
+        this.settings.loadingSpinner = false;
         
+      },
+      error=>{
+        this.settings.loadingSpinner = false;
       }
     );
   }
   //Mantenimiento pendiente de los clientes
   public getConsulta1(){
+    this.settings.loadingSpinner = true;
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/cliente1/'+this.usuario.empresa.idEmpresa).subscribe(
-      (res:any)=>{
+      (res:any)=>{console.log(res)
         data = res[0];
         this.data1=data[0];
         this.data2=data[1];
         this.data3=data[2];
+        this.settings.loadingSpinner = false;
     }
     )
   }    
 //listar por cliente y los equipos
   public getConsulta2(){
+    this.settings.loadingSpinner = true;
     let fechai = this.datePipe.transform(this.fechai4, 'yyyy-MM-dd')
     let fechaf = this.datePipe.transform(this.fechaf4, 'yyyy-MM-dd')
     this.service.get('ordenesDetalle/cliente/'+this.usuario.empresa.idEmpresa+'/'+this.ClienteSelect+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{this.sql1=res
+      res=>{ console.log(res)
+        this.sql1=res
+        this.settings.loadingSpinner = false;
       }, error=>{
         console.log(error)
       }
@@ -85,12 +100,14 @@ export class ConsultasComponent implements OnInit {
   }
   //listar por tecnicos y sus equipos
   public getConsulta3(){
+    this.settings.loadingSpinner = true;
     let fechai = this.datePipe.transform(this.fechai2, 'yyyy-MM-dd')
     let fechaf = this.datePipe.transform(this.fechaf2, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/tecnico/'+this.usuario.empresa.idEmpresa+'/'+this.TecnicoSelect+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{
+      res=>{   console.log(res)
       this.sql2=res  
+      this.settings.loadingSpinner = false;
       },error=>{
         console.log(error)
       }
@@ -98,36 +115,45 @@ export class ConsultasComponent implements OnInit {
   }
   //listar todos los tecnicos con equipos
   public getConsulta4(){
+    this.settings.loadingSpinner = true;
     let fechai = this.datePipe.transform(this.fechai1, 'yyyy-MM-dd')
     let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/responsable2/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{
-        data = res[0];
-        this.data1=data[0];
-        this.data2=data[1];
-        this.data3=data[2];}
-    ),error=>{console.log(error)}
-  }
-  //Programacion por tecnico
-  public getConsulta5(){
-    let fechai = this.datePipe.transform(this.fechai3, 'yyyy-MM-dd')
-    let fechaf = this.datePipe.transform(this.fechaf3, 'yyyy-MM-dd')
-    let data: Array<any> = [];
-    this.service.get('ordenesDetalle/responsable/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{
+      res=>{console.log(res)
         data = res[0];
         this.data1=data[0];
         this.data2=data[1];
         this.data3=data[2];
+        this.settings.loadingSpinner = false;}
+        
+    ),error=>{console.log(error)}
+  }
+  //Programacion por tecnico
+  public getConsulta5(){
+    this.settings.loadingSpinner = true;
+    let fechai = this.datePipe.transform(this.fechai3, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf3, 'yyyy-MM-dd')
+    let data: Array<any> = [];
+    this.service.get('ordenesDetalle/responsable/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
+      res=>{console.log(res)
+        data = res[0];
+        this.data1=data[0];
+        this.data2=data[1];
+        this.data3=data[2];
+        this.settings.loadingSpinner = false;
       }
     )
   }
  
   public getTecnicos() {
+    this.settings.loadingSpinner = true;
     this.service.get('tecnicos/list').subscribe(
       data => {
+        console.log(data)
         this.tecnicos = data;
+       
+        this.settings.loadingSpinner = false;
       },
       error => {
         console.log(error)

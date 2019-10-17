@@ -55,7 +55,7 @@ export class PrincipalComponent implements OnInit {
   //GET INSTRUMENTOS
   public getOrdenes() {
     this.settings.loadingSpinner = true;
-    this._AppService.get(`ordenes/empresa`+this.usuario.empresa.idEmpresa).subscribe(
+    this._AppService.get(`ordenes/empresa/`+this.usuario.empresa.idEmpresa).subscribe(
       result => { this.settings.loadingSpinner = false; this.ordenes = result; },
       error => { this.Toast.fire(this.error_en_La_consulta); }
     );

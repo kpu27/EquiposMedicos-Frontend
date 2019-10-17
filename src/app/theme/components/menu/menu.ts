@@ -24,7 +24,7 @@ export const verticalMenuItems = [
     new Menu (130, 'Cotizaciones', null, null, 'attach_money', null, true, 0, roles),
     new Menu (131, 'Crear', '/procesos/cotizaciones-form', null, 'money', null, false, 130, roles), // TODO:
     new Menu (132, 'Ver - Editar', '/procesos/cotizaciones', null, 'money', null, false, 130, roles), // TODO:
-    new Menu (133, 'Aprovar', '/procesos/cotizaciones-por-aprovar', null, 'money', null, false, 130, roles), // TODO:
+    new Menu (133, 'Aprobar', '/procesos/cotizaciones-por-aprobar', null, 'money', null, false, 130, roles), // TODO:
     new Menu (135, 'Ordenes de Trabajo', null, null, 'gavel', null, true, 0 , roles),
     new Menu (136, 'Programar', '/procesos/programar-orden', null, 'gavel', null, false, 135 , roles), //TODO:
     new Menu (137, 'Ver - Editar', '/procesos/orden-trabajo', null, 'gavel', null, false, 135 , roles), //TODO:

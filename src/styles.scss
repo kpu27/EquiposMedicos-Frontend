@@ -150,3 +150,8 @@ $color-overlay: rgba(0, 0, 0, .8);
     }
   }
 
+  .mat-list .mat-list-item {
+    height: 50px; /* default is 72px */
+  }
+
+

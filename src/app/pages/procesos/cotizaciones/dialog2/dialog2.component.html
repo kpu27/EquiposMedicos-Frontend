@@ -1,4 +1,8 @@
-<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport" style="    height: 90%;
+border: 0;
+background: #f7f7f7;
+overflow: auto;
+box-shadow: inset 0px 0px 6px 0px #e4dfdf">
   <div class="row justify-content-end pb-2 bg-light">
   </div>
   <form>
@@ -6,8 +10,8 @@
       <div class="container-equipos" perfectScrollbar>
         <mat-list style="position: relative">
             <div >
-                <mat-list-item style="height: 60px;" *ngFor="let item of aut">
-                    <div ><p-checkbox name="grupo1" (onChange)="getitem({value: $event, id: item.idCotizDeta})"   label= "{{item.fkEquipos.nombre}}"></p-checkbox></div>
+                <mat-list-item  class="mb-2" style="height: 30px;" *ngFor="let item of aut" style="background: rgb(241, 241, 241);">
+                    <div ><p-checkbox name="grupo1" (onChange)="getitem($event, item)"   label= "{{item.fkEquipos.nombre}}"></p-checkbox></div>
 
                 </mat-list-item>
             </div>
@@ -15,8 +19,12 @@
     </div>
     </div>
   </form>
-  <button class="btn btn-success" (click)="update()" >Autorizar</button>
 </cdk-virtual-scroll-viewport>
+
+<button class="btn btn-success mt-2 float-right" (click)="enviarCotizacionesDetalle()" >Autorizar</button>
+
+
+
 <ngx-smart-modal #myModal identifier="myModal">
   <h3 class="text-center">Enviar Cotización</h3>
   <br/>

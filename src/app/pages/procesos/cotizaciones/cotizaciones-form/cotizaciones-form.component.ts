@@ -9,6 +9,8 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 import { blockTransition } from '../../../../theme/utils/app-animation';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
+import { Router } from '@angular/router';
+
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
@@ -56,14 +58,17 @@ export class CotizacionesFormComponent implements OnInit {
   public datoschanged: boolean = true;
   public panelOpenState = false;
   public alowed: boolean;
+  public ultimo: any;
   public cols: any[];
   public usuario: Usuario;
-  constructor(
+  public count = 0;
+    constructor(
     public appSettings: AppSettings,
     private _AppService: AppService,
     private datePipe: DatePipe,
     private _formBuilder: FormBuilder,
-    public auth: AuthService,
+    public auth: AuthService, 
+    public router: Router,
     public ngxSmartModalService: NgxSmartModalService) {
     this.equipos = [];
     this.equiposSelected = [];
@@ -84,6 +89,7 @@ export class CotizacionesFormComponent implements OnInit {
     this.getEquipos();
     this.getIdEmpresa();
     this.getParametros();
+    this.countUltimo();
 
     this.datos = this._formBuilder.group({
       idCliente: ['', Validators.compose([Validators.required])],
@@ -199,7 +205,8 @@ export class CotizacionesFormComponent implements OnInit {
       "valorUnitario": valoru
  }
     this._AppService.post('cotizacionDetalle/new', detalles).subscribe(
-      data => { console.log(data) }
+      data => { console.log(data)
+      this.count= this.count + 1 }
     );
   }
   public validarInput():boolean {
@@ -211,6 +218,17 @@ export class CotizacionesFormComponent implements OnInit {
     }
     return this.alowed;
   }
+
+  public countUltimo(){
+    this._AppService.get('cotizaciones/count').subscribe(
+      res=>{
+        this.ultimo = res 
+        console.log(res)
+        console.log(this.ultimo)
+      }
+    )
+  }
+
   public submit() {
     if(this.validarInput() == true){
       swalWithBootstrapButtons.fire({
@@ -224,12 +242,9 @@ export class CotizacionesFormComponent implements OnInit {
         if (result.value) {
             this.settings.loadingSpinner = true;
             let datos = this.datos.value;
-            let consecutivo = parseInt(this.consecutivo[0].codigo);
-            consecutivo = consecutivo + this.idCot + 1;
             let contizacion = {
-              "idCotizEncab": this.idCot + 1,
               "fechaSistema": "2019-01-01T00:00:00.000+0000",
-              "codigo": String(this.consecutivo[0].nombreCorto + this.consecutivo[0].valor+ this.idCot),
+              "codigo": String(this.consecutivo[0].nombreCorto + this.consecutivo[0].valor + this.ultimo + 1 ),
               "fecha": this.datePipe.transform(datos.fecha, 'yyyy-MM-dd'),
               "viaticoValor": datos.viatico,
               "viaticoIva": datos.iva,
@@ -239,7 +254,7 @@ export class CotizacionesFormComponent implements OnInit {
               "garantiaMo": "0",
               "condicionPago": datos.cp,
               "responsable": this.usuario.nombre,
-              "estado": 0,
+              "estado": 1,
               "fkCliente": datos.idCliente,
               "fkEmpresa": this.idEmpresa
             }
@@ -249,9 +264,9 @@ export class CotizacionesFormComponent implements OnInit {
                   this.CrearDetalle(
                     parseInt(this.equiposSelected[index].calibracion),
                     parseInt(this.equiposSelected[index].cant),
-                    this.idCot + 1,
+                    data.idCotizEncab,
                     this.equiposSelected[index].idEquipo,
-                    String(this.idCot + 1),
+                    String(data.idCotizEncab),
                     parseInt(this.equiposSelected[index].valoru));
                 }
                 this.settings.loadingSpinner = false;
@@ -261,6 +276,10 @@ export class CotizacionesFormComponent implements OnInit {
                   text: 'Cotizacion Creada',
                   timer: 2500
                 });
+                this.router.navigate(['procesos/cotizaciones-por-aprobar'])
+                if(this.count == this.equiposSelected.length){
+                  this.router.navigate(['../cotizaciones-por-aprobar'])
+                }
                 this.goBack();
               }
             );
