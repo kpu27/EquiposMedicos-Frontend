@@ -67,7 +67,9 @@ export class CotizacionesPorAprovarComponent implements OnInit {
     this._AppService.get('cotizaciones/estado/'+this.usuario.empresa.idEmpresa).subscribe(
       (data: any) => { console.log(data); 
         this.data = data; 
-        this.settings.loadingSpinner = false; }
+        this.settings.loadingSpinner = false; },
+        error => { console.log(error),
+          this.settings.loadingSpinner = false; }
     );
   }
   

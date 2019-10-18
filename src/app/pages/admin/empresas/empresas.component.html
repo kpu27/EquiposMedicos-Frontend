@@ -34,6 +34,9 @@
                     {{ item.idEmpresa }}
                   </td>
                   <td>
+                    {{ item.fotoEmpresa }}
+                  </td>
+                  <td>
                     {{ item.nombreEmpresa }}
                   </td>
                   <td>
@@ -146,8 +149,8 @@
             <div *ngIf="userImg != null || userImg != '';then content else other_content"></div>
   
   
-            <ng-template #content><img [src]="UrlImages + userImg" alt="" width="160px" class="rounded-circle m-3 border-img" /></ng-template>
-            <ng-template #other_content><img src="assets/img/default_picture.png" alt="" width="160px" class="rounded-circle m-3 border-img" /></ng-template>
+            <ng-template #content><img [src]="UrlLogos + userImg" alt="" width="160px" class="rounded-circle m-3 border-img" /></ng-template>
+            <ng-template #other_content><img src="../../../../assets/img/default_picture.png" alt="" width="160px" class="rounded-circle m-3 border-img" /></ng-template>
   
             <br /><br />
             <div class="row d-flex justify-content-center">

@@ -35,6 +35,8 @@ import { NgxPrintModule } from 'ngx-print';
 import { CotizacionesPorAprovarComponent } from './cotizaciones/cotizaciones-por-aprovar/cotizaciones-por-aprovar.component';
 import { Dialog2Component } from './cotizaciones/dialog2/dialog2.component';
 import { HojaVidaComponent } from './orden-trabajo/hoja-vida/hoja-vida.component';
+import { OrderDialogComponent } from './orden-trabajo/ordenes-table/order-dialog/order-dialog.component';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 
 registerLocaleData(es);
@@ -74,7 +76,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     pCalendar,    
     NgxPrintModule,
     MatDialogModule,
-    CheckboxModule
+    CheckboxModule,
+    ClickOutsideModule
   ],
   declarations: [
     ProcesosComponent,
@@ -91,12 +94,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DialogComponent,
     Dialog2Component,
     CotizacionesPorAprovarComponent,
-    HojaVidaComponent
+    HojaVidaComponent,
+    OrderDialogComponent
   ],
   entryComponents: [
     CalendarioDialogComponent,
     DialogComponent,
     Dialog2Component,
+    OrderDialogComponent,
     HojaVidaComponent 
   ],
   providers:[

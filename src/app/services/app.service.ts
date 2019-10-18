@@ -84,6 +84,19 @@ export class AppService {
     this.clearSession();
   }
 
+  subirLogoEmpresa(Archivo: File, id): Observable<any> {
+    if (this.auth.isAuthenticated()) {
+      if (!this.auth.isTokenExpired()) {
+        this.getHeaders();
+        let formData = new FormData();
+        formData.append('file', Archivo);
+        formData.append('id', id);
+        return this.http.post<any>(`${this.url}uploadLogoEmpresa`, formData, this.httpMultipartOption);
+      }
+    }
+    this.clearSession();
+  }
+
   inpustCalendarLenguaje() {
     return {
       //date

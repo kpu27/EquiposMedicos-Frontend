@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
@@ -22,11 +22,13 @@ export class OrdenesTableComponent implements OnInit {
   public protocolos: any;
   public table:number;
   public cols: any[];
+  
+  public cotizacion: any;
   constructor( 
     private datePipe: DatePipe,
     public appSettings:AppSettings, 
     private _AppService:AppService,
-    public dialog: MatDialog
+    public dialog: MatDialog 
     ) {  
       this.settings = this.appSettings.settings; 
       this.table = 0;
@@ -42,6 +44,18 @@ export class OrdenesTableComponent implements OnInit {
     }
   ngOnInit() {
 
+  }
+
+  getCotizacionById(id)
+  {
+    this.settings.loadingSpinner = true;
+    this._AppService.get(`ordenes/${id}`).subscribe(
+      (data:any) => {
+        this.cotizacion = data;
+        this.openDialog();
+        this.settings.loadingSpinner = false;
+      }
+    )
   }
   public return(){
     this.table = 0;
@@ -70,8 +84,9 @@ export class OrdenesTableComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
-    dialogConfig.width = '50%';
-    dialogConfig.height = '50%';
+    dialogConfig.width = '50em';
+    dialogConfig.height = '35em';
+    dialogConfig.data = this.cotizacion;
 
 /*     dialogConfig.data = {
       id: 1,

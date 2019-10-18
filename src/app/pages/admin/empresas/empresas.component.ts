@@ -27,7 +27,7 @@ export class EmpresasComponent implements OnInit {
   public datoschanged: boolean = true;
   public tipoForm: number;
   private idCliente: number;
-  UrlImages = APP.UrlImages;
+  UrlLogos = APP.UrlLogos;
   userImg;
   imagePath;
   imgURL: any;
@@ -42,11 +42,12 @@ export class EmpresasComponent implements OnInit {
     this.settings = this.appSettings.settings;
     this.cols = [
       { field: 'idEmpresa', header: 'id',width: '8%'},
+      { field: 'foto', header: 'Foto', width: '10%' },
       { field: 'nombreEmpresa', header: 'Nombre Empresa', width: '20%' },
       { field: 'nitEmpresa', header: 'NIT',width: '12%' },
       { field: 'representanteLegal', header: 'Representante Legal',width: '20%' },
       { filed: 'sloganEmpresa', header: 'Slogan',width: '30%' },
-      { filed: 'acciones', header: 'Acciones',width: '20%' },
+      { filed: 'acciones', header: 'Acciones',width: '10%' },
     ];
     this.estado = true;
   }
@@ -299,7 +300,7 @@ export class EmpresasComponent implements OnInit {
     if (!this.logoSeleccionado) {
       Swal.fire('Error de carga: ', 'Debe seleccionar una foto', 'error');
     } else if (this.empresa != null) {
-      this.appService.subirImagen(this.logoSeleccionado, this.empresa.idEmpresa).subscribe(
+      this.appService.subirLogoEmpresa(this.logoSeleccionado, this.empresa.idEmpresa).subscribe(
         result => {
           //this.entidad = result;
           Swal.fire({ type: 'success', title: 'Exito!', text: `${result.mensaje}`, timer: 3000 });
