@@ -1,7 +1,7 @@
 import { Component, ViewChild} from '@angular/core';
 import { AppSettings } from './app.settings';
 import { Settings } from './app.settings.model';
-
+import 'chart.js/dist/Chart.min.js';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

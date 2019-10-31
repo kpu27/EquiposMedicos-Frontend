@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import swal from 'sweetalert2';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
+import { Usuario } from 'src/app/models/usuario';
 export class OrdenDetalle {
   constructor(
     public tipoServicio: number,
@@ -26,7 +27,7 @@ export class OrdenDetalle {
     public estadoReporte: number,
     public fkCliente: number,
     public fkEmpresa: number,
-    public fkEquipos: number,
+    public fkEquipos: any,
     public fkOrdenes: number,
     public fkResponsable:number
   ) { }
@@ -63,7 +64,7 @@ export class CalendarioComponent implements OnInit {
   @Input() cotizacion: any;
   @Input() cotizacionDetalles: any = new Array();
   cotizacionDetallesSeleccionados: any = new Array();
-  ordenDetalle: Array<OrdenDetalle> = [];
+  ordenDetalle: Array<any> = [];
   public tecnico; any;
   public tecnicos: any = [];
   public date;
@@ -88,7 +89,7 @@ export class CalendarioComponent implements OnInit {
   refresh: Subject<any> = new Subject();
   public settings: Settings;
   public valid = false;
-  public usuario: any;
+  public usuario: Usuario;
   public consecutivo: string;
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
@@ -107,10 +108,11 @@ export class CalendarioComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.getTecnicos();
     this.usuario = this.auth.getDataUsuario();
+    console.log(this.usuario);
+    this.getTecnicos();
+   
     this.getConsecutivo();
-    console.log('COTIZACIONES DETALLE DESPITAOOO AQUIII',this.cotizacionDetalles);
   }
   public crearOrden(){
     this.getConsecutivo();
@@ -120,27 +122,53 @@ export class CalendarioComponent implements OnInit {
       (data: any) => { console.log(data); idOrden = data.idOrdenes;
         for (let i = 0; i < this.ordenDetalle.length; i++) {
           this.ordenDetalle[i].fkOrdenes = idOrden;
-          this.crearOrdenesDetalles(this.ordenDetalle[i]);
+          this.crearOrdenesDetalles(this.ordenDetalle[i], data.idOrdenes);
         }
           Swal.fire({type: 'success', text: 'Orden de Trabajo Creada con exito!', timer: 3000});
           this.setEstadoCotizacion();
           this.return.emit();
+          const json = {
+            "idCotizEncab": this.cotizacion.idCotizEncab,
+            "fechaSistema": this.cotizacion.fechaSistema,
+            "codigo": this.cotizacion.codigo,
+            "fecha": this.cotizacion.fecha,
+            "viaticoValor": this.cotizacion.viaticoValor,
+            "viaticoIva": this.cotizacion.viaticoIva,
+            "vigencia": this.cotizacion.vigencia,
+            "entrega": this.cotizacion.entrega,
+            "garantiaDf": this.cotizacion.garantiaDf,
+            "garantiaMo": this.cotizacion.garantiaMo,
+            "condicionPago": this.cotizacion.condicionPago,
+            "responsable": this.cotizacion.responsable,
+            "estado": 3,
+            "fkCliente": this.cotizacion.fkCliente.idCliente,
+            "fkEmpresa": this.cotizacion.fkEmpresa.idEmpresa
+        }
+        console.log("COTIZACION ====> ",json)
+          this.service.put(`cotizaciones/${this.cotizacion.idCotizEncab}`, json).subscribe(
+            (data:any) => {
+              console.log(data);
+            }
+          )
       }
     );
   }
-  public crearOrdenesDetalles(detalleOrden: any){
+  public crearOrdenesDetalles(detalleOrden: any, idOrden: number){
+    detalleOrden.fkOrdenes = idOrden;
     this.service.post('ordenesDetalle/new',detalleOrden).subscribe(
-      (data: any) => {} 
+      (data: any) => {
+        console.log(data)
+      } 
     );
   }
-  public setEstadoCotizacion(){
+   public setEstadoCotizacion(){
     this.cotizacion.estado = 3;
     this.service.put('cotizaciones/update',this.cotizacion).subscribe(
       (data: any) => {}
     );
   }
   public getTecnicos() {
-    this.service.get('tecnicos/list').subscribe(
+    this.service.get('tecnicos/estado/'+this.usuario.empresa.idEmpresa).subscribe(
       data => {
         this.tecnicos = data;
         console.log(data);
@@ -182,9 +210,9 @@ export class CalendarioComponent implements OnInit {
       tapaBocas: 1,
       gorro: 1,
       bata:1,
-      riesgos: datos.riesgos,
+      riesgos: "sin riegos",
       comentarios: datos.comentario,
-      esatdoOrden: 0
+      esatdoOrden: 3
     }
   }
   public agregarMantenimiento() {
@@ -225,16 +253,21 @@ export class CalendarioComponent implements OnInit {
           color: colors.yellow,
           actions: this.actions
         }
-        console.log('FIXMEEEEEEE HEREEEE',this.cotizacion);
+        
         for (let i = 0; i < coDetalles.length; i++) {
-          this.ordenDetalle.push(
-            new OrdenDetalle(157,1,fecha,'','','',0,
-              this.cotizacion.fkCliente.idCliente,
-              this.cotizacion.fkEmpresa.idEmpresa,
-              coDetalles[i].fkEquipos,
-              0,
-              tecnico.idTecnico
-          ));
+          this.ordenDetalle.push({
+            tipoServicio: 157,
+            calibracion: 1,
+            fechaProgramada: fecha,
+            numeroReporte: '1',
+            infomacionReporte: '1',
+            estadoReporte: 3,
+            fkCliente: this.cotizacion.fkCliente.idCliente,
+            fkEmpresa: this.cotizacion.fkEmpresa.idEmpresa,
+            fkEquipos: coDetalles[i].fkEquipos,
+            fkOrdenes: 0,
+            fkResponsable: tecnico.idTecnico
+          });
         }
 
         console.log(this.ordenDetalle);

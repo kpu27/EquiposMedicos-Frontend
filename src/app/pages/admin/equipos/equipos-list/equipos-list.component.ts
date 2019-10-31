@@ -238,11 +238,11 @@ export class EquiposListComponent implements OnInit {
   public deleteEquipo() {
     Swal.fire({
       title: 'Advertencia',
-      text: 'Estas seguro de que quiere ' + this.setText(this.estadoEquipo) + ' el protocolo?',
+      text: 'Estas seguro de que quiere ' + this.setText(this.estadoEquipo) + ' el equipos?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
         let datos = this.datos.value;

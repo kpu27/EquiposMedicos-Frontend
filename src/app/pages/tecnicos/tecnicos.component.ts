@@ -152,8 +152,10 @@ export class TecnicosComponent implements OnInit {
     this.getTecnico();
   }
   getTecnico(){
+    console.log(this.usuario.id)
     this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
-      (data: any) => {this.tecnicoSelected = data}
+      (data: any) => {this.tecnicoSelected = data
+      console.log(data)}
     );
   }
   getDetalles(){
@@ -172,7 +174,7 @@ export class TecnicosComponent implements OnInit {
   }
   getCotizacionesDetalles() {
     this.settings.loadingSpinner = true;
-    this._AppService.get('ordenesDetalle/res/'+ this.tecnico.idTecnico +'/'+ this.idCliente).subscribe(
+    this._AppService.get('ordenesDetalle/res/'+ this.tecnicoSelected.idTecnico +'/'+ this.idCliente).subscribe(
       (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
       error => { this.settings.loadingSpinner = false; }
     );

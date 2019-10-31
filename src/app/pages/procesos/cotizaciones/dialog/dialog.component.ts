@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Settings } from '../../../../app.settings.model';
+import { AppSettings } from '../../../../app.settings';
 
 @Component({
   selector: 'app-dialog',
@@ -11,28 +14,56 @@ export class DialogComponent implements OnInit {
 
   cotizacion: any;
   items: any;
+  public settings: Settings;
   subTotal: Array<any> = [];
-  monto: any = 0;
-
-  constructor(private api: AppService, public mgxSmartModalService: NgxSmartModalService) { }
+  monto: number = 0;
+  datos:any;
+  datosDetalles:any;
+  constructor(
+    public appSettings: AppSettings,
+    public dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private servicio: AppService, public mgxSmartModalService: NgxSmartModalService) {
+      this.settings = this.appSettings.settings;
+      this.getDatosUSuario()
+      this.getDatosDetalle()
+     }
 
   ngOnInit() {
-
-    this.getCotizacionById(8);
-    this.getItemsCotizados(8);
-    this.getSubTotal(8);
+    this.getSubTotal(this.data.idCotizEncab);
     document.getElementById("print").addEventListener("click", this.printElement);
   }
 
   getTotal() {
     for (let i = 0; i < this.subTotal.length; i++) {
+      console.log(this.subTotal[i]);
       this.monto += parseInt(this.subTotal[i]);
     }
+    console.log(this.monto);
+  }
+  
+  public getDatosUSuario(){
 
+    this.servicio.get('cotizaciones/'+this.data.idCotizEncab).subscribe(
+      res=>{ 
+        this.datos=res
+        console.log(res)
+      }
+    )
+  }
+
+  public getDatosDetalle(){
+    this.settings.loadingSpinner = true;
+    this.servicio.get('cotizacionDetalle/cotizacion/'+this.data.idCotizEncab).subscribe(
+      res=>{
+        this.datosDetalles=res
+        this.settings.loadingSpinner = false;
+      }
+    )
   }
 
   getSubTotal(id: number) {
-    this.api.get(`cotizacionDetalle/sumatoria/8`).subscribe(
+    this.servicio.get(`cotizacionDetalle/sumatoria/${id}`).subscribe(
       (data: any) => {
         console.log(data);
         if (data.length > 0) {
@@ -43,24 +74,8 @@ export class DialogComponent implements OnInit {
     )
   }
 
-  getCotizacionById(id: number) {
-    this.api.get(`cotizaciones/${id}`).subscribe(
-      (data) => {
-        console.log(data);
-        this.cotizacion = data;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-  }
-  getItemsCotizados(idCotizacion: number) {
-    this.api.get(`cotizacionDetalle/cotizacion/${idCotizacion}`).subscribe(
-      (data) => {
-        console.log(data);
-        this.items = data;
-      }
-    )
+  closeDialog(){
+    this.dialogRef.close();
   }
 
   printElement() {
@@ -72,7 +87,7 @@ export class DialogComponent implements OnInit {
     winprint.document.write('body,td,th{font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#000000}');
     winprint.document.write('.style1 {font-size:11px; font-weight:bold; color:#000000; }');
     winprint.document.write('.borderTable {border:solid 2px black;}');
-    winprint.document.write('@import url("../../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css")');
+    winprint.document.write('.infor2{position:relative; left:20px}');
     winprint.document.write('</style></head><body onload="window.print();">');
     winprint.document.writeln(printPage);
     winprint.document.write('</body></html>');

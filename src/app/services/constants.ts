@@ -18,5 +18,5 @@ export const APP: any = {
     //ApiEndpoint: 'http://ec2-18-221-61-141.us-east-2.compute.amazonaws.com:5000/rest/v1/',
     ApiEndpoint: 'http://localhost:5000/rest/v1/',
 //    AppBaseUrl: 'http://localhost:4200',
-    UrlImages: 'http://ec2-18-221-61-141.us-east-2.compute.amazonaws.com:5000/rest/v1/usuario/img/'
+    UrlImages: 'http://localhost:5000/rest/v1/usuario/img/'
 }

@@ -102,7 +102,6 @@ export class TecnicosTableComponent implements OnInit {
         if (result.value) {
           let datos = this.datos.value;
           let tecnico = {
-            "idTecnico": 50,
             "nombre": datos.nombre,
             "nombreCorto": datos.nombreCorto,
             "documento": datos.documento,
@@ -124,7 +123,7 @@ export class TecnicosTableComponent implements OnInit {
             "username": datos.nombreCorto,
             "fkEmpresa": this.usuario.empresa.idEmpresa,
             "expirado": 1,
-            "roles": [{ "id": 1, "nombre": "ROLE_TECNICO" }],
+            "roles": 3,
             "foto": '',
             "password": datos.documento
           }
@@ -136,7 +135,7 @@ export class TecnicosTableComponent implements OnInit {
             "username": datos.nombreCorto,
             "documento": datos.documento,
             "fkEmpresa": this.usuario.empresa.idEmpresa,
-            "enabled": 0,
+            "enabled": 1,
             "expirado": 0
           }
           this.service.post('tecnicos/new', tecnico).subscribe(
@@ -226,9 +225,10 @@ export class TecnicosTableComponent implements OnInit {
     }
   }
   public getTecnicos() {
-    this.service.get('tecnicos/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
+    this.service.get('tecnicos/estado/'+this.usuario.empresa.idEmpresa).subscribe(
       data => {
         this.tecnicos = data;
+        console.log(data)
       },
       err => {
         console.log(err);

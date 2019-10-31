@@ -36,26 +36,31 @@ export class ConsultasComponent implements OnInit {
   data1:any = {};
   data2:any = {};
   data3:any = 0;
+  data4:any;
   data:any;
   alison:any;
+  options = {
+	
+		
+	}
+  public cols: any[];
   public settings: Settings;
+  public info: Array<any> = [];
 
 
   constructor( private datePipe: DatePipe,private service:AppService, 
     private servicio: AuthService,
     public appSettings: AppSettings,) { 
     this.settings = this.appSettings.settings;
-    this.alison = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-          {
-              label: 'Mi primer chart',
-              backgroundColor: '#42A5F5',
-              borderColor: '#1E88E5',
-              alison: [65, 59, 80, 81, 56, 55, 40]
-          }
-      ]
-  }
+    this.cols = [
+      { header: 'Equipo' },
+      {  header: 'Marca' },
+      {  header: 'Programado' },
+      {  header: 'Realizado' },
+      {  header: 'Cliente' },
+      
+  ];  
+ 
   }
   public getClientes() {
     this.settings.loadingSpinner = true;
@@ -76,10 +81,10 @@ export class ConsultasComponent implements OnInit {
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/cliente1/'+this.usuario.empresa.idEmpresa).subscribe(
       (res:any)=>{console.log(res)
-        data = res[0];
+       /* data = res[0];
         this.data1=data[0];
         this.data2=data[1];
-        this.data3=data[2];
+        this.data3=data[2];*/
         this.settings.loadingSpinner = false;
     }
     )
@@ -120,12 +125,43 @@ export class ConsultasComponent implements OnInit {
     let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/responsable2/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{console.log(res)
-        data = res[0];
-        this.data1=data[0];
-        this.data2=data[1];
-        this.data3=data[2];
-        this.settings.loadingSpinner = false;}
+      (res:any)=>{console.log(res);
+        if(res.length > 0){
+
+
+          let label = [];
+          let datos = []
+          res.forEach(d => {
+             label.push(d[3]);
+             datos.push(d[2]);
+          });
+
+
+
+
+          data = res[0];
+          this.data1=data[0];
+          this.data2=data[1];
+          this.data3=data[2];
+          this.data4=data[3];
+          this.info = res;
+          this.settings.loadingSpinner = false;
+        
+
+          this.data = {
+          labels: label,
+          datasets: [
+              {
+                  label: 'Numero de equipos',
+                  data: datos,
+                  backgroundColor:'#429d8a',
+                  borderColor:'#429d8a'
+              }
+          ]
+      }
+        }
+     
+      }
         
     ),error=>{console.log(error)}
   }

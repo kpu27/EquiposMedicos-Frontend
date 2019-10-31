@@ -28,7 +28,7 @@
               <ng-template pTemplate="body" let-item let-columns="columns">
                 <tr [pSelectableRow]="item">
                   <td class="text-center">
-                    <button class="text-center" mat-icon-button pTooltip="Editar Protocolos" (click)="openDialog()" tooltipPosition="top">
+                    <button class="text-center" mat-icon-button pTooltip="Editar Protocolos" (click)="selectCotizacion(item);openDialog();" tooltipPosition="top">
                       <mat-icon  class="text-info">remove_red_eye</mat-icon>
                     </button>
                   </td>

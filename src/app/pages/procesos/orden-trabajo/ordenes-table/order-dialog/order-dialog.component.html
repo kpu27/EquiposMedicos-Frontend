@@ -1,44 +1,69 @@
-<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
 
-  <div class="row justify-content-end pb-2 bg-light">
-    <div class="col-md-12">
-      <button class="ml-2" mat-mini-fab color="warn" (click)="close()" style="float: right">
-        <mat-icon>clear</mat-icon>
-      </button>
-      <button class="ml-2" mat-mini-fab color="accent" style="float: right"
-        styleSheetFile="../../../../../../node_modules/bootstrap/dist/css/bootstrap.css" printSectionId="printElement"
-        ngxPrint>
-        <mat-icon>print</mat-icon>
-      </button>
-      <button mat-mini-fab color="primary" (click)="ngxSmartModalService.getModal('myModal').open()"
+  <div class="row pb-2 justify-content-around text-center">
+
+      <div class="col-md-12">
+          <button class="btn btn-secondary text-ligth w-25 ml-2" *ngIf="!active" (click)="active=true;resetInputValues();"
+          style="float: right">
+          Cancelar
+        </button>
+        <button class="btn btn-success text-ligth w-25" *ngIf="!active" (click)="active=true;saveInfo()"
+          style="float: right">
+          Guardar
+        </button>
+      </div>
+
+      <div class="col-md-12 d-flex justify-content-end" *ngIf="emailInput">
+          <input type="text" class="form-control w-25" placeholder="Asunto" aria-label="Asunto" aria-describedby="basic-addon2"> &nbsp;
+          <input type="text" class="form-control w-50" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon2"> &nbsp;
+          <button class="btn btn-success btn-sm" style="width: 5em;" type="button">Enviar</button>
+          &nbsp;
+          <button class="btn btn-secondary btn-sm" style="width: 6em;" type="button" (click)="emailInput=false">Cancelar</button>
+      </div>
+
+      <div class="col-md-12 d-flex justify-content-end text-center" *ngIf="active && !emailInput">
+            
+ 
+        <button class="mx-2" mat-mini-fab class="bg-info text-ligth" *ngIf="active" (click)="active=false;enableInput()"
         style="float: right">
-        <mat-icon>email</mat-icon>
+        <mat-icon>edit</mat-icon>
       </button>
-    </div>
+  
+            <button class="ml-2 d-flex justify-content-center" mat-mini-fab color="warn" (click)="closeDialog()" style="float: right">
+                <mat-icon>clear</mat-icon>
+              </button>
+      </div>
   </div>
 
-  <form action="">
+  <form [formGroup]="form" class="border" >
     <div class="container">
+      <div class="row border px-4">
+        <div class="col-md-8">
+          ORDEN DE TRABAJO <br> # {{orden.numOrden}}
+        </div>
+        <div class="col-md-4">
+          FECHA COTIZACIÓN <br> {{item.fechaCot}}
+        </div>
+      </div>
       <div class="row text-center m-0 py-2 bg-light w-100">
         <div class="col-md-4">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"># Orden &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text-muted" for="orden"># Orden &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="orden" id="orden" formControlName="orden"
+              class="form-control form-control-sm" >
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"># Cotización &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text-muted" for="cotizacion"># Cotización &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="cotizacion" id="cotizacion"
+              class="form-control form-control-sm" formControlName="cotizacion">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label class="text-muted" for="idcliente">Fecha cotización &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text-muted" for="fechaCot">Fecha cotización &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="fechaCot" id="fechaCot"
+              class="form-control form-control-sm" formControlName="fechaCot">
           </div>
         </div>
       </div>
@@ -46,16 +71,16 @@
       <div class="row text-center m-0 py-2 bg-light w-100">
         <div class="col-md-6">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"> Cliente &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text-muted" for="cliente"> Cliente &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="cliente" id="cliente"
+              class="form-control form-control-sm" formControlName="cliente">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"> Técnico &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text-muted" for="tecnico"> Técnico &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="tecnico" id="tecnico"
+              class="form-control form-control-sm" formControlName="tecnico">
           </div>
         </div>
       </div>
@@ -63,9 +88,9 @@
       <div class="row text-center m-0 py-2 bg-light w-100">
         <div class="col-md-12">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"> Comentarios &nbsp;<b class="text-danger">*</b></label>
-            <textarea readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm" rows="2"></textarea>
+            <label class="text-muted" for="comentarios"> Comentarios &nbsp;<b class="text-danger">*</b></label>
+            <textarea type="text" name="comentarios" id="comentarios"
+              class="form-control form-control-sm" rows="2" formControlName="comentarios" ></textarea>
           </div>
         </div>
       </div>
@@ -73,27 +98,26 @@
       <div class="row text-center m-0 py-2 bg-light w-100">
         <div class="col-md-4">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"> Fecha &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text-muted" for="fechaEntrega"> Fecha entrega &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="fechaEntrega" id="fechaEntrega"
+              class="form-control form-control-sm" formControlName="fechaEntrega">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label class="text-muted" for="idcliente"> Estado &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <label class="text -muted" for="estado"> Estado &nbsp;<b class="text-danger">*</b></label>
+            <input type="text" name="estado" id="estado"
+              class="form-control form-control-sm" formControlName="estado">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label class="text-muted" for="idcliente"> %%%%%%% &nbsp;<b class="text-danger">*</b></label>
-            <input readonly type="text" [(ngModel)]="clienteSelected.documento" name="idcli" id="idcli"
-              class="form-control form-control-sm">
+            <input type="text" name="idcli" id="idcli"
+              class="form-control form-control-sm" >
           </div>
         </div>
       </div>
     </div>
   </form>
 
-</cdk-virtual-scroll-viewport>

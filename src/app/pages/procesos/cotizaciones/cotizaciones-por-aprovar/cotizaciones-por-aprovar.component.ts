@@ -95,6 +95,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.width = '80%';
     dialogConfig.height = '80%';
+    dialogConfig.data = this.SelectCotizacion;
     this.dialog.open(DialogComponent, dialogConfig);
   }
 

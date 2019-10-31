@@ -21,11 +21,11 @@
       <td style="text-align: left">{{ item.fkCotizacion.responsable }}</td>
       <td style="text-align: left">{{ getDate(item.fechaOrden) }}</td>
       <td class="text-center">
-        <div *ngIf="item.esatdoOrden == 3" class="badge badge-success">
-          Activo
-        </div>
-        <div *ngIf="item.esatdoOrden == 4" class="badge badge-info">
+        <div *ngIf="item.esatdoOrden == 3" class="badge badge-info">
           Asignado
+        </div>
+        <div *ngIf="item.esatdoOrden == 4" class="badge badge-success">
+          Realizado
         </div>
         <div *ngIf="item.esatdoOrden == 9" class="badge badge-danger">
           Cancelada
@@ -36,29 +36,11 @@
           <div class="container">
             
             <button class="text-center" mat-icon-button pTooltip="Editar Protocolos"
-              (click)="openDialog()"
+              (click)="getCotizacionById(item.idOrdenes);"
               tooltipPosition="top">
               <mat-icon class="text-secondary">remove_red_eye</mat-icon>
             </button>
 
-<!--             <button *ngIf="item.esatdoOrden == 3" class="text-center" mat-icon-button pTooltip="Editar Protocolos" (click)="
-                seleccionarProtocolo(item);
-                getTecnicos();
-                estado = false;
-                setTipoForm(1)
-              " tooltipPosition="top">
-              <mat-icon class="text-info">mode_edit</mat-icon>
-            </button>
-
-            <button *ngIf="item.esatdoOrden == 3" class="text-center" mat-icon-button pTooltip="Eliminar Protocolo"
-              tooltipPosition="top" (click)="seleccionarProtocolo(item); deleteProtocolo()">
-              <mat-icon class="text-danger">delete</mat-icon>
-            </button>
-
-            <button *ngIf="item.esatdoOrden == 9" class="text-center" mat-icon-button pTooltip="Restaurar Protocolo"
-              tooltipPosition="top" (click)="seleccionarProtocolo(item); deleteProtocolo()">
-              <mat-icon class="text-warning">cached</mat-icon>
-            </button> -->
 
           </div>
         </div>
@@ -67,33 +49,3 @@
   </ng-template>
 </p-table>
 
-
-<!--////////// table protocolos-->
-
-<!-- <p-table *ngIf="table == 1" #dt [value]="protocolos" [paginator]="true" [rows]="7">
-  <ng-template pTemplate="header">
-    <tr>
-      <div  style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
-        <button style="float: right" mat-flat-button color="accent" (click)="return()">
-          <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
-        </button>
-      </div>
-    </tr>
-    <tr class="bg">
-      <th width="10%">Codigo</th>
-      <th width="20%">Nombre</th>
-      <th width="30%">Descripcion</th>
-      <th width="20%">Responsable</th>
-      <th width="20%">Revision</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-item>
-    <tr class="tbody">
-      <td>{{item.fkProtocolo.codigo}}</td>
-      <td style="text-align: left">{{item.fkProtocolo.nombre}}</td>
-      <td style="text-align: left">{{item.fkProtocolo.descripcion}}</td>
-      <td style="text-align: left">{{item.fkProtocolo.responsable}}</td>
-      <td>{{item.fkProtocolo.revision}}</td>
-    </tr>
-  </ng-template>
-</p-table> -->

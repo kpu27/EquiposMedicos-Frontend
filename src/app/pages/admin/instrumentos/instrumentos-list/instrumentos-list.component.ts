@@ -124,7 +124,7 @@ export class InstrumentosListComponent implements OnInit {
         this.protocolos = result;
         this.settings.loadingSpinner = false;
         if (result.length > 0) {
-          Swal.fire({ type: 'success', text: 'listado de protocolos!', timer: 2000 });
+          Swal.fire({ type: 'success', text: 'listado de Instrumentos!', timer: 2000 });
         } else {
           Swal.fire({ type: 'error', text: 'No se Obtuvieron datos!', timer: 2000 });
         }
@@ -265,11 +265,11 @@ export class InstrumentosListComponent implements OnInit {
  public deleteInstrumento() {
     Swal.fire({
       title: 'Advertencia',
-      text: 'Estas seguro de que quiere '+this.setText(this.estadoIns)+' el protocolo?',
+      text: 'Estas seguro de que quiere '+this.setText(this.estadoIns)+' el Instrumento?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
         let datos = this.datos.value;

@@ -41,6 +41,9 @@ import { NgxPrintModule } from 'ngx-print';
 import { EmpresasComponent } from './pages/admin/empresas/empresas.component';
 import { TableModule } from 'primeng/table';
 import { NgxSmartModalService, NgxSmartModalModule } from 'ngx-smart-modal';
+import {ChartModule} from 'primeng/chart';
+import { ButtonModule } from 'primeng/button';
+
 
 
 @NgModule({
@@ -59,7 +62,9 @@ import { NgxSmartModalService, NgxSmartModalModule } from 'ngx-smart-modal';
     ScrollingModule,
     NgxPrintModule,
     TableModule,
-    NgxSmartModalModule
+    NgxSmartModalModule,
+    ChartModule,
+    ButtonModule 
   ],
   declarations: [
     AppComponent,

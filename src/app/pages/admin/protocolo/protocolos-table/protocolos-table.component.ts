@@ -211,15 +211,14 @@ export class ProtocolosTableComponent implements OnInit {
       }
     })
   }
-  public setEstdo(estado: number): number{
+  public setEstdo(estado: number) {
      switch (estado) {
        case 0:
-         estado = 9;
-         return estado;
+        this.estadoPro = 9;
          break;
        case 9:
-         estado = 0;
-         return estado;
+        this.estadoPro = 0;
+         break;
        default:
          break;
      }
@@ -231,12 +230,18 @@ export class ProtocolosTableComponent implements OnInit {
         break;
       case 9:
         return 'reactivar';
+        break;
       default:
         break;
     }
   }
   public deleteProtocolo() {
     let datos = this.datos.value;
+    if(this.estadoPro == 0){
+      this.estadoPro = 9;
+    }else{
+      this.estadoPro = 0
+    }
     let protocolo = {
       "fkEmpresa": this.empresa,
       'idProtocolo': this.idProtocolo,
@@ -245,15 +250,15 @@ export class ProtocolosTableComponent implements OnInit {
       'descripcion': datos.descripcion,
       'revision': this.datePipe.transform(datos.revision, 'yyyy-MM-dd'),
       'responsable': this.usuario.nombre,
-      'estado': this.setEstdo(this.estadoPro)
+      'estado': this.estadoPro
     }
     Swal.fire({
       title: 'Advertencia',
       text: 'Estas seguro de que quiere '+this.setText(this.estadoPro)+' el protocolo?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
         this.service.put(`protocolos/${this.idProtocolo}`, protocolo).subscribe(

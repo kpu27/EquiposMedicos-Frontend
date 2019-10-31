@@ -74,6 +74,9 @@ export class Dialog2Component implements OnInit {
         break;
     }
   }
+  closeDialog(){
+    this.dialogRef.close();
+  }
 
   //METODO PARA ELIMINAR ITEM DESELECIONADO 
   deleteItem(item: any) {

@@ -18,7 +18,7 @@
             </h3>
 
 
-            <div *ngIf="valid == true" class="container">
+            <div *ngIf="cotizacionDetalles == 0" class="container">
                 <form  [formGroup]="form2">
                         <div class="row">
                                 <div class="col-12">
@@ -38,7 +38,7 @@
                 </form>
             </div>
 
-            <div *ngIf="valid == false" class="container-equipos" perfectScrollbar>
+            <div *ngIf="cotizacionDetalles != 0" class="container-equipos" perfectScrollbar>
                 <mat-list style="position: relative">
                     <div *ngFor="let coDetalle of cotizacionDetalles">
                         <mat-list-item style="height: 60px;">
@@ -54,14 +54,14 @@
                     </div>
                 </mat-list>
             </div>
-            <h3 *ngIf="valid == false" mat-subheader
+            <h3 *ngIf="cotizacionDetalles != 0" mat-subheader
                 style="padding-bottom: 0px;color: #6a7a71;font-size: large;margin: 0px;">
                 <mat-icon mat-list-icon
                     style="margin-right: 10px;color: #6a7a71;font-size: large; margin: 0px;margin-top: 6px;">settings
                 </mat-icon>
                 Configuración
             </h3>
-            <form *ngIf="valid == false" [formGroup]="form"
+            <form *ngIf="cotizacionDetalles != 0" [formGroup]="form"
                 style="width: 85%; text-align: center; offset: 40px; position: relative; left: 6%;">
                 <br>
                 <div class="content">
@@ -112,14 +112,7 @@
                         </button>
                     </div>
                     <h2>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h2>
-                    <div class="">
-                        <button mat-icon-button (click)="view = 'month'">
-                            <mat-icon>view_comfy</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="openScheduleDialog(null)">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                    </div>
+                    <div></div>
                 </div>
             </div>
 

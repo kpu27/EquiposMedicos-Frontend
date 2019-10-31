@@ -36,6 +36,7 @@ export class CotizacionesListComponent implements OnInit {
   public info: any;
   public display: boolean = false;
   public cols: any[];
+  SelectCotizacion:any;
   usuario:Usuario;
 
   name: string;
@@ -63,10 +64,14 @@ export class CotizacionesListComponent implements OnInit {
     this.usuario = this.service.obtenerDatosUser();
     this.getCotizaciones();
   }
+  selectCotizacion(cotizacion:any){
+    this.SelectCotizacion = cotizacion;
+    console.log(this.SelectCotizacion)
+  }
 
   public getCotizaciones() {
     this.settings.loadingSpinner = true;
-    this._AppService.get('cotizaciones/list').subscribe(
+    this._AppService.get('cotizaciones/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
       (data: any) => { 
         this.data = data; 
         this.settings.loadingSpinner = false; }
@@ -94,16 +99,7 @@ export class CotizacionesListComponent implements OnInit {
     dialogConfig.autoFocus = false;
     dialogConfig.width = '80%';
     dialogConfig.height = '80%';
-
-/*     dialogConfig.data = {
-      id: 1,
-      title: 'Angular For Beginners'
-    };
- */
-/*     dialogConfig.position = {
-      'top': '0',
-      left: '0'
-    }; */
+    dialogConfig.data = this.SelectCotizacion;
 
     this.dialog.open(DialogComponent, dialogConfig);
   }
