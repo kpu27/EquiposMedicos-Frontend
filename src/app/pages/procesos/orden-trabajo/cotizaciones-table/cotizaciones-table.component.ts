@@ -5,7 +5,6 @@ import { AppService } from 'src/app/services/app.service';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 
-
 @Component({
   selector: 'app-cotizaciones-table',
   templateUrl: './cotizaciones-table.component.html',
@@ -26,7 +25,6 @@ export class CotizacionesTableComponent implements OnInit {
     this.getCotizacionesSinOrdenDeTrabajo(2);
   }
 
-
   getCotizacionesSinOrdenDeTrabajo(estado:number)
   {
     this._AppService.get(`cotizaciones/listar-cotizaciones-sin-orden/${estado}/`+this.usuario.empresa.idEmpresa).subscribe(
@@ -38,7 +36,7 @@ export class CotizacionesTableComponent implements OnInit {
   }
 
   crearOrdenDetalle(cotizacion) {
-    this._AppService.get(`cotizacionDetalle/cotizacion/${cotizacion.idCotizEncab}`).subscribe(result => { 
+    this._AppService.get(`cotizacionDetalle/cotizacion/estado/${cotizacion.idCotizEncab}`).subscribe(result => { 
       console.log('RESULTADO PENDIENTE',result);
       this.cotizacionDetalles = result;
        }
@@ -52,6 +50,5 @@ export class CotizacionesTableComponent implements OnInit {
     this.estado = 'agregarOrden';
     this.crearOrden.emit(cotizaciones);
   }
-
 
 }

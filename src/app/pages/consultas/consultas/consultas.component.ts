@@ -22,6 +22,7 @@ export class ConsultasComponent implements OnInit {
   TecnicoSelect:any;
   tecnicos: any;
   formularios:any;
+  formulario:any;
   usuario:Usuario;
   fechai1:any;
   fechai2:any;

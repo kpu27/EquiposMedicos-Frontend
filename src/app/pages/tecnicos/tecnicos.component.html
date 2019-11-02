@@ -186,26 +186,12 @@
                             </div>
 
 
-                            <div class="col-md-12">
-                                <hr class="my-2">
-                                <h6 class="text-muted">Actividades</h6>
-                                <div class="table-responsive">
-                                    <table style="border: 2px solid #ccc" class="table table-sm table-striped">
-                                        <tbody>
-                                            <tr *ngFor="let item of actividades; let i = index">
-                                                <td scope="row">{{i+1}}</td>
-                                                <td scope="row">{{item.nombre}}</td>
-                                                <td scope="row">
-                                                    <mat-checkbox [(ngModel)]="item.realizado" name="realizado"
-                                                        color="warn">realizado</mat-checkbox>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+
+
+
                         </div>
                     </form>
+
                     <form [formGroup]="datos" (ngSubmit)="generarReporte()" class="form-text">
                         <div class="form-row">
                             <div class="col-md-12">

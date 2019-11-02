@@ -23,7 +23,7 @@ export class DialogComponent implements OnInit {
     public appSettings: AppSettings,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private servicio: AppService, public mgxSmartModalService: NgxSmartModalService) {
+    private servicio: AppService, public ngxSmartModalService: NgxSmartModalService) {
       this.settings = this.appSettings.settings;
       this.getDatosUSuario()
       this.getDatosDetalle()

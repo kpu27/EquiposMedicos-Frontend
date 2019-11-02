@@ -27,7 +27,7 @@ import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/cotizaciones-form.component';
 import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { DialogComponent } from './cotizaciones/dialog/dialog.component';
 import {CheckboxModule} from 'primeng/checkbox';
 

@@ -23,7 +23,11 @@ export class MantenimientosRealizadosComponent implements OnInit {
   tecnicoSelected: any;
   cols: any[];
   view = true;
+  detalles:any;
+  acts:any;
+  form:any;
   infoReporte: any;
+  allowed:any;
   codigoReporte: any;
   constructor(
     public appSettings: AppSettings,    
@@ -99,6 +103,26 @@ export class MantenimientosRealizadosComponent implements OnInit {
   }
   public getDate(fecha: any) {
     return this.datePipe.transform(fecha, 'yyyy-MM-dd');
+  }
+  getActividadesProtocolo(idDetalle: number) {
+    let idPro = this.detalles[idDetalle].fkEquipos.fkProtocolo.idProtocolo;
+    console.log(idPro);
+    this._AppService.get('actividades/protocolo/' + idPro).subscribe(
+      (data: any) => { console.log(data); this.setActividades(data); this.acts = data; this.form = true },
+      error => { console.log(error) 
+      }
+    );
+  }
+  validarActividades(): boolean{
+    for (let index = 0; index < this.actividades.length; index++) {
+      let item = this.actividades[index];
+      if(item.realizado == true){
+        this.allowed = true;
+      }else{
+        this.allowed = false;
+      }
+    }
+    return this.allowed;
   }
 
 }

@@ -109,6 +109,7 @@ export class TecnicosComponent implements OnInit {
     this.settings = this.appSettings.settings;
     this.detalles = [];
     this.actividades = [];
+    this.acts = [];
     this.idCliente = null;
     this.datos = this._formBuilder.group({
       descripcion: ['', Validators.compose([Validators.required, Validators.minLength(15), Validators.maxLength(80)])]
@@ -190,14 +191,15 @@ export class TecnicosComponent implements OnInit {
     this.events = [];
     for (let index = 0; index < this.detalles.length; index++) {
       let item = this.detalles[index];
-      let fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'yyyy-MM-dd'));
+      let fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'M/d/yy'));
+      fecha.setDate(fecha.getDate()+1)
       this.info.idDetalle = index;
       this.info.equipo = item.fkEquipos.nombre;
       //this.info.responsable = item.fkResponsable.nombre;
       this.idDetalle = item.idOrdenesDetalle;
       this.events.push({
         id: index,
-        start: new Date(fecha),
+        start: fecha,
         title: item.fkEquipos.nombre,
         color: this.setColors(item.estadoReporte),
         actions: this.setActions(item.estadoReporte),
@@ -229,18 +231,26 @@ export class TecnicosComponent implements OnInit {
   }
   getActividadesProtocolo(idDetalle: number) {
     let idPro = this.detalles[idDetalle].fkEquipos.fkProtocolo.idProtocolo;
+    console.log(this.detalles[idDetalle]);
     console.log(idPro);
     this._AppService.get('actividades/protocolo/' + idPro).subscribe(
-      (data: any) => { console.log(data); this.setActividades(data); this.acts = data; this.form = true },
+      (data: any) => { 
+        console.log(data);
+        this.acts = data;
+        this.actividades = data;
+        this.form = true; 
+      }, 
       error => { console.log(error) }
     );
   }
-  setActividades(data: any){
+  setActividades(data: Array<any>){
     this.actividades = [];
     for (let index = 0; index < data.length; index++) {
       let item = data[index];
       this.actividades.push(new Actividad(item.idActividades, item.actividades, false)); 
     }
+    console.log(this.actividades);
+    this.form = true;  
   }
   validarActividades(): boolean{
     for (let index = 0; index < this.actividades.length; index++) {
@@ -288,6 +298,7 @@ export class TecnicosComponent implements OnInit {
     });
   }
   verReporte(idDetalle){
+    console.log(idDetalle)
     swalWithBootstrapButtons.fire({
       text: 'Quiere ver el Reporte?',
       type: 'warning',
@@ -371,5 +382,9 @@ export class TecnicosComponent implements OnInit {
   }
   goBack(){
     this.form = false;
+  }
+
+  getInfo(data: any){
+    return String(data);
   }
 }

@@ -11,8 +11,8 @@ import { Usuario, UsuarioLogin } from '../models/usuario';
 })
 export class AppService {
   //ec2-18-221-61-141.us-east-2.compute.amazonaws.com
-  public url = 'http://localhost:5000/rest/v1/';
-  public publicUrl = 'http://localhost:5000/';
+  public url = 'http://ec2-52-87-159-200.compute-1.amazonaws.com:5000/rest/v1/';
+  public publicUrl = 'http://ec2-52-87-159-200.compute-1.amazonaws.com:5000/';
   private token = '';
   private httpOptions;
   private httpMultipartOption;
