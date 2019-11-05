@@ -148,47 +148,7 @@
                                 </div>
                             </div>
                             <!-- ESPECIFICACIONES EQUIPOS -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="text-muted" for="emailres">Email Responsable &nbsp;<b
-                                            class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.email" name="emailres"
-                                        id="emailres" class="form-control form-control-sm">
-                                </div>
-                            </div>
                             
-                            <!-- ---------- -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="text-muted" for="nombreres">Nombre Responsable &nbsp;<b
-                                            class="text-danger">*</b></label>
-                                    <!-- [(ngModel)]="tecnicoSelected.nombre" -->
-                                    <input readonly type="text" name="nombreres" id="nombreres"
-                                        class="form-control form-control-sm">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="text-muted" for="docres">Documento Responsable &nbsp;<b
-                                            class="text-danger">*</b></label>
-                                    <!-- [(ngModel)]="tecnicoSelected.documento" -->
-                                    <input readonly type="text" name="docres" id="docres"
-                                        class="form-control form-control-sm">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="text-muted" for="celres">Celular Responsable &nbsp;<b
-                                            class="text-danger">*</b></label>
-                                    <input readonly type="text" [(ngModel)]="tecnicoSelected.telefonoCelular"
-                                        name="celres" id="celres" class="form-control form-control-sm">
-                                </div>
-                            </div>
-
-
-
-
-
                         </div>
                     </form>
 
@@ -200,6 +160,23 @@
                                             class="text-danger">*</b> </label>
                                     <textarea formControlName="descripcion" class="form-control" name="descripcion"
                                         id="descripcion" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <hr class="my-2">
+                                <h6 class="text-muted">Actividades</h6>
+                                <div class="table-responsive">
+                                    <table style="border: 2px solid #ccc" class="table table-sm table-striped">
+                                        <tbody>
+                                            <tr *ngFor="let item of actividades; let i = index">
+                                                <td scope="row">{{i+1}}</td>
+                                                <td scope="row">{{item.nombre}}</td>
+                                                <td scope="row">
+                                                    <mat-checkbox [(ngModel)]="item.realizado" name="realizado" color="warn">realizado</mat-checkbox>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="col-md-12">

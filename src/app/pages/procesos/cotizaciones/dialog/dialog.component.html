@@ -23,29 +23,28 @@
         </div>
         <div class="col-md-2 my-auto">
           <h6 class="text-center" style="border: solid 1px grey;">
-            RC-05-03 <br />
-            02/08/2014 <br />
-            Version 01
+            {{datos.codigo}} <br />
+            {{datos.entrega}}<br />
           </h6>
         </div>
       </div>
 
       <hr class="pt-1" />
-      <h4 class="text-center">Cotización servicio técnico No. VS 0022-2019</h4>
+      <h4 class="text-center">Cotización servicio técnico No. {{datos.codigo}}-2019</h4>
 
       <div class="form-row mt-3" >
         <div class="col-md-6 infor1">
-         <label>{{datos.entrega}}</label><br />
+         <label></label><br />
          <label >{{datos.fkCliente.nombre}}</label> <br />
-         <label>{{datos.fkCliente.nombreCorto}}</label> <br />
+         
           Atencíon: <label>{{datos.fkCliente.atencion}}</label> <br />
          <label>{{datos.fkCliente.email}}</label> <br />
         </div>
 
         <div class="col-md-6 m-auto infor2">
-          NIT: 900.092.124 <br />
+         
           Dirección: <label>{{datos.fkCliente.direccion}}</label><br />
-         <label>{{datos.fkCliente.documento}}</label> <br />
+          <label>{{datos.fkCliente.documento}}</label> <br />
           Teléfono: <label>{{datos.fkCliente.telefonoCelular}}</label>
         </div>
       </div>
@@ -55,10 +54,10 @@
             <tr>
               <th>Item</th>
               <th>Referencia</th>
-              <th>Descripción</th>
+              <th>Nombre</th>
               <th>Cantidad</th>
-              <th>Valor Unidad</th>
-              <th>Valor Total</th>
+              <th>Vr Unidad</th>
+              <th>Vr Total</th>
             </tr>
           </thead>
 
@@ -66,9 +65,7 @@
             <tr class="text-center borderTable">
               <th scope="row">{{ i+1 }}</th>
               <td>{{ item.fkEquipos.codigo }}</td>
-              <td class="text-justify">
-                {{ item.fkEquipos.fkProtocolo.descripcion }}
-              </td>
+              <td>{{item.fkEquipos.nombre}}</td>
               <td>{{ item.cantidad }}</td>
               <td>${{ item.valorUnitario }}</td>
               <td>${{ item.cantidad * item.valorUnitario }}</td>

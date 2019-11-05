@@ -56,8 +56,7 @@ export class CotizacionesListComponent implements OnInit {
       { field: 'entrega', header: 'Entrega', width: '10%' },
       { field: 'condicionPago', header: 'Condicion de Pago', width: '12%' },
       { field: 'responsable', header: 'Responsable', width: '15%' },
-      { field: 'estado', header: 'Estado', width: '10%' },
-      { field: 'acciones', header: 'Accion', width: '8%' }
+      { field: 'estado', header: 'Estado', width: '10%' }
     ];
   }
   ngOnInit() {

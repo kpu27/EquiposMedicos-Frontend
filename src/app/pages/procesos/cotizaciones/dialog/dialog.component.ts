@@ -57,6 +57,7 @@ export class DialogComponent implements OnInit {
     this.servicio.get('cotizacionDetalle/cotizacion/'+this.data.idCotizEncab).subscribe(
       res=>{
         this.datosDetalles=res
+        console.log(res)
         this.settings.loadingSpinner = false;
       }
     )
