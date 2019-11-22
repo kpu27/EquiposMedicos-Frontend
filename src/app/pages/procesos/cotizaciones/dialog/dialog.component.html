@@ -9,10 +9,6 @@
         ngxPrint>
         <mat-icon>print</mat-icon>
       </button>
-      <button mat-mini-fab color="primary" (click)="ngxSmartModalService.getModal('myModal').open()"
-        style="float: right">
-        <mat-icon>email</mat-icon>
-      </button>
     </div>
   </div>
   <form>
@@ -74,12 +70,20 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>TOTAL:</th>
+              <th></th>
               <td></td>
               <td></td>
-              <td></td>
+              <td>SUB TOTAL:</td>
               <td class="ml-3">${{ monto }}</td>
             </tr>
+            <tr>
+              <th></th>
+              <td></td>
+              <td></td>
+              <td>IVA:</td>
+              <td class="ml-3">{{datos.viaticoIva}}%</td>
+            </tr>
+            <label for=""></label>
           </tfoot> 
         </table>
       </div>

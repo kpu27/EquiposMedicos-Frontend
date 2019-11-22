@@ -98,6 +98,9 @@ export class TecnicosComponent implements OnInit {
     responsable: '',
     equipo: '',
   }
+
+  public infoReporte: Array<any> = [{propiedad: '', valor: 0}];
+
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
     private _AppService: AppService,
@@ -152,6 +155,10 @@ export class TecnicosComponent implements OnInit {
     this.getClientes();
     this.getTecnico();
   }
+  public addInfoReport() {
+    this.infoReporte.push({propiedad: '', valor: 0});
+  }
+
   getTecnico(){
     console.log(this.usuario.id)
     this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
@@ -187,6 +194,7 @@ export class TecnicosComponent implements OnInit {
       }
     );
   }
+
   setDates() {
     this.events = [];
     for (let index = 0; index < this.detalles.length; index++) {
@@ -237,7 +245,7 @@ export class TecnicosComponent implements OnInit {
       (data: any) => { 
         console.log(data);
         this.acts = data;
-        this.actividades = data;
+        this.setActividades(data);
         this.form = true; 
       }, 
       error => { console.log(error) }
@@ -333,7 +341,6 @@ export class TecnicosComponent implements OnInit {
     );
   }
   generarReporte(){
-    if(this.datos.valid){
       if(this.validarActividades() == true){
         swalWithBootstrapButtons.fire({
           text: 'Seguro de que quiere generar el reporte?',
@@ -378,7 +385,6 @@ export class TecnicosComponent implements OnInit {
       }else{
         Swal.fire({ type: 'warning', text: 'debe validar las actividades', timer: 2000});
       }
-    }
   }
   goBack(){
     this.form = false;

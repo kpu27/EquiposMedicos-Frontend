@@ -16,12 +16,12 @@ padding : 50px 0;
 .login-sec .copy-text{position:absolute; width:80%; bottom:20px; font-size:13px; text-align:center;}
 .login-sec .copy-text i{color:#00695c;}
 .login-sec .copy-text a{color:#00695c;}
-.login-sec h2{margin-bottom:30px; font-weight:800; font-size:30px; color: #00695c;}
-.login-sec h2:after{content:" "; width:100px; height:5px; background:#00695c; display:block; margin-top:20px; border-radius:3px; margin-left:auto;margin-right:auto}
+.login-sec h1{margin-bottom:30px; font-weight:800; font-size:30px; color: #00695c;}
+.login-sec h1:after{content:" "; width:100px; height:5px; background:#00695c; display:block; margin-top:20px; border-radius:3px; margin-left:auto;margin-right:auto}
 .btn-login{background: #00695c; color:#fff; font-weight:600;}
-.banner-text{width:70%; position:absolute; bottom:40px; padding-left:20px;}
-.banner-text h2{color:#fff; font-weight:600;}
-.banner-text h2:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
+.banner-text{width:100%; position:absolute; bottom:40px; padding-left:20px;}
+.banner-text h1{color:#fff; font-weight:600;}
+.banner-text h1:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
 .banner-text p{color:#fff;}
 .label-container{left: 5%;text-align: center;position: relative;}
 .form-check-label{left: -13%; position: relative;}
