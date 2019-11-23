@@ -38,11 +38,9 @@ export class MantenimientosRealizadosComponent implements OnInit {
       this.cols = [
         { field: 'idOrdenesDetalle', header: 'ID', width: '10%' },
         { field: 'fechaProgramada', header: 'Programada',width: '15%' },
-        { field: 'fechaRealizada', header: 'Realizada',width: '15%' },
         { field: 'fkCliente', header: 'Cliente',width: '20%' },
         { field: 'fkOrdenes', header: '# Orden',width: '10%' },
         { field: 'estadoReporte', header: 'Estado',width: '10%' },
-        { field: 'numeroReporte', header: '# Reporte',width: '10%' },
         { field: '', header: 'Acciones',width: '10%' }
     ];
     this.settings.tipoColor = 1;
@@ -55,8 +53,9 @@ export class MantenimientosRealizadosComponent implements OnInit {
 
   public getReportesOrdenes(){
     this.settings.loadingSpinner = true;
-    this._AppService.get('ordenesDetalle/reportes/'+this.usuario.empresa.idEmpresa).subscribe(
-      (data: any) => {this.reportesOrdenes = data; console.log(data); this.settings.loadingSpinner = false;}
+    this._AppService.get('ordenes/resportes/'+this.usuario.empresa.idEmpresa).subscribe(
+      (data: any) => {this.reportesOrdenes = data;
+         console.log(data); this.settings.loadingSpinner = false;}
     );
   }
 

@@ -33,25 +33,19 @@
                             <ng-template pTemplate="body" let-item let-columns="columns">
                                 <tr [pSelectableRow]="item">
                                     <td class="text-center">
-                                        {{item.idOrdenesDetalle}}
+                                        {{item.idOrdenes}}
                                     </td>
                                     <td>
-                                        {{ getDate(item.fechaProgramada) }}
+                                        {{ getDate(item.fechaOrden) }}
                                     </td>
                                     <td>
-                                        {{ getDate(item.fechaRealizada) }}
+                                        {{item.fkCotizacion.fkCliente.nombre}}
                                     </td>
                                     <td>
-                                        {{item.fkCliente.nombre}}
-                                    </td>
-                                    <td>
-                                        {{item.fkOrdenes.numOrden}}
+                                        {{item.numOrden}}
                                     </td>
                                     <td class="text-center">
-                                        <div *ngIf="item.estadoReporte == 1" class="badge badge-success">Realizado</div>
-                                    </td>
-                                    <td>
-                                        {{item.numeroReporte}}
+                                        <div *ngIf="item.esatdoOrden == 4" class="badge badge-success">Realizado</div>
                                     </td>
                                     <td class="text-center">
                                         <button (click)="setInfoReporte(item)" mat-icon-button>

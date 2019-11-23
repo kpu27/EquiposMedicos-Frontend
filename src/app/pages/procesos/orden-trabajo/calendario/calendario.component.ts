@@ -230,7 +230,7 @@ export class CalendarioComponent implements OnInit {
         for (let i = 0; i < this.tecnicos.length; i++) {
           if (this.tecnicos[i].idTecnico === parseInt(datos.responsable)) {
             tecnico = this.tecnicos[i];
-            this.tecnicos.splice(i, 1);
+           // this.tecnicos.splice(i, 1);
           }
         }
         let coDetalles: Array<any>  = this.cotizacionDetallesSeleccionados;

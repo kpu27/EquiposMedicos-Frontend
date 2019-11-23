@@ -162,8 +162,7 @@ export class TecnicosComponent implements OnInit {
   getTecnico(){
     console.log(this.usuario.id)
     this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
-      (data: any) => {this.tecnicoSelected = data
-      console.log(data)}
+      (data: any) => {this.tecnicoSelected = data}
     );
   }
   getDetalles(){

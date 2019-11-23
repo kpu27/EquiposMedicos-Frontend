@@ -11,8 +11,7 @@ box-shadow: inset 0px 0px 6px 0px #e4dfdf">
         <mat-list style="position: relative">
             <div >
                 <mat-list-item  class="mb-2" style="height: 30px;" *ngFor="let item of aut" style="background: rgb(241, 241, 241);">
-                    <div ><p-checkbox name="grupo1" (onChange)="getitem($event, item)"   label= "{{item.fkEquipos.nombre}}"></p-checkbox></div>
-
+                    <div ><p-checkbox name="grupo1" (onChange)="getitem($event, item)"   label= "{{item.fkEquipos.nombre}}"><input type="text" disabled>{{item.cantidad}}</p-checkbox></div>
                 </mat-list-item>
             </div>
         </mat-list>
