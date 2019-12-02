@@ -6,25 +6,34 @@ box-shadow: inset 0px 0px 6px 0px #e4dfdf">
   <div class="row justify-content-end pb-2 bg-light">
   </div>
   <form>
-    <div class="container" id="printElement">
-      <div class="container-equipos" perfectScrollbar>
+    <div class="containe
+    r" id="printElement">
+      <div class="container-equipos" perfectScrollbar style="overflow-x: hidden;">
         <mat-list style="position: relative">
-            <div >
-                <mat-list-item  class="mb-2" style="height: 30px;" *ngFor="let item of aut" style="background: rgb(241, 241, 241);">
-                    <div ><p-checkbox name="grupo1" (onChange)="getitem($event, item)"   label= "{{item.fkEquipos.nombre}}"><input type="text" disabled>{{item.cantidad}}</p-checkbox></div>
-                </mat-list-item>
-            </div>
+                <div class="row" *ngFor="let item of aut; let i = index" style="height: 30px;" 
+                style="background: rgb(241, 241, 241);padding: 1rem;">
+                  <div class="col-10">
+                    <p-checkbox name="grupo1" (onChange)="getitem($event, item)" label="{{item.fkEquipos.nombre}}">
+                    </p-checkbox>
+                  </div>
+                  <div class="col-2">
+                    <input type="text" style="width: 5rem;
+                    border-radius: 5px;
+                    border: 1px solid #b5b5b5;
+                    padding: 5px;" (change)="setCantidad(item, $event)" [value]="item.cantidad">
+                  </div>
+              <!--   </div> -->
+          </div>
         </mat-list>
-    </div>
-    </div>
+      </div>
+    </div> 
   </form>
-</cdk-virtual-scroll-viewport>
-
-<button class="btn btn-success mt-2 float-right" (click)="enviarCotizacionesDetalle(); closeDialog()">Autorizar</button>
+</cdk-virtual-scroll-viewport> <button class="btn btn-success mt-2 float-right"
+  (click)="enviarCotizacionesDetalle(); closeDialog()">Autorizar</button>
 
 
 
 <ngx-smart-modal #myModal identifier="myModal">
   <h3 class="text-center">Enviar Cotización</h3>
-  <br/>
+  <br />
 </ngx-smart-modal>

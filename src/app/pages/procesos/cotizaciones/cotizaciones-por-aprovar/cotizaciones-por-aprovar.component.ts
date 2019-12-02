@@ -65,7 +65,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
   public getCotizaciones() {
     this.settings.loadingSpinner = true;
     this._AppService.get('cotizaciones/estado/'+this.usuario.empresa.idEmpresa).subscribe(
-      (data: any) => { console.log(data); 
+      (data: any) => { 
         this.data = data; 
         this.settings.loadingSpinner = false; }
     );
@@ -84,7 +84,6 @@ export class CotizacionesPorAprovarComponent implements OnInit {
 
   selectCotizacion(cotizacion:any){
     this.SelectCotizacion = cotizacion;
-    console.log(this.SelectCotizacion)
   }
   
   openDialog() {
@@ -104,7 +103,7 @@ export class CotizacionesPorAprovarComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
-    dialogConfig.width = '30%';
+    dialogConfig.width = '50%';
     dialogConfig.height = '80%';
     dialogConfig.data = this.SelectCotizacion;
 

@@ -65,7 +65,6 @@ export class CotizacionesListComponent implements OnInit {
   }
   selectCotizacion(cotizacion:any){
     this.SelectCotizacion = cotizacion;
-    console.log(this.SelectCotizacion)
   }
 
   public getCotizaciones() {

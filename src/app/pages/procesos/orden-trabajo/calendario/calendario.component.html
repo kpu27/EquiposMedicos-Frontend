@@ -38,7 +38,7 @@
                 </form>
             </div>
 
-            <div *ngIf="cotizacionDetalles != 0" class="container-equipos" perfectScrollbar>
+            <div *ngIf="cotizacionDetalles.length > 0" class="container-equipos" perfectScrollbar>
                 <mat-list style="position: relative">
                     <div *ngFor="let coDetalle of cotizacionDetalles">
                         <mat-list-item style="height: 60px;">

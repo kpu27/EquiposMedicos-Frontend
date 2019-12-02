@@ -36,10 +36,8 @@ export class DialogComponent implements OnInit {
 
   getTotal() {
     for (let i = 0; i < this.subTotal.length; i++) {
-      console.log(this.subTotal[i]);
       this.monto += parseInt(this.subTotal[i]);
     }
-    console.log(this.monto);
   }
   
   public getDatosUSuario(){
@@ -47,7 +45,7 @@ export class DialogComponent implements OnInit {
     this.servicio.get('cotizaciones/'+this.data.idCotizEncab).subscribe(
       res=>{ 
         this.datos=res
-        console.log(res)
+        
       }
     )
   }
@@ -57,7 +55,6 @@ export class DialogComponent implements OnInit {
     this.servicio.get('cotizacionDetalle/cotizacion/'+this.data.idCotizEncab).subscribe(
       res=>{
         this.datosDetalles=res
-        console.log(res)
         this.settings.loadingSpinner = false;
       }
     )
@@ -66,7 +63,6 @@ export class DialogComponent implements OnInit {
   getSubTotal(id: number) {
     this.servicio.get(`cotizacionDetalle/sumatoria/${id}`).subscribe(
       (data: any) => {
-        console.log(data);
         if (data.length > 0) {
           this.subTotal = data;
           this.getTotal();

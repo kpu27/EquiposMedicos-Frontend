@@ -135,7 +135,6 @@ export class CotizacionesFormComponent implements OnInit {
   public getClientes() {
     this._AppService.get('clientes/estado/'+this.usuario.empresa.idEmpresa).subscribe(
       (data: any) => {
-        console.log(data)
         this.clientes = data;
       },error=>{
         console.log(error)
@@ -205,7 +204,7 @@ export class CotizacionesFormComponent implements OnInit {
       "valorUnitario": valoru
  }
     this._AppService.post('cotizacionDetalle/new', detalles).subscribe(
-      data => { console.log(data)
+      data => { 
       this.count= this.count + 1 }
     );
   }
@@ -223,8 +222,6 @@ export class CotizacionesFormComponent implements OnInit {
     this._AppService.get('cotizaciones/count').subscribe(
       res=>{
         this.ultimo = res 
-        console.log(res)
-        console.log(this.ultimo)
       }
     )
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { MatDialog } from '@angular/material';
@@ -79,6 +79,8 @@ export class TecnicosComponent implements OnInit {
   usuario : any;
   roles: string;
   es: any;
+  public id_orden_detalle_report: number;
+  public descripcion:any;
   tecnico: any;
   actions: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
@@ -86,7 +88,7 @@ export class TecnicosComponent implements OnInit {
   },
   {
     label: '<i class="material-icons icon-sm text-warning">list_alt</i>',
-    onClick: ({ event }: { event: CalendarEvent }): void => { this.verReporte(parseInt(String(event.id)))  }
+    onClick: ({ event }: { event: CalendarEvent }): void => { this.id_orden_detalle_report = parseInt(String(event.id)); this.verReporte(parseInt(String(event.id)))  }
   }];
   actions2: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
@@ -133,7 +135,7 @@ export class TecnicosComponent implements OnInit {
         veces = 0;
         times++;
       });
-      console.log(this.datoschanged);
+     
     });
   }
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -160,7 +162,6 @@ export class TecnicosComponent implements OnInit {
   }
 
   getTecnico(){
-    console.log(this.usuario.id)
     this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
       (data: any) => {this.tecnicoSelected = data}
     );
@@ -216,21 +217,21 @@ export class TecnicosComponent implements OnInit {
     this.refresh.next();
   }
   setActions(estado: number): CalendarEventAction[] {
-    return this.actions
-/*     switch (estado) {
-      case 0:
-        if(this.roles == 'ROLE_ADMIN'){ return this.actions2 }else{ return this.actions }
-      case 1:
-        return this.actions2
+    //return this.actions
+    switch (estado) {
+      case 3:
+        return this.actions;
+      case 4:
+        return this.actions2;
       default:
         break;
-    } */
+    }
   }
   setColors(estado: number): any {
     switch (estado) {
-      case 0:
-        return colors.black
-      case 1:
+      case 3:
+        return colors.blue
+      case 4:
         return colors.green
       default:
         break;
@@ -238,11 +239,8 @@ export class TecnicosComponent implements OnInit {
   }
   getActividadesProtocolo(idDetalle: number) {
     let idPro = this.detalles[idDetalle].fkEquipos.fkProtocolo.idProtocolo;
-    console.log(this.detalles[idDetalle]);
-    console.log(idPro);
     this._AppService.get('actividades/protocolo/' + idPro).subscribe(
       (data: any) => { 
-        console.log(data);
         this.acts = data;
         this.setActividades(data);
         this.form = true; 
@@ -256,7 +254,6 @@ export class TecnicosComponent implements OnInit {
       let item = data[index];
       this.actividades.push(new Actividad(item.idActividades, item.actividades, false)); 
     }
-    console.log(this.actividades);
     this.form = true;  
   }
   validarActividades(): boolean{
@@ -305,7 +302,6 @@ export class TecnicosComponent implements OnInit {
     });
   }
   verReporte(idDetalle){
-    console.log(idDetalle)
     swalWithBootstrapButtons.fire({
       text: 'Quiere ver el Reporte?',
       type: 'warning',
@@ -318,13 +314,15 @@ export class TecnicosComponent implements OnInit {
         this.getActividadesProtocolo(idDetalle);
         this.getDataDetalle(idDetalle);
         this.getConsecutivoReporte(this.usuario.empresa.idEmpresa);
+        this.idDetalle = this.detalles[this.id_orden_detalle_report].idOrdenesDetalle;
+        console.log('id detalle => ', this.idDetalle);
       } else if (
         result.dismiss === Swal.DismissReason.cancel
       ) {
       }
     })
   }
-  getConsecutivoReporte(idEmpresa){
+  getConsecutivoReporte(idEmpresa: number) {
     let count: number;
     this._AppService.get('ordenesDetalle/reportes/count/'+idEmpresa).subscribe(
       (data: any) => {
@@ -334,6 +332,7 @@ export class TecnicosComponent implements OnInit {
           (data: any) => {
             console.log(data);
             this.codigoReporte = String(data[0].nombreCorto+data[0].valor+count); 
+            console.log(this.codigoReporte);
           }
         );
       }
@@ -353,38 +352,38 @@ export class TecnicosComponent implements OnInit {
               this.settings.loadingSpinner = true;
               let datos = this.datos.value;
               let reporte = {
-                descripcion: datos.descripcion,
+                descripcion: this.descripcion,
                 cliente: this.clienteSelected.idCliente,
                 equipo: this.equipoSelected.idEquipos,
-                responsable: this.tecnicoSelected.idTecnico,
+                //responsable: this.tecnicoSelected.idTecnico,
                 orden:  this.ordenSelected,
                 codigoReporte: this.codigoReporte
               }
               let info = {
                 codReport: String(this.codigoReporte),
-                estado: 1,
+                estado: 4,
                 idDetalle: this.idDetalle,
                 informacionReporte: String(JSON.stringify(reporte))
               }
               this._AppService.put('ordenesDetalle/reporte', info).subscribe(
-                (data: any) => { this.settings.loadingSpinner = false;
+                (data: any) => { 
+                 this.settings.loadingSpinner = false;
                  this.datos.reset();
                  this.form = false;
                  this.getDetalles();
-                 console.log(data)
                  Swal.fire({type: 'success', text: 'reporte generado', timer: 2000})
                 },
                 error => { this.settings.loadingSpinner = false;}
               );
           } else if (
             result.dismiss === Swal.DismissReason.cancel
-          ) {
-          }
+          ) {}
         })
       }else{
         Swal.fire({ type: 'warning', text: 'debe validar las actividades', timer: 2000});
       }
   }
+
   goBack(){
     this.form = false;
   }

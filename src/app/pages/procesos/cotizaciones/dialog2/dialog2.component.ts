@@ -41,7 +41,6 @@ export class Dialog2Component implements OnInit {
     this.settings.loadingSpinner = true;
     this.service.get("cotizacionDetalle/cotizacion/" + this.data.idCotizEncab).subscribe(
       res => {
-        console.log(res)
         this.aut = res
         this.settings.loadingSpinner = false;
       }
@@ -53,24 +52,31 @@ export class Dialog2Component implements OnInit {
       if(this.itemsSeleccionados.length != 0 && this.itemsSeleccionados != null){
         this.settings.loadingSpinner = true;
         this.service.put('cotizaciondetalle/updateestados/'+this.data.idCotizEncab, this.itemsSeleccionados).subscribe(
-          result => {this.settings.loadingSpinner = false, console.log(result), this.alert('Autorizado con exito'), 
+          result => {this.settings.loadingSpinner = false, this.alert('Autorizado con exito'), 
         this.router.navigate(['procesos/programar-orden']) },
-          error => {this.settings.loadingSpinner = false, console.log(error)}
+          error => {this.settings.loadingSpinner = false}
         )
       }
   }
 
+  setCantidad(item:any, e:any) {
+    for (let index = 0; index < this.itemsSeleccionados.length; index++) {
+      const element = this.itemsSeleccionados[index];
+      if(element.idCotizDeta == item.idCotizDeta) {
+        this.itemsSeleccionados[index].cantidad = e.target.value
+        
+        break;
+      }
+    }
+  }
   //METODO ARRAY EN EL SE GUARDAN LOS ITEMS SELECCIONADOS
   getitem(evento , data) {
-    console.log(evento)
     switch (evento) {
       case true:
         this.itemsSeleccionados.push(data);
-        console.log(this.itemsSeleccionados)
         break;
       case false:
         this.deleteItem(data);
-        console.log(this.itemsSeleccionados)
         break;
     }
   }

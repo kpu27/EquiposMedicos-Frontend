@@ -59,10 +59,11 @@ const colors: any = {
 export class CalendarioComponent implements OnInit {
   public form: FormGroup;
   public form2: FormGroup;
+  public indexes: Array<any> = [];
   es: any;
   @Output() return = new EventEmitter();
   @Input() cotizacion: any;
-  @Input() cotizacionDetalles: any = new Array();
+  @Input() cotizacionDetalles: Array<any> = [];
   cotizacionDetallesSeleccionados: any = new Array();
   ordenDetalle: Array<any> = [];
   public tecnico; any;
@@ -230,17 +231,16 @@ export class CalendarioComponent implements OnInit {
         for (let i = 0; i < this.tecnicos.length; i++) {
           if (this.tecnicos[i].idTecnico === parseInt(datos.responsable)) {
             tecnico = this.tecnicos[i];
-           // this.tecnicos.splice(i, 1);
           }
         }
         let coDetalles: Array<any>  = this.cotizacionDetallesSeleccionados;
-        for (let i = 0; i < this.cotizacionDetallesSeleccionados.length; i++) {
-          for (let e = 0; e < this.cotizacionDetalles.length; e++) {
-            if (this.cotizacionDetallesSeleccionados[i].idCotizDeta == this.cotizacionDetalles[e].idCotizDeta) {
-              this.cotizacionDetalles.splice(e, 1);
-            }
-          }
+
+        for (let index = 0; index < this.indexes.length; index++) {
+          this.cotizacionDetalles.splice(this.indexes[index], 1);
         }
+
+        this.indexes = [];
+
         this.cotizacionDetallesSeleccionados = [];
         this.form.controls['responsable'].setValue(' ');
         this.form.controls['fecha'].setValue(' ');
@@ -288,15 +288,19 @@ export class CalendarioComponent implements OnInit {
       this.Toast.fire(this.error_instrumento_lengh);
     }
   }
-  isChecked(event, CoDetalle) {
+  isChecked(event: any, CoDetalle: any, index: number) {
     switch (event.checked) {
       case true:
         this.cotizacionDetallesSeleccionados.push(CoDetalle);
+        this.indexes.push(index);
         console.log(this.cotizacionDetallesSeleccionados);
         break;
       case false:
         for (let i = 0; i < this.cotizacionDetallesSeleccionados.length; i++) {
-          if (this.cotizacionDetallesSeleccionados[i].idCotizDeta === CoDetalle.idCotizDeta) { this.cotizacionDetallesSeleccionados.splice(i, 1) }
+          if (this.cotizacionDetallesSeleccionados[i].idCotizDeta === CoDetalle.idCotizDeta) { 
+            this.cotizacionDetallesSeleccionados.splice(i, 1);
+            this.indexes.splice(index, 1);
+          }
         }
         break;
     }
