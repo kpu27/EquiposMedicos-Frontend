@@ -17,6 +17,14 @@ export const Slide = [
 export const APP: any = {
     //ApiEndpoint: 'http://ec2-18-221-61-141.us-east-2.compute.amazonaws.com:5000/rest/v1/',
     ApiEndpoint: 'http://ec2-52-87-159-200.compute-1.amazonaws.com:5000/rest/v1/',
-//    AppBaseUrl: 'http://localhost:4200',
-    UrlImages: 'http://ec2-52-87-159-200.compute-1.amazonaws.com:5000/rest/v1/usuario/img/'
-}
+//  AppBaseUrl: 'http://localhost:4200',
+  //http://ec2-52-87-159-200.compute-1.amazonaws.com:5000/rest/v1/usuario/img/'
+
+    PublicURL: 'http://localhost:5000/',
+    url : 'http://localhost:5000/rest/v1/',
+    UrlImages: 'http://localhost:5000/rest/v1/usuario/img/',
+    BaseUrl: 'http://localhost:5000/rest/v1/ordenes/reporte/'
+  
+  
+  
+  }

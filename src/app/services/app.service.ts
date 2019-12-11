@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { APP } from './constants';
 import { Usuario, UsuarioLogin } from '../models/usuario';
 
 @Injectable({
@@ -11,12 +12,19 @@ import { Usuario, UsuarioLogin } from '../models/usuario';
 })
 export class AppService {
   //ec2-52-87-159-200.compute-1.amazonaws.com
-  public url = 'http://localhost:5000/rest/v1/';
-  public publicUrl = 'http://localhost:5000/';
+  public url;
+  public publicUrl;
+  public baseURL;
   private token = '';
   private httpOptions;
   private httpMultipartOption;
-  constructor(private http: HttpClient, private auth: AuthService, private router: Router) { this.getHeaders(); }
+  constructor(private http: HttpClient, private auth: AuthService, private router: Router) { this.getHeaders();
+  
+      this.url = APP.url;
+      this.publicUrl = APP.PublicURL;
+      this.baseURL = APP.BaseUrl;
+  
+  }
 
   getHeaders() {
     this.token = sessionStorage.getItem('token');
@@ -84,6 +92,10 @@ export class AppService {
     this.clearSession();
   }
 
+
+
+
+
   inpustCalendarLenguaje() {
     return {
       //date
@@ -118,5 +130,18 @@ export class AppService {
       pmNames: ['p.m.', 'PM', 'P'],
     }
   }
+
+
+
+
+
+
+  generarReporte(tipoMantenimiento: string,id): any {
+    const httpOptions = {
+      responseType  : 'blob' as 'json'        //This also worked
+    };
+    
+    return this.http.get<any>(this.baseURL + tipoMantenimiento+ "/" + id, httpOptions);
+     }
 
 }

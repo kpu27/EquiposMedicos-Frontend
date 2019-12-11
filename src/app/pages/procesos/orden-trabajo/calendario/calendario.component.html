@@ -16,9 +16,7 @@
             margin-left: 15%;">
                 <mat-icon mat-list-icon style="margin-right: 10px">receipt</mat-icon> {{consecutivo}}
             </h3>
-
-
-            <div *ngIf="cotizacionDetalles == 0" class="container">
+            <div *ngIf="cotizacionDetalles.length == 0" class="container">
                 <form  [formGroup]="form2">
                         <div class="row">
                                 <div class="col-12">
@@ -54,14 +52,14 @@
                     </div>
                 </mat-list>
             </div>
-            <h3 *ngIf="cotizacionDetalles != 0" mat-subheader
+            <h3 *ngIf="cotizacionDetalles.length != 0" mat-subheader
                 style="padding-bottom: 0px;color: #6a7a71;font-size: large;margin: 0px;">
                 <mat-icon mat-list-icon
                     style="margin-right: 10px;color: #6a7a71;font-size: large; margin: 0px;margin-top: 6px;">settings
                 </mat-icon>
                 Configuración
             </h3>
-            <form *ngIf="cotizacionDetalles != 0" [formGroup]="form"
+            <form *ngIf="cotizacionDetalles.length != 0" [formGroup]="form"
                 style="width: 85%; text-align: center; offset: 40px; position: relative; left: 6%;">
                 <br>
                 <div class="content">

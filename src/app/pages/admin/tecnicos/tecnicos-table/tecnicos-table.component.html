@@ -33,7 +33,7 @@
                   <td style="text-align: left">{{item.documento}}</td>
                   <td style="text-align: left">{{item.nombre}}</td>
                   <td style="text-align: left">{{item.telefonoCelular}}</td>
-                  <td style="text-align: left">{{item.email}}</td>
+                  <td style="word-wrap: break-word;">{{item.email}}</td>
                   <td style="text-align: center">
                     <div *ngIf="item.estado == 1" class="badge badge-success">Activo</div>
                     <div *ngIf="item.estado == 9" class="badge badge-danger">Inactivo</div>

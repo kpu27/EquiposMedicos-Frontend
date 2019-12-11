@@ -63,7 +63,7 @@ export class CalendarioComponent implements OnInit {
   es: any;
   @Output() return = new EventEmitter();
   @Input() cotizacion: any;
-  @Input() cotizacionDetalles: Array<any> = [];
+  @Input() cotizacionDetalles: Array <any>;
   cotizacionDetallesSeleccionados: any = new Array();
   ordenDetalle: Array<any> = [];
   public tecnico; any;

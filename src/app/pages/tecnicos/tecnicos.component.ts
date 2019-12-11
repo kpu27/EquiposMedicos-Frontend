@@ -14,6 +14,7 @@ import { FormioAppConfig } from 'angular-formio';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
+import { APP } from '../../services/constants';
 class Actividad{constructor(public id: number, public nombre: string, public realizado: boolean){}};
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -81,6 +82,9 @@ export class TecnicosComponent implements OnInit {
   es: any;
   public id_orden_detalle_report: number;
   public descripcion:any;
+  public modelo:any;
+  public marca:any;
+  public serial:any;
   tecnico: any;
   actions: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
@@ -93,6 +97,10 @@ export class TecnicosComponent implements OnInit {
   actions2: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
     onClick: ({ event }: { event: CalendarEvent }): void => { this.detalleSelected = this.detalles[event.id], this.openScheduleDialog(), this.settings.sidenavUserBlock = true }
+  },
+  {
+    label: '<i class="material-icons icon-sm text-danger">print</i>',
+    onClick: ({ event }: { event: CalendarEvent }): void => { this.getReporteMantenimiento(this.detalles[event.id].idOrdenesDetalle) }
   }];
   events: CalendarEvent[] = [];
   info = {
@@ -100,6 +108,12 @@ export class TecnicosComponent implements OnInit {
     responsable: '',
     equipo: '',
   }
+
+
+
+
+
+
 
   public infoReporte: Array<any> = [{propiedad: '', valor: 0}];
 
@@ -355,18 +369,23 @@ export class TecnicosComponent implements OnInit {
                 descripcion: this.descripcion,
                 cliente: this.clienteSelected.idCliente,
                 equipo: this.equipoSelected.idEquipos,
-                //responsable: this.tecnicoSelected.idTecnico,
+                
                 orden:  this.ordenSelected,
                 codigoReporte: this.codigoReporte
               }
               let info = {
+                serial: this.serial,
+                fkModelo:this.modelo,
+                fkMarca:this.marca,
                 codReport: String(this.codigoReporte),
                 estado: 4,
                 idDetalle: this.idDetalle,
                 informacionReporte: String(JSON.stringify(reporte))
               }
-              this._AppService.put('ordenesDetalle/reporte', info).subscribe(
+              console.log(info)
+               this._AppService.put('ordenesDetalle/reporte', info).subscribe(
                 (data: any) => { 
+                  console.log(data)
                  this.settings.loadingSpinner = false;
                  this.datos.reset();
                  this.form = false;
@@ -374,7 +393,7 @@ export class TecnicosComponent implements OnInit {
                  Swal.fire({type: 'success', text: 'reporte generado', timer: 2000})
                 },
                 error => { this.settings.loadingSpinner = false;}
-              );
+              ); 
           } else if (
             result.dismiss === Swal.DismissReason.cancel
           ) {}
@@ -391,4 +410,21 @@ export class TecnicosComponent implements OnInit {
   getInfo(data: any){
     return String(data);
   }
+
+  getReporteMantenimiento(id){
+    this.settings.loadingSpinner = true;
+      this._AppService.get("ordenes/reporte/mantenimiento/"+id).subscribe((response : any) => {
+        this.settings.loadingSpinner = false;
+        let url = APP.url+"ordenes/reporte/view/"+response.ruta;
+        console.log(url);
+        window.open(url);
+      },
+      error =>{
+        console.log(error);
+        this.settings.loadingSpinner = false;
+      });
+    
+  }
+
+
 }

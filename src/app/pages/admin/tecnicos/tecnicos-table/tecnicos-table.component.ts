@@ -114,19 +114,6 @@ export class TecnicosTableComponent implements OnInit {
             "fkUsuario": null,
             "estado": 1
           }
-          let usuario = {
-            "nombre": datos.nombre,
-            "apellido": datos.nombreCorto,
-            "documento": datos.documento,
-            "email": datos.email,
-            "enabled": 1,
-            "username": datos.nombreCorto,
-            "fkEmpresa": this.usuario.empresa.idEmpresa,
-            "expirado": 1,
-            "roles": 3,
-            "foto": '',
-            "password": datos.documento
-          }
           const newUser = {
             "apellido": datos.nombreCorto,
             "email": datos.email,
@@ -138,25 +125,20 @@ export class TecnicosTableComponent implements OnInit {
             "enabled": 1,
             "expirado": 0
           }
-          this.service.post('tecnicos/new', tecnico).subscribe(
+
+          let objeto = {
+            usuario : newUser,
+            tecnico : tecnico
+          }
+
+
+          this.service.post('tecnicos/new', objeto).subscribe(
             result => {
-              this.agregarTecnico = result;
-              this.service.post('usuarios/new', newUser).subscribe(
-                (result: any) => {
-                  tecnico.fkUsuario = result.fkUsuario;
-                  this.service.put('tecnicos/' + result.idTecnico, tecnico).subscribe(
-                    result => {
-                      Swal.fire({ type: 'success', text: 'Tecnico Creado con Exito!', timer: 3000 });
-                      this.estado = true;
-                      this.getTecnicos();
-                    },
-                    error => {
-                      console.log(error);
-                      Swal.fire({ type: 'error', text: 'Error al Crear el Tecnico', timer: 2000 });
-                    }
-                  )
-                },
-              )
+              console.log(result);
+           
+            },
+            error => {
+              console.log(error);
             }
           )
         } else if (

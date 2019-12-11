@@ -147,8 +147,31 @@
                                         name="protocoloquipo" id="protocoloquipo" class="form-control form-control-sm">
                                 </div>
                             </div>
-                            <!-- ESPECIFICACIONES EQUIPOS -->
-
+                            <!--ESPECIFICACIONES EQUIPOS -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-muted" for="codequipo">Marca<b
+                                            class="text-danger">*</b></label>
+                                    <input  type="text" name="marca" [(ngModel)]="marca"
+                                        id="marca" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="text-muted" for="nombrequipo">Modelo<b
+                                            class="text-danger">*</b></label>
+                                    <input  type="text" name="modelo" [(ngModel)]="modelo"
+                                        id="modelo" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="text-muted" for="protocoloquipo">Serial<b
+                                            class="text-danger">*</b></label>
+                                    <input  type="text" [(ngModel)]="serial"
+                                        name="serial" id="serial" class="form-control form-control-sm">
+                                </div>
+                            </div>
                         </div>
                     </form>
 
@@ -171,32 +194,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                              <button (click)="addInfoReport()" class="btn btn-success"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
-
-                            <div *ngFor="let item of infoReporte" class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="text-muted" for="descripcion">Propiedad &nbsp;<b
-                                                    class="text-danger">*</b> </label>
-                                            <input name="protocoloquipo" id="protocoloquipo"
-                                                class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="text-muted" for="descripcion">Valor &nbsp;<b class="text-danger">*</b>
-                                            </label>
-                                            <input name="protocoloquipo" type="number" id="protocoloquipo"
-                                                class="form-control form-control-sm">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">

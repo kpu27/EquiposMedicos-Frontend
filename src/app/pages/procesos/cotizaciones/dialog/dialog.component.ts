@@ -4,6 +4,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Settings } from '../../../../app.settings.model';
 import { AppSettings } from '../../../../app.settings';
+import { APP } from '../../../../services/constants';
 
 @Component({
   selector: 'app-dialog',
@@ -49,6 +50,23 @@ export class DialogComponent implements OnInit {
       }
     )
   }
+
+  
+  getReporteMantenimiento(){
+    this.settings.loadingSpinner = true;
+      this.servicio.get("ordenes/reporte/"+this.data.idCotizEncab).subscribe((response : any) => {
+        this.settings.loadingSpinner = false;
+        let url = APP.url+"ordenes/reporte/view/"+response.ruta;
+        console.log(url);
+        window.open(url);
+      },
+      error =>{
+        console.log(error);
+        this.settings.loadingSpinner = false;
+      });
+    
+  }
+
 
   public getDatosDetalle(){
     this.settings.loadingSpinner = true;
