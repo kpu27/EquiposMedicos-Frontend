@@ -413,9 +413,9 @@ export class TecnicosComponent implements OnInit {
 
   getReporteMantenimiento(id){
     this.settings.loadingSpinner = true;
-      this._AppService.get("ordenes/reporte/mantenimiento/"+id).subscribe((response : any) => {
+      this._AppService.get("reporte/mantenimiento/"+id).subscribe((response : any) => {
         this.settings.loadingSpinner = false;
-        let url = APP.url+"ordenes/reporte/view/"+response.ruta;
+        let url = APP.url+"reporte/view/"+response.ruta;
         console.log(url);
         window.open(url);
       },

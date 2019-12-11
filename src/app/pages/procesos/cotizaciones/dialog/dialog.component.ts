@@ -54,9 +54,9 @@ export class DialogComponent implements OnInit {
   
   getReporteMantenimiento(){
     this.settings.loadingSpinner = true;
-      this.servicio.get("ordenes/reporte/"+this.data.idCotizEncab).subscribe((response : any) => {
+      this.servicio.get("reporte/"+this.data.idCotizEncab).subscribe((response : any) => {
         this.settings.loadingSpinner = false;
-        let url = APP.url+"ordenes/reporte/view/"+response.ruta;
+        let url = APP.url+"reporte/view/"+response.ruta;
         console.log(url);
         window.open(url);
       },

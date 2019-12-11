@@ -62,6 +62,9 @@
         </div>
         <div class="col-md-4">
           <button mat-button style="color: #206936" (click)="getConsulta4(); formulario=3">Consultar</button>
+          <button class="btn btn-control btn-primary" style="float: right;" (click)="getReporteGraficaTecnico()" *ngIf="formulario==3"><i class="material-icons">
+            print
+            </i></button>
         </div>
       </div>
       <!--CONSULTA POR CLIENTE Y EL TOTAL DE SUS EQUIPOS-->
@@ -71,6 +74,7 @@
             <mat-label>Fecha inicio:</mat-label>
             <input matInput [matDatepicker]="inicio4" (click)="getConsulta2();formulario=3" placeholder="Choose a date"
               name="fechai4" [(ngModel)]="fechai4">
+              
             <mat-datepicker-toggle matSuffix [for]="inicio4"></mat-datepicker-toggle>
             <mat-datepicker #inicio4></mat-datepicker>
           </mat-form-field>

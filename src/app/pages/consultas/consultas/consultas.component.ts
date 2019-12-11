@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@a
 import { DatePipe } from '@angular/common';
 import { Settings } from '../../../app.settings.model';
 import { AppSettings } from '../../../app.settings';
+import { APP } from '../../../services/constants';
 
 
 @Component({
@@ -103,6 +104,22 @@ export class ConsultasComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+  getReporteGraficaTecnico(){
+    this.settings.loadingSpinner = true;
+    let fechai = this.datePipe.transform(this.fechai1, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
+      this.service.get("reporte/grafica/tecnico/"+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe((response : any) => {
+        this.settings.loadingSpinner = false;
+        let url = APP.url+"reporte/view/"+response.ruta;
+        console.log(url);
+        window.open(url);
+      },
+      error =>{
+        console.log(error);
+        this.settings.loadingSpinner = false;
+      });
+    
   }
   //listar por tecnicos y sus equipos
   public getConsulta3(){
