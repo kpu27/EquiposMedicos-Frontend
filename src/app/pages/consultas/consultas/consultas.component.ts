@@ -46,6 +46,7 @@ export class ConsultasComponent implements OnInit {
 		
 	}
   public cols: any[];
+  public col2: any[];
   public settings: Settings;
   public info: Array<any> = [];
 
@@ -61,9 +62,24 @@ export class ConsultasComponent implements OnInit {
       {  header: 'Realizado' },
       {  header: 'Cliente' },
       
-  ];  
+  ]; 
+  this.col2 = [
+    { header: 'Equipo' },
+    {  header: 'Marca' },
+    {  header: 'Programado' },
+    {  header: 'Realizado' },
+    {  header: 'Responable' },
+    
+]; 
+   
  
-  }
+}
+ngOnInit() {
+  this.usuario = this.servicio.obtenerDatosUser();
+  this.getClientes();
+  this.getTecnicos();
+} 
+  // LISTA DE CLIENTES PARA SELECCIONAR 
   public getClientes() {
     this.settings.loadingSpinner = true;
     this.service.get('clientes/empresa/'+this.usuario.empresa.idEmpresa).subscribe(
@@ -77,52 +93,32 @@ export class ConsultasComponent implements OnInit {
       }
     );
   }
-  //Mantenimiento pendiente de los clientes
-  public getConsulta1(){
+  //LISTAR PARA SELECCIONAR TECNICOS
+  public getTecnicos() {
     this.settings.loadingSpinner = true;
-    let data: Array<any> = [];
-    this.service.get('ordenesDetalle/cliente1/'+this.usuario.empresa.idEmpresa).subscribe(
-      (res:any)=>{console.log(res)
-       /* data = res[0];
-        this.data1=data[0];
-        this.data2=data[1];
-        this.data3=data[2];*/
+    this.service.get('tecnicos/list').subscribe(
+      data => {
+        console.log(data)
+        this.tecnicos = data;
+       
         this.settings.loadingSpinner = false;
-    }
-    )
-  }    
-//listar por cliente y los equipos
-  public getConsulta2(){
-    this.settings.loadingSpinner = true;
-    let fechai = this.datePipe.transform(this.fechai4, 'yyyy-MM-dd')
-    let fechaf = this.datePipe.transform(this.fechaf4, 'yyyy-MM-dd')
-    this.service.get('ordenesDetalle/cliente/'+this.usuario.empresa.idEmpresa+'/'+this.ClienteSelect+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{ console.log(res)
-        this.sql1=res
-        this.settings.loadingSpinner = false;
-      }, error=>{
+      },
+      error => {
         console.log(error)
       }
     )
   }
-  getReporteGraficaTecnico(){
-    this.settings.loadingSpinner = true;
-    let fechai = this.datePipe.transform(this.fechai1, 'yyyy-MM-dd')
-    let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
-      this.service.get("reporte/grafica/tecnico/"+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe((response : any) => {
-        this.settings.loadingSpinner = false;
-        let url = APP.url+"reporte/view/"+response.ruta;
-        console.log(url);
-        window.open(url);
-      },
-      error =>{
-        console.log(error);
-        this.settings.loadingSpinner = false;
-      });
-    
+  //SELECCIONAR CLIENTE
+  SelectCliente(cliente:any){
+    this.ClienteSelect = cliente;
   }
+//SELECCIONAR TECNICO
+  SelectTecnico(tenico:any){
+    this.TecnicoSelect = tenico;
+  }
+ 
   //listar por tecnicos y sus equipos
-  public getConsulta3(){
+  public getPorTecnico(){
     this.settings.loadingSpinner = true;
     let fechai = this.datePipe.transform(this.fechai2, 'yyyy-MM-dd')
     let fechaf = this.datePipe.transform(this.fechaf2, 'yyyy-MM-dd')
@@ -136,8 +132,23 @@ export class ConsultasComponent implements OnInit {
       }
     )
   }
-  //listar todos los tecnicos con equipos
-  public getConsulta4(){
+
+  public getPorCliente(){
+    this.settings.loadingSpinner = true;
+    let fechai = this.datePipe.transform(this.fechai3, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf3, 'yyyy-MM-dd')
+    let data: Array<any> = [];
+    this.service.get('ordenesDetalle/cliente/'+this.usuario.empresa.idEmpresa+'/'+this.ClienteSelect+'/'+fechai+'/'+fechaf).subscribe(
+      res=>{   console.log(res)
+      this.sql1=res  
+      this.settings.loadingSpinner = false;
+      },error=>{
+        console.log(error)
+      }
+    )
+  }
+  //LISTAR TODOS LOS TECNICOS 
+  public getTotalTecnicos(){
     this.settings.loadingSpinner = true;
     let fechai = this.datePipe.transform(this.fechai1, 'yyyy-MM-dd')
     let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
@@ -153,10 +164,6 @@ export class ConsultasComponent implements OnInit {
              label.push(d[3]);
              datos.push(d[2]);
           });
-
-
-
-
           data = res[0];
           this.data1=data[0];
           this.data2=data[1];
@@ -183,49 +190,91 @@ export class ConsultasComponent implements OnInit {
         
     ),error=>{console.log(error)}
   }
-  //Programacion por tecnico
-  public getConsulta5(){
-    this.settings.loadingSpinner = true;
-    let fechai = this.datePipe.transform(this.fechai3, 'yyyy-MM-dd')
-    let fechaf = this.datePipe.transform(this.fechaf3, 'yyyy-MM-dd')
+//LISTAR TODOS LOS CLIENTES
+public getTotalCliente(){
+  this.settings.loadingSpinner = true;
+    let fechai = this.datePipe.transform(this.fechai4, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf4, 'yyyy-MM-dd')
     let data: Array<any> = [];
     this.service.get('ordenesDetalle/responsable/'+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
-      res=>{console.log(res)
-        data = res[0];
-        this.data1=data[0];
-        this.data2=data[1];
-        this.data3=data[2];
-        this.settings.loadingSpinner = false;
+      (res:any)=>{console.log(res);
+        if(res.length > 0){ 
+
+          let label = [];
+          let datos = []
+          res.forEach(d => {
+             label.push(d[3]);
+             datos.push(d[2]);
+          });
+          data = res[0];
+          this.data1=data[0];
+          this.data2=data[1];
+          this.data3=data[2];
+          this.data4=data[3];
+          this.info = res;
+          this.settings.loadingSpinner = false;
+        }
+     
       }
-    )
-  }
+        
+    ),error=>{console.log(error)}
+}
  
-  public getTecnicos() {
+ //reporte todos los tecnicos
+  getReporteGraficaTecnico(){
     this.settings.loadingSpinner = true;
-    this.service.get('tecnicos/list').subscribe(
-      data => {
-        console.log(data)
-        this.tecnicos = data;
-       
+    let fechai = this.datePipe.transform(this.fechai1, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf1, 'yyyy-MM-dd')
+      this.service.get("reporte/grafica/tecnico/"+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
+        (response : any) => {
+          console.log(response)
         this.settings.loadingSpinner = false;
+        let url = APP.url+"reporte/view/"+response.ruta;
+        window.open(url);
       },
-      error => {
-        console.log(error)
-      }
-    )
+      error =>{
+        console.log(error);
+        this.settings.loadingSpinner = false;
+      });
+    
   }
-  SelectCliente(cliente:any){
-    this.ClienteSelect = cliente;
+//reporte todo los clientes
+  getReporteGraficaCliente(){
+    this.settings.loadingSpinner = true;
+    let fechai = this.datePipe.transform(this.fechai4, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf4, 'yyyy-MM-dd')
+      this.service.get("reporte/grafica/cliente/"+this.usuario.empresa.idEmpresa+'/'+fechai+'/'+fechaf).subscribe(
+        (response : any) => {
+          console.log(response)
+        this.settings.loadingSpinner = false;
+        let url = APP.url+"reporte/view/"+response.ruta;
+        window.open(url);
+      },
+      error =>{
+        console.log(error);
+        this.settings.loadingSpinner = false;
+      });
+    
+  }
+  //reportes por tecnico
+  getReporteGraficaPorTecnico(){
+    this.settings.loadingSpinner = true;
+    let fechai = this.datePipe.transform(this.fechai2, 'yyyy-MM-dd')
+    let fechaf = this.datePipe.transform(this.fechaf2, 'yyyy-MM-dd')
+      this.service.get("reporte/grafica/portecnico/"+this.usuario.empresa.idEmpresa+'/'+this.TecnicoSelect+'/'+fechai+'/'+fechaf).subscribe(
+        (response : any) => {
+          console.log(response)
+        this.settings.loadingSpinner = false;
+        let url = APP.url+"reporte/view/"+response.ruta;
+        window.open(url);
+      },
+      error =>{
+        console.log(error);
+        this.settings.loadingSpinner = false;
+      });
+    
   }
 
-  SelectTecnico(tenico:any){
-    this.TecnicoSelect = tenico;
-  }
-
-  ngOnInit() {
-    this.usuario = this.servicio.obtenerDatosUser();
-    this.getClientes();
-    this.getTecnicos();
-  }
+ 
 
 }

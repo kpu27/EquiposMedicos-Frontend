@@ -23,7 +23,7 @@ export const APP: any = {
     PublicURL: 'http://localhost:5000/',
     url : 'http://localhost:5000/rest/v1/',
     UrlImages: 'http://localhost:5000/rest/v1/usuario/img/',
-    BaseUrl: 'http://localhost:5000/rest/v1/ordenes/reporte/'
+    BaseUrl: 'http://localhost:5000/rest/v1/reporte/'
   
   
   
