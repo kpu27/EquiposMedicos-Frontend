@@ -5,7 +5,10 @@ import { AuthService } from './auth.service';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { APP } from './constants';
+import { ToastrService } from 'ngx-toastr';
 import { Usuario, UsuarioLogin } from '../models/usuario';
+import { AppSettings } from '../app.settings';
+import { Settings } from '../app.settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +20,14 @@ export class AppService {
   public baseURL;
   private token = '';
   private httpOptions;
+  settings: Settings;
   private httpMultipartOption;
-  constructor(private http: HttpClient, private auth: AuthService, private router: Router) { this.getHeaders();
+  constructor(private http: HttpClient,  
+       private toastr: ToastrService,
+       public appSettings: AppSettings,
+        private auth: AuthService, private router: Router) { 
+          this.settings = this.appSettings.settings;
+          this.getHeaders();
   
       this.url = APP.url;
       this.publicUrl = APP.PublicURL;
@@ -143,5 +152,23 @@ export class AppService {
     
     return this.http.get<any>(this.baseURL + tipoMantenimiento+ "/" + id, httpOptions);
      }
+     showSuccess(text: string) {
+      this.toastr.success(text, 'Success!');
+    }
+  
+    showInfo(text: string) {
+      this.toastr.info(text, 'Info!');
+    }
+  
+    showWarning(text: string) {
+      this.toastr.warning(text, 'Warning!');
+    }
+  
+    showError(text: string) {
+      this.toastr.error(text, 'Error!');
+    }
+  
+    public openSpinner() { this.settings.loadingSpinner = true; }
+    public closeSpinner() { this.settings.loadingSpinner = false; }
 
 }

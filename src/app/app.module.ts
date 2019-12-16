@@ -16,6 +16,8 @@ import { CalendarModule } from 'angular-calendar';
 import { SharedModule } from './shared/shared.module';
 import { PipesModule } from './theme/pipes/pipes.module';
 import { routing } from './app.routing';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
+
 
 import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
@@ -64,7 +66,8 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     NgxSmartModalModule,
     ChartModule,
-    ButtonModule 
+    ButtonModule,
+    ToastrModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -92,7 +95,8 @@ import { ButtonModule } from 'primeng/button';
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     AppService,
-    NgxSmartModalService
+    NgxSmartModalService,
+    ToastrService
   ],
   bootstrap: [AppComponent]
 })

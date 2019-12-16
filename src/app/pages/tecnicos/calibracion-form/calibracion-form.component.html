@@ -1,0 +1,237 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <mat-tab-group class="w-100">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">view_comfy</mat-icon>
+          &nbsp;DATOS OBTENIDOS DE LA PRUEBA / VERIFICACIÓN
+        </ng-template>
+        <div style="height: auto; max-height: 300px; overflow-y: scroll; padding: 10px;">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title bg-header text-center text-muted" style="pad: 3px;"><b><i
+                    class="fa fa-file-alt"></i>&nbsp;DATOS PRUEBA</b>
+              </h5>
+              <table class="table table-sm table-bordered w-100">
+                <thead class="bg-header">
+                  <tr>
+                    <th class="text-center text-success" style="width: 50px;cursor: pointer;"><a (click)="addPrueba()"><i
+                          class="fa fa-plus"></i></a></th>
+                    <th class="text-center">Lectura de Equipo</th>
+                    <th class="text-center">Lectura Patron</th>
+                    <th class="text-center">Desviacion</th>
+                    <th class="text-center">Accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="text-center bg-header">
+                      #:
+                    </th>
+                    <td class="bg-header">
+                      <div class="row">
+                        <div class="col-md-6">Parametro 1</div>
+                        <div class="col-md-6">Parametro 2</div>
+                      </div>
+                    </td>
+                    <td class="bg-header">
+                      <div class="row">
+                        <div class="col-md-6">Parametro 1</div>
+                        <div class="col-md-6">Parametro 2</div>
+                      </div>
+                    </td>
+                    <td class="bg-header">
+                      <div class="row">
+                        <div class="col-md-6">Parametro 1</div>
+                        <div class="col-md-6">Parametro 2</div>
+                      </div>
+                    </td>
+                    <td class="bg-header">
+                      Eliminar
+                    </td>
+                  </tr>
+                  <tr *ngFor="let item of pruebas; let i = index">
+                    <td>
+                      <input type="text" readonly class="form-control form-control-sm bg-white" [value]="i+1">
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control form-control-sm" name="prueba" id="prueba"
+                            placeholder="Parametro1" (change)="setValorLetcuraEquipo1(i, $event.target.value)">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control form-control-sm" name="prueba" id="prueba"
+                            placeholder="Parametro2" (change)="setValorLetcuraEquipo2(i, $event.target.value)">
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control form-control-sm" name="prueba" id="prueba"
+                            placeholder="Parametro1" (change)="setValorLetcuraPatron1(i, $event.target.value)">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control form-control-sm" name="prueba" id="prueba"
+                            placeholder="Parametro2" (change)="setValorLetcuraPatron2(i, $event.target.value)">
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control form-control-sm bg-white" name="prueba"
+                            id="prueba" placeholder="Parametro1" [value]="item.desviacion1"
+                            [ngClass]="item.desviacion1 == 0 ? 'text-success' : 'text-danger'" (change)="setValorLetcuraDesviacion1(i, $event.target.value)">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control form-control-sm bg-white" name="prueba"
+                            id="prueba" placeholder="Parametro2" [value]="item.desviacion2"
+                            [ngClass]="item.desviacion2 == 0 ? 'text-success' : 'text-danger'" (change)="setValorLetcuraDesviacion2(i, $event.target.value)">
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <button (click)="deletePrueba(i)" class="btn btn-sm btn-outline-danger"><i
+                          class="fa fa-times"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th class="text-center">
+                      <button [disabled]="pruebas.length === 0" (click)="evaluarPruebas()" type="button"
+                        class="btn btn-sm btn-outline-info">Evaluar</button>
+                    </th>
+                    <th class="bg-header text-center"></th>
+                    <th class="bg-header text-center">PROMEDIO DESVIACIÓN =></th>
+                    <th class="text-center">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input readonly type="number" class="form-control form-control-sm bg-white" name="promedio1"
+                            id="promedio1" [value]="promedio1"
+                            [ngClass]="promedio1 == 0 ? 'text-success' : 'text-danger'">
+                        </div>
+                        <div class="col-md-6">
+                          <input readonly type="number" class="form-control form-control-sm bg-white" name="promedio2"
+                            id="promedio2" [value]="promedio2"
+                            [ngClass]="promedio2 == 0 ? 'text-success' : 'text-danger'">
+                        </div>
+                      </div>
+                    </th>
+                    <th class="text-center">
+                      <button (click)="resetPruebas()" class="btn btn-sm btn-outline-warning">
+                        <i class="fa fa-sync"></i>
+                      </button>
+                    </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">report</mat-icon>
+          &nbsp;REPUESTOS Y/O ACCESORIOS
+        </ng-template>
+        <div style="height: auto; max-height: 300px; overflow-y: scroll; padding: 10px;">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title bg-header text-center text-muted" style="pad: 3px;"><b><i
+                    class="fa fa-file-alt"></i>&nbsp;REPUESTOS Y/O ACCESORIOS</b></h5>
+              <table class="table table-sm table-bordered">
+                <thead class="bg-header">
+                  <tr>
+                    <th class="text-center text-success" style="width: 50px;cursor: pointer;"><a (click)="addRepuesto()"><i
+                          class="fa fa-plus"></i></a></th>
+                    <th class="text-center" style="width: 45%;">Descripcion</th>
+                    <th class="text-center" style="width: 30%;">Referencia</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center" style="width: auto;">Accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of repuestos; let i = index">
+                    <td>
+                      <input type="text" readonly class="form-control form-control-sm bg-white" [value]="i+1">
+                    </td>
+                    <td>
+                      <input type="text" (change)="setRepuestoDescripcion(i, $event.target.value)"
+                        class="form-control form-control-sm" name="descripcion" id="descripcion"
+                        placeholder="Descripcion...">
+                    </td>
+                    <td>
+                      <input type="text" (change)="setRepuestoReferecia(i, $event.target.value)"
+                        class="form-control form-control-sm" name="referencia" id="referencia"
+                        placeholder="Referencia...">
+                    </td>
+                    <td>
+                      <input type="number" (change)="setRepuestoCantidad(i, $event.target.value)"
+                        class="form-control form-control-sm" name="cantidad" id="cantidad">
+                    </td>
+                    <td class="text-center">
+                      <button (click)="deleteRepuesto(i)" class="btn btn-sm btn-outline-danger"><i
+                          class="fa fa-times"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">description</mat-icon>
+          &nbsp;OBSERVACIONES
+        </ng-template>
+
+        <div style="height: auto; max-height: 300px; overflow-y: scroll; padding: 10px;">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title bg-header text-center text-muted" style="pad: 3px;"><b><i
+                    class="fa fa-file-alt"></i>&nbsp;OBSERVACIONES</b></h5>
+              <table class="table table-sm table-bordered">
+                <thead class="bg-header">
+                  <tr>
+                    <th class="text-center text-success" style="width: 50px; cursor: pointer;"><a (click)="addObservacion()"><i
+                          class="fa fa-plus"></i></a></th>
+                    <th class="text-center" style="width: 30%;"><b>Nombre Observacion</b></th>
+                    <th class="text-center"><b>Descripcion</b></th>
+                    <th class="text-center" style="width: 70px;"><b>Accion</b></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of observaciones; let i = index">
+                    <td>
+                      <input type="text" readonly class="form-control form-control-sm bg-white" [value]="i+1">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" name="nombre" id="nombre"
+                        placeholder="Nombre Observacion..."
+                        (change)="setValorNombreObservacion(i, $event.target.value)">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion"
+                        placeholder="Descripcion..." (change)="setValorNombreDescripcion(i, $event.target.value)">
+                    </td>
+                    <td class="text-center">
+                      <button (click)="deleteObservacion(i)" type="button" class="btn btn-sm btn-outline-danger"><i
+                          class="fa fa-times"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+</div>

@@ -15,14 +15,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@a
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { APP } from '../../services/constants';
-class Actividad{constructor(public id: number, public nombre: string, public realizado: boolean){}};
-const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false,
-})
+import { InventarioFormComponent } from './inventario-form/inventario-form.component';
+class Actividad { constructor(public id: number, public nombre: string, public realizado: boolean) { } }
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -49,9 +43,7 @@ const colors: any = {
   selector: 'app-schedule',
   templateUrl: './tecnicos.component.html',
   animations: [blockTransition],
-  host: {
-    '[@blockTransition]': ''
-  },
+  host: { '[@blockTransition]': '' },
   providers: [DatePipe, FormioAppConfig]
 })
 export class TecnicosComponent implements OnInit {
@@ -68,54 +60,63 @@ export class TecnicosComponent implements OnInit {
   tecnicoSelected: any;
   ordenSelected: any;
   form = false;
-  view: string = 'month';
+  view = 'month';
   viewDate: Date = new Date();
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen = true;
   refresh: Subject<any> = new Subject();
   settings: Settings;
   datos: FormGroup;
-  datoschanged: boolean = true;
+  datoschanged = true;
   allowed: boolean;
   detalleSelected: any;
-  usuario : any;
+  usuario: any;
   roles: string;
   es: any;
   public id_orden_detalle_report: number;
-  public descripcion:any;
-  public modelo:any;
-  public marca:any;
-  public serial:any;
+  public descripcion: any;
+  public modelo: any;
+  public marca: any;
+  public serial = '';
+  public serialValid = false;
+  public calibracionvalid: any = 0;
+  public calibracionallowed = false;
+  public calibracion: any;
   tecnico: any;
   actions: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
-    onClick: ({ event }: { event: CalendarEvent }): void => { this.detalleSelected = this.detalles[event.id], this.openScheduleDialog(), this.settings.sidenavUserBlock = true }
+    onClick: ({ event }: { event: CalendarEvent }): void => {
+      this.detalleSelected = this.detalles[event.id],
+        this.openScheduleDialog(),
+        this.settings.sidenavUserBlock = true;
+    }
   },
   {
     label: '<i class="material-icons icon-sm text-warning">list_alt</i>',
-    onClick: ({ event }: { event: CalendarEvent }): void => { this.id_orden_detalle_report = parseInt(String(event.id)); this.verReporte(parseInt(String(event.id)))  }
+    onClick: ({ event }: { event: CalendarEvent }): void => {
+      this.id_orden_detalle_report = parseInt(String(event.id));
+      this.verReporte(parseInt(String(event.id)));
+    }
   }];
   actions2: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
-    onClick: ({ event }: { event: CalendarEvent }): void => { this.detalleSelected = this.detalles[event.id], this.openScheduleDialog(), this.settings.sidenavUserBlock = true }
+    onClick: ({ event }: { event: CalendarEvent }): void => {
+      this.detalleSelected = this.detalles[event.id],
+        this.openScheduleDialog(), this.settings.sidenavUserBlock = true;
+    }
   },
   {
     label: '<i class="material-icons icon-sm text-danger">print</i>',
-    onClick: ({ event }: { event: CalendarEvent }): void => { this.getReporteMantenimiento(this.detalles[event.id].idOrdenesDetalle) }
+    onClick: ({ event }: { event: CalendarEvent }): void => {
+      this.getReporteMantenimiento(this.detalles[event.id].idOrdenesDetalle);
+    }
   }];
   events: CalendarEvent[] = [];
   info = {
     idDetalle: 0,
     responsable: '',
     equipo: '',
-  }
-
-
-
-
-
-
-
-  public infoReporte: Array<any> = [{propiedad: '', valor: 0}];
+  };
+  public infoReporte: Array<any> = [{ propiedad: '', valor: 0 }];
 
   constructor(public appSettings: AppSettings,
     public dialog: MatDialog,
@@ -135,8 +136,8 @@ export class TecnicosComponent implements OnInit {
     });
     this.datos.valueChanges.subscribe(() => {
       this.datoschanged = true;
-      let times: number = 0;
-      let veces: number = 0;
+      let times = 0;
+      let veces = 0;
       (<any>Object).values(this.datos.controls).forEach(control => {
         (<any>Object).values(this.datos).forEach(data => {
           if (veces == times) {
@@ -149,7 +150,7 @@ export class TecnicosComponent implements OnInit {
         veces = 0;
         times++;
       });
-     
+
     });
   }
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -172,31 +173,31 @@ export class TecnicosComponent implements OnInit {
     this.getTecnico();
   }
   public addInfoReport() {
-    this.infoReporte.push({propiedad: '', valor: 0});
+    this.infoReporte.push({ propiedad: '', valor: 0 });
   }
 
-  getTecnico(){
-    this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
-      (data: any) => {this.tecnicoSelected = data}
+  getTecnico() {
+    this._AppService.get('tecnicos/responsable/' + this.usuario.id).subscribe(
+      (data: any) => { this.tecnicoSelected = data; }
     );
   }
-  getDetalles(){
-    if(this.roles == 'ROLE_ADMIN'){
+  getDetalles() {
+    if (this.roles === 'ROLE_ADMIN') {
       this.getCotizacionesDetallesByIdCliente();
-    }else{
+    } else {
       this.getCotizacionesDetalles();
     }
   }
   getCotizacionesDetallesByIdCliente() {
     this.settings.loadingSpinner = true;
-    this._AppService.get('ordenesDetalle/cliente/'+this.idCliente).subscribe(
+    this._AppService.get('ordenesDetalle/cliente/' + this.idCliente).subscribe(
       (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
       error => { this.settings.loadingSpinner = false; }
     );
   }
   getCotizacionesDetalles() {
     this.settings.loadingSpinner = true;
-    this._AppService.get('ordenesDetalle/res/'+ this.tecnicoSelected.idTecnico +'/'+ this.idCliente).subscribe(
+    this._AppService.get('ordenesDetalle/res/' + this.tecnicoSelected.idTecnico + '/' + this.idCliente).subscribe(
       (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
       error => { this.settings.loadingSpinner = false; }
     );
@@ -212,12 +213,12 @@ export class TecnicosComponent implements OnInit {
   setDates() {
     this.events = [];
     for (let index = 0; index < this.detalles.length; index++) {
-      let item = this.detalles[index];
-      let fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'M/d/yy'));
-      fecha.setDate(fecha.getDate()+1)
+      const item = this.detalles[index];
+      const fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'M/d/yy'));
+      fecha.setDate(fecha.getDate() + 1);
       this.info.idDetalle = index;
       this.info.equipo = item.fkEquipos.nombre;
-      //this.info.responsable = item.fkResponsable.nombre;
+      // this.info.responsable = item.fkResponsable.nombre;
       this.idDetalle = item.idOrdenesDetalle;
       this.events.push({
         id: index,
@@ -231,7 +232,7 @@ export class TecnicosComponent implements OnInit {
     this.refresh.next();
   }
   setActions(estado: number): CalendarEventAction[] {
-    //return this.actions
+    // return this.actions
     switch (estado) {
       case 3:
         return this.actions;
@@ -244,38 +245,38 @@ export class TecnicosComponent implements OnInit {
   setColors(estado: number): any {
     switch (estado) {
       case 3:
-        return colors.blue
+        return colors.blue;
       case 4:
-        return colors.green
+        return colors.green;
       default:
         break;
     }
   }
   getActividadesProtocolo(idDetalle: number) {
-    let idPro = this.detalles[idDetalle].fkEquipos.fkProtocolo.idProtocolo;
+    const idPro = this.detalles[idDetalle].fkEquipos.fkProtocolo.idProtocolo;
     this._AppService.get('actividades/protocolo/' + idPro).subscribe(
-      (data: any) => { 
+      (data: any) => {
         this.acts = data;
         this.setActividades(data);
-        this.form = true; 
-      }, 
-      error => { console.log(error) }
+        this.form = true;
+      },
+      error => { console.log(error); }
     );
   }
-  setActividades(data: Array<any>){
+  setActividades(data: Array<any>) {
     this.actividades = [];
     for (let index = 0; index < data.length; index++) {
-      let item = data[index];
-      this.actividades.push(new Actividad(item.idActividades, item.actividades, false)); 
+      const item = data[index];
+      this.actividades.push(new Actividad(item.idActividades, item.actividades, false));
     }
-    this.form = true;  
+    this.form = true;
   }
-  validarActividades(): boolean{
+  validarActividades(): boolean {
     for (let index = 0; index < this.actividades.length; index++) {
-      let item = this.actividades[index];
-      if(item.realizado == true){
+      const item = this.actividades[index];
+      if (item.realizado === true) {
         this.allowed = true;
-      }else{
+      } else {
         this.allowed = false;
       }
     }
@@ -298,7 +299,7 @@ export class TecnicosComponent implements OnInit {
     }
   }
   openScheduleDialog() {
-    let dialogRef = this.dialog.open(ScheduleDialogComponent, {
+    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
       data: this.detalleSelected,
       disableClose: true
     });
@@ -310,13 +311,13 @@ export class TecnicosComponent implements OnInit {
           this.events.push(result);
           this.refresh.next();
         } else {
-          //implement edit here
+          // implement edit here
         }
       }
     });
   }
-  verReporte(idDetalle){
-    swalWithBootstrapButtons.fire({
+  public verReporte(idDetalle) {
+    Swal.fire({
       text: 'Quiere ver el Reporte?',
       type: 'warning',
       showCancelButton: true,
@@ -325,6 +326,14 @@ export class TecnicosComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
+        this.serial = '';
+        this.marca = '';
+        this.modelo = '';
+        this.serialValid = false;
+        this.calibracionvalid = 0;
+        this.calibracionallowed = false;
+        this.calibracion = null;
+        this.descripcion = null;
         this.getActividadesProtocolo(idDetalle);
         this.getDataDetalle(idDetalle);
         this.getConsecutivoReporte(this.usuario.empresa.idEmpresa);
@@ -334,97 +343,170 @@ export class TecnicosComponent implements OnInit {
         result.dismiss === Swal.DismissReason.cancel
       ) {
       }
-    })
+    });
   }
-  getConsecutivoReporte(idEmpresa: number) {
+
+  public goBack() {
+    this.form = false;
+  }
+
+  public getInfo(data: any) {
+    return String(data);
+  }
+
+  public getReporteMantenimiento(id) {
+    this.settings.loadingSpinner = true;
+    this._AppService.get('reporte/mantenimiento/' + id).subscribe((response: any) => {
+      this.settings.loadingSpinner = false;
+      const url = APP.url + 'reporte/view/' + response.ruta;
+      console.log(url);
+      window.open(url);
+    },
+      error => {
+        this.settings.loadingSpinner = false;
+      });
+  }
+
+  public findBySerial() {
+    this._AppService.get('equiposInve/serial/' + this.serial + '/' + String(this.equipoSelected.idEquipos)).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data != null) {
+          this.marca = data.marca;
+          this.modelo = data.modelo;
+          this.serialValid = true;
+          this._AppService.showSuccess('El serial ya existe');
+        } else {
+          Swal.fire({
+            title: 'Advertencia',
+            text: 'El Serial no Esta Registrado, Desea Registrarlo?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, Registrar',
+            cancelButtonText: 'No, Cancelar',
+          }).then((result) => {
+            if (result.value) {
+              this.openModalInventarioForm();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+            }
+          });
+        }
+      },
+      error => { this._AppService.showError('Error al consultar el Serial'); }
+    );
+  }
+
+  public openModalInventarioForm() {
+    const dialogRef = this.dialog.open(InventarioFormComponent, {
+      data: {
+        serial: this.serial,
+        empresa: this.usuario.empresa.idEmpresa,
+        cliente: this.clienteSelected,
+        equipo: this.equipoSelected,
+      },
+      width: '70%',
+      height: 'auto',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.close === 1) {
+        this.serial = result.serial;
+        this.marca = result.marca;
+        this.modelo = result.modelo;
+        this.serialValid = true;
+      }
+    });
+  }
+
+  public getCalibracion(data: any) {
+    if (data.valid === true) {
+      console.log(data.calibracion);
+      this._AppService.showSuccess('Calibracion validada');
+      this.calibracion = data.calibracion;
+      this.calibracionallowed = true;
+      this.calibracionvalid = 0;
+    } else {
+      this._AppService.showWarning('los datos de la calibracion no estan validados');
+      this.calibracionallowed = false;
+      this.calibracionvalid = 0;
+    }
+  }
+
+  public getConsecutivoReporte(idEmpresa: number) {
     let count: number;
-    this._AppService.get('ordenesDetalle/reportes/count/'+idEmpresa).subscribe(
+    this._AppService.get('ordenesDetalle/reportes/count/' + idEmpresa).subscribe(
       (data: any) => {
         console.log(data);
         count = data;
-        this._AppService.get('parametro/filtro_empresa_grupo_parametro/'+idEmpresa+'/0/153').subscribe(
-          (data: any) => {
+        this._AppService.get('parametro/filtro_empresa_grupo_parametro/' + idEmpresa + '/0/153').subscribe(
+          (data2: any) => {
             console.log(data);
-            this.codigoReporte = String(data[0].nombreCorto+data[0].valor+count); 
+            this.codigoReporte = String(data2[0].nombreCorto + data2[0].valor + count);
             console.log(this.codigoReporte);
           }
         );
       }
     );
   }
-  generarReporte(){
-      if(this.validarActividades() == true){
-        swalWithBootstrapButtons.fire({
-          text: 'Seguro de que quiere generar el reporte?',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Si',
-          cancelButtonText: 'No!',
-          reverseButtons: true
-        }).then((result) => {
-          if (result.value) {
-              this.settings.loadingSpinner = true;
-              let datos = this.datos.value;
-              let reporte = {
-                descripcion: this.descripcion,
-                cliente: this.clienteSelected.idCliente,
-                equipo: this.equipoSelected.idEquipos,
-                
-                orden:  this.ordenSelected,
-                codigoReporte: this.codigoReporte
-              }
-              let info = {
-                serial: this.serial,
-                fkModelo:this.modelo,
-                fkMarca:this.marca,
-                codReport: String(this.codigoReporte),
-                estado: 4,
-                idDetalle: this.idDetalle,
-                informacionReporte: String(JSON.stringify(reporte))
-              }
-              console.log(info)
-               this._AppService.put('ordenesDetalle/reporte', info).subscribe(
-                (data: any) => { 
-                  console.log(data)
-                 this.settings.loadingSpinner = false;
-                 this.datos.reset();
-                 this.form = false;
-                 this.getDetalles();
-                 Swal.fire({type: 'success', text: 'reporte generado', timer: 2000})
-                },
-                error => { this.settings.loadingSpinner = false;}
-              ); 
-          } else if (
-            result.dismiss === Swal.DismissReason.cancel
-          ) {}
-        })
-      }else{
-        Swal.fire({ type: 'warning', text: 'debe validar las actividades', timer: 2000});
-      }
-  }
 
-  goBack(){
-    this.form = false;
-  }
-
-  getInfo(data: any){
-    return String(data);
-  }
-
-  getReporteMantenimiento(id){
-    this.settings.loadingSpinner = true;
-      this._AppService.get("reporte/mantenimiento/"+id).subscribe((response : any) => {
-        this.settings.loadingSpinner = false;
-        let url = APP.url+"reporte/view/"+response.ruta;
-        console.log(url);
-        window.open(url);
-      },
-      error =>{
-        console.log(error);
-        this.settings.loadingSpinner = false;
+  public generarReporte() {
+    this.calibracionvalid = 1;
+    if (this.validarActividades() === true) {
+      Swal.fire({
+        text: 'Seguro de que quiere generar el reporte?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          if (this.calibracionallowed === true) {
+            this.settings.loadingSpinner = true;
+            const datos = this.datos.value;
+            const reporte = {
+              descripcion: this.descripcion,
+              cliente: this.clienteSelected.idCliente,
+              equipo: this.equipoSelected.idEquipos,
+              orden: this.ordenSelected,
+              codigoReporte: this.codigoReporte
+            };
+            const info = {
+              serial: this.serial,
+              fkModelo: this.modelo,
+              fkMarca: this.marca,
+              codReport: String(this.codigoReporte),
+              estado: 4,
+              idDetalle: this.idDetalle,
+              informacionReporte: String(JSON.stringify(reporte)),
+              calibracion: this.calibracion,
+            };
+            console.log(info);
+            this._AppService.put('ordenesDetalle/reporte', info).subscribe(
+              (data: any) => {
+                console.log(data);
+                this.settings.loadingSpinner = false;
+                this.datos.reset();
+                this.form = false;
+                this.getDetalles();
+                Swal.fire({ type: 'success', text: 'reporte generado', timer: 3000, showConfirmButton: false });
+              },
+              error => { this.settings.loadingSpinner = false; }
+            );
+          } else {
+            Swal.fire({
+              type: 'warning',
+              text: 'los datos de la calibracion no son validos',
+              showConfirmButton: false,
+              timer: 3000,
+            });
+          }
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) { }
       });
-    
+    } else {
+      Swal.fire({ type: 'warning', text: 'debe validar las actividades', timer: 2000 });
+    }
   }
-
-
 }

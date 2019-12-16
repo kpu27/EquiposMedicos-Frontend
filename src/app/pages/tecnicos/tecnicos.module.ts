@@ -10,6 +10,8 @@ import {MatCardModule, MatIconModule} from '@angular/material';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import {TableModule} from 'primeng/table';
+import { InventarioFormComponent } from './inventario-form/inventario-form.component';
+import { CalibracionFormComponent } from './calibracion-form/calibracion-form.component';
 import { MantenimientosRealizadosComponent } from './mantenimientos-realizados/mantenimientos-realizados.component';
 registerLocaleData(es);
 export const routes = [
@@ -33,10 +35,13 @@ export const routes = [
   declarations: [
     TecnicosComponent, 
     ScheduleDialogComponent, 
-    MantenimientosRealizadosComponent
+    MantenimientosRealizadosComponent,
+    InventarioFormComponent,
+    CalibracionFormComponent,
   ],
   entryComponents: [
-    ScheduleDialogComponent
+    ScheduleDialogComponent,
+    InventarioFormComponent
   ],
   providers:[
     { provide: LOCALE_ID, useValue: "es-ES" },

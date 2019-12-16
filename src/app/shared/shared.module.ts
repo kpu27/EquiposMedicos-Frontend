@@ -34,8 +34,6 @@ import { MatAutocompleteModule,
          MatStepperModule } from '@angular/material';
 import { ChartCommonModule } from '@swimlane/ngx-charts';
 
-      
-
 @NgModule({
   imports: [
     CommonModule,

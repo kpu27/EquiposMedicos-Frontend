@@ -148,77 +148,114 @@
                                 </div>
                             </div>
                             <!--ESPECIFICACIONES EQUIPOS -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="text-muted" for="protocoloquipo">Serial<b class="text-danger">*</b>
+                                    </label>
+                                    <div class="input-group mb-3">
+                                        <input [disabled]="serialValid" [(ngModel)]="serial" type="text" name="serial" id="serial"
+                                            class="form-control form-control-sm" placeholder="Serial del Equipo"
+                                            aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                            <button [disabled]="serialValid || serial==''" (click)="findBySerial()" class="btn btn-sm btn-outline-info"
+                                                type="button" id="button-addon2"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-muted" for="codequipo">Marca<b
-                                            class="text-danger">*</b></label>
-                                    <input  type="text" name="marca" [(ngModel)]="marca"
-                                        id="marca" class="form-control form-control-sm">
+                                    <label class="text-muted" for="codequipo">Marca<b class="text-danger">*</b></label>
+                                    <input readonly type="text" name="marca" [(ngModel)]="marca" id="marca"
+                                        class="form-control form-control-sm" placeholder="Marca del Equipo...">
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label class="text-muted" for="nombrequipo">Modelo<b
                                             class="text-danger">*</b></label>
-                                    <input  type="text" name="modelo" [(ngModel)]="modelo"
-                                        id="modelo" class="form-control form-control-sm">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="text-muted" for="protocoloquipo">Serial<b
-                                            class="text-danger">*</b></label>
-                                    <input  type="text" [(ngModel)]="serial"
-                                        name="serial" id="serial" class="form-control form-control-sm">
+                                    <input readonly type="text" name="modelo" [(ngModel)]="modelo" id="modelo"
+                                        class="form-control form-control-sm" placeholder="Modelo del Equipo...">
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <form class="form-text">
-                        <div class="form-row">
+                    <mat-tab-group>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon class="example-tab-icon">apps</mat-icon>
+                                &nbsp;Actividades
+                            </ng-template>
 
-                            <div class="col-md-12">
-                                <hr class="my-2">
-                                <h6 class="text-muted">Actividades</h6>
-                                <div class="table-responsive">
-                                    <table style="border: 2px solid #ccc" class="table table-sm table-striped">
-                                        <tbody>
-                                            <tr *ngFor="let item of actividades; let i = index">
-                                                <td scope="row">{{i+1}}</td>
-                                                <td scope="row">{{item.nombre}}</td>
-                                                <td scope="row">
-                                                    <mat-checkbox [(ngModel)]="item.realizado" name="realizado"
-                                                        color="warn"></mat-checkbox>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title bg-header text-center text-muted" style="pad: 3px;">
+                                        <b><i class="fa fa-file-alt"></i>&nbsp;ACTIVADES</b></h5>
+
+                                    <form class="form-text">
+                                        <div class="form-row">
+
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table style="border: 2px solid #ccc"
+                                                        class="table table-sm table-striped">
+                                                        <tbody>
+                                                            <tr *ngFor="let item of actividades; let i = index">
+                                                                <td scope="row">{{i+1}}</td>
+                                                                <td scope="row">{{item.nombre}}</td>
+                                                                <td scope="row">
+                                                                    <mat-checkbox [(ngModel)]="item.realizado"
+                                                                        name="realizado" color="warn"></mat-checkbox>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="text-muted" for="descripcion">Descripcion &nbsp;<b
+                                                            class="text-danger">*</b> </label>
+                                                    <textarea [(ngModel)]="descripcion" class="form-control"
+                                                        name="descripcion" id="descripcion" rows="4"></textarea>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12">
+
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <button type="button" (click)="generarReporte()" [disabled]="descripcion==null ||descripcion == '' " class="btn btn-sm btn-outline-dark">
+                                                        <i class="fa fa-save"></i>&nbsp;Guardar
+                                                    </button>
+                                                    <button type="button" (click)="goBack()" class="btn btn-sm btn-outline-dark">
+                                                        <i class="fa fa-times"></i>&nbsp;Cancelar
+                                                    </button>
+                                                </div>
+
+                                                <br>
+                                                <br>
+                                            </div>
+
+
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="text-muted" for="descripcion">Descripcion &nbsp;<b
-                                            class="text-danger">*</b> </label>
-                                    <textarea [(ngModel)]="descripcion" class="form-control" name="descripcion"
-                                        id="descripcion" rows="4"></textarea>
-                                </div>
-                            </div>
+                        </mat-tab>
 
-                           
-                           
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon class="tab-icon">list-alt</mat-icon>
+                                &nbsp;Calibracion
+                            </ng-template>
+                            <app-calibracion-form  [calibracionvalid]="calibracionvalid" (getCalibracion)="getCalibracion($event)"></app-calibracion-form>
+                        </mat-tab>
+                    </mat-tab-group>
 
-                            <div class="col-md-12">
-                                <button [disabled]="descripcion==null ||descripcion == '' " (click)="generarReporte()"
-                                    color="primary" type="submit" mat-button>
-                                    <mat-icon>save</mat-icon> Guardar
-                                </button>
-                                <button (click)="goBack()" style="float: right" class="text-danger" mat-button>
-                                    <mat-icon>clear</mat-icon> Cancelar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+
                 </mat-card-content>
             </mat-card>
         </div>
