@@ -16,7 +16,7 @@ export class InventarioFormComponent implements OnInit {
   public modelo = '';
   public frecuenciaDias = '';
   public propiedades: Array<any> = [{propiedad: '', valor: ''}];
-  settings: Settings;
+  public settings: Settings;
 
   constructor(public dialogRef: MatDialogRef<InventarioFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,7 +64,7 @@ export class InventarioFormComponent implements OnInit {
       idEquiposInventario: 0,
       fkEmpresa: this.data.empresa,
       fkCliente: this.data.cliente.idCliente,
-      fkEquipos: this.data.equipo.idEquipos,
+      fkEquipo: this.data.equipo.idEquipos,
       serial: this.serial,
       marca: this.marca,
       modelo: this.serial,
@@ -77,8 +77,6 @@ export class InventarioFormComponent implements OnInit {
 
   public crear() {
     console.log(this.setData());
-
-
     if (this.validarObservaciones() === true) {
       Swal.fire({
         title: 'Advertencia',

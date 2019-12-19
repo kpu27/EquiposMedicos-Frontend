@@ -227,7 +227,7 @@
                                             <div class="col-md-12">
 
                                                 <div class="btn-group btn-group-sm" role="group">
-                                                    <button type="button" (click)="generarReporte()" [disabled]="descripcion==null ||descripcion == '' " class="btn btn-sm btn-outline-dark">
+                                                    <button type="button" (click)="generarReporte()" [disabled]="descripcion==null || descripcion == '' || serial==null || serial == ''" class="btn btn-sm btn-outline-dark">
                                                         <i class="fa fa-save"></i>&nbsp;Guardar
                                                     </button>
                                                     <button type="button" (click)="goBack()" class="btn btn-sm btn-outline-dark">

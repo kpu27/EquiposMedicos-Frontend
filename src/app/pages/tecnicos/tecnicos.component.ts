@@ -451,62 +451,59 @@ export class TecnicosComponent implements OnInit {
 
   public generarReporte() {
     this.calibracionvalid = 1;
-    if (this.validarActividades() === true) {
-      Swal.fire({
-        text: 'Seguro de que quiere generar el reporte?',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Si',
-        cancelButtonText: 'No!',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.value) {
-          if (this.calibracionallowed === true) {
-            this.settings.loadingSpinner = true;
-            const datos = this.datos.value;
-            const reporte = {
-              descripcion: this.descripcion,
-              cliente: this.clienteSelected.idCliente,
-              equipo: this.equipoSelected.idEquipos,
-              orden: this.ordenSelected,
-              codigoReporte: this.codigoReporte
-            };
-            const info = {
-              serial: this.serial,
-              fkModelo: this.modelo,
-              fkMarca: this.marca,
-              codReport: String(this.codigoReporte),
-              estado: 4,
-              idDetalle: this.idDetalle,
-              informacionReporte: String(JSON.stringify(reporte)),
-              calibracion: this.calibracion,
-            };
-            console.log(info);
-            this._AppService.put('ordenesDetalle/reporte', info).subscribe(
-              (data: any) => {
-                console.log(data);
-                this.settings.loadingSpinner = false;
-                this.datos.reset();
-                this.form = false;
-                this.getDetalles();
-                Swal.fire({ type: 'success', text: 'reporte generado', timer: 3000, showConfirmButton: false });
-              },
-              error => { this.settings.loadingSpinner = false; }
-            );
-          } else {
-            Swal.fire({
-              type: 'warning',
-              text: 'los datos de la calibracion no son validos',
-              showConfirmButton: false,
-              timer: 3000,
-            });
-          }
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) { }
-      });
-    } else {
-      Swal.fire({ type: 'warning', text: 'debe validar las actividades', timer: 2000 });
-    }
+    Swal.fire({
+      text: 'Seguro de que quiere generar el reporte?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        if (this.calibracionallowed === true) {
+          this._AppService.openSpinner();
+          const reporte = {
+            descripcion: this.descripcion,
+            cliente: this.clienteSelected.idCliente,
+            equipo: this.equipoSelected.idEquipos,
+            orden: this.ordenSelected,
+            codigoReporte: this.codigoReporte
+          };
+          const info = {
+            serial: this.serial,
+            fkModelo: this.modelo,
+            fkMarca: this.marca,
+            codReport: String(this.codigoReporte),
+            estado: 4,
+            idDetalle: this.idDetalle,
+            informacionReporte: String(JSON.stringify(reporte)),
+            calibracion: this.calibracion,
+            actividades: String(JSON.stringify(this.actividades))
+          };
+          console.log(info);
+          this._AppService.put('ordenesDetalle/reporte', info).subscribe(
+            (data: any) => {
+              console.log(data);
+              this.settings.loadingSpinner = false;
+              this._AppService.openSpinner();
+              this.datos.reset();
+              this.form = false;
+              this.getDetalles();
+              Swal.fire({ type: 'success', text: 'reporte generado', timer: 3000, showConfirmButton: false });
+            },
+            error => { this._AppService.closeSpinner(); }
+          );
+        } else {
+          Swal.fire({
+            type: 'warning',
+            text: 'los datos de la calibracion no son validos',
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) { }
+    });
   }
 }
